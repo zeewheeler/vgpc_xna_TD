@@ -13,7 +13,7 @@ namespace vgpc_tower_defense.GameObjects
     public class GameObject
     {
         //Class variables. The class "glues" all of these variables together. 
-        private Texture2D   texture;
+        private Texture2D   default_texture;
         private Vector2     position;
         private float       direction;
         private Vector2     center;
@@ -30,9 +30,9 @@ namespace vgpc_tower_defense.GameObjects
             direction = 0.0f;
             position = Vector2.Zero;
 
-            texture = loadedTexture;
+            default_texture = loadedTexture;
             center = new Vector2(
-                texture.Width / 2, texture.Height / 2);
+                default_texture.Width / 2, default_texture.Height / 2);
             velocity = Vector2.Zero;
             is_active = false;
         }
@@ -42,7 +42,7 @@ namespace vgpc_tower_defense.GameObjects
         {
             if (is_active)
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(default_texture, position, Color.White);
             }
         }
 
@@ -71,14 +71,14 @@ namespace vgpc_tower_defense.GameObjects
         public float VelocityX { get { return velocity.X; } set { velocity.X = value; } }
         public float VelocityY { get { return velocity.Y; } set { velocity.Y = value; } }
         public bool Is_active { get { return is_active; } set { is_active = value; } }
-        public Texture2D GetTexture() { return texture; }
+        public Texture2D GetTexture() { return default_texture; }
         public Vector2 GetPos() { return position; }
         public Vector2 GetVel() { return velocity; }
         public void SetPosition(Vector2 pos) { position = pos; }
         public void SetVelocity(Vector2 vel) { velocity = vel; }
         public Vector2 GetCenter() { return center; }
         public float Direction { get { return direction; } set { direction = value; } }
-        public int GetWidth() { return texture.Width; }
-        public int GetHeight() { return texture.Height; }
+        public int GetWidth() { return default_texture.Width; }
+        public int GetHeight() { return default_texture.Height; }
     }
 }
