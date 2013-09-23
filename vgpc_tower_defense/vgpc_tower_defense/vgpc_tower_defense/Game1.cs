@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -9,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace vgpc_tower_defense
@@ -42,6 +44,21 @@ namespace vgpc_tower_defense
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            using (StreamReader file_reader = File.OpenText("towers.json"))
+            {
+                JsonTextReader json_reader = new JsonTextReader(file_reader);
+                while (json_reader.Read())
+                {
+                    if (json_reader.Value != null)
+                        Console.WriteLine("Token: {0}, Value: {1}", json_reader.TokenType, json_reader.Value);
+                    else
+                        Console.WriteLine("Token: {0}", json_reader.TokenType);
+                }
+            }
+                
+
+            
         }
 
         /// <summary>
