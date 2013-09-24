@@ -75,12 +75,12 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseGameObjects\tower_config.cs" />
-    <Compile Include="badguys\EnemyMob.cs" />
-    <Compile Include="BaseGameObjects\gameObject.cs" />
-    <Compile Include="BaseGameObjects\game_object_config.cs" />
-    <Compile Include="towers\Projectile.cs" />
-    <Compile Include="towers\Tower.cs" />
+    <Compile Include="Base Game Classes\tower_config.cs" />
+    <Compile Include="Badguys\EnemyMob.cs" />
+    <Compile Include="Base Game Classes\gameObject.cs" />
+    <Compile Include="Base Game Classes\game_object_config.cs" />
+    <Compile Include="Base Game Classes\Projectile.cs" />
+    <Compile Include="Tower\Tower.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
