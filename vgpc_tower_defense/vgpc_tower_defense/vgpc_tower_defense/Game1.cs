@@ -77,7 +77,7 @@ namespace vgpc_tower_defense
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), "Plasma Tower");
+            ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
             ptower.position.X = graphics.GraphicsDevice.Viewport.Width / 2;
             ptower.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
             ptower.is_active = true;

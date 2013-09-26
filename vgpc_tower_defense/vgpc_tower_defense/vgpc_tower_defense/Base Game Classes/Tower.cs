@@ -15,7 +15,7 @@ namespace vgpc_tower_defense.GameObjects
     {
      
         //constructor
-        public Tower(Texture2D default_tex, string Tower_Type)
+        public Tower(Texture2D default_tex)
             : base(default_tex)
         {
             //sounds
@@ -43,14 +43,7 @@ namespace vgpc_tower_defense.GameObjects
             cost_upgrade_1 = 2;
             cost_upgrade_2 = 3;
             
-            //texture_right       = null;
-            //texture_up_right    = null;
-            //texture_up          = null;
-            //texture_up_left     = null;
-            //texture_left        = null;
-            //texture_down_left   = null;
-            //texture_down        = null;
-            //texture_down_right  = null;
+           
  
             
         }
@@ -61,15 +54,7 @@ namespace vgpc_tower_defense.GameObjects
         protected SoundEffect sound_build;
 
       
-        //private Texture2D texture_default_tower;
-        //private Texture2D texture_right;
-        //private Texture2D texture_up_right;
-        //private Texture2D texture_up;
-        //private Texture2D texture_up_left;
-        //private Texture2D texture_left; 
-        //private Texture2D texture_down_left; 
-        //private Texture2D texture_down;
-        //private Texture2D texture_down_right;
+       
             
         //projectiles
         protected Texture2D texture_projectile; //texture
