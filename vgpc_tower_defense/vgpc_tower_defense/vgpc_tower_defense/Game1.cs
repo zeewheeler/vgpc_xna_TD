@@ -66,6 +66,9 @@ namespace vgpc_tower_defense
         }
 
         GameObjects.Tower ptower;
+        GameObjects.EnemyMob badguy;
+
+        List<GameObjects.EnemyMob> active_badguys = new List<GameObjects.EnemyMob>();
         
 
         /// <summary>
@@ -78,9 +81,19 @@ namespace vgpc_tower_defense
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
-            ptower.position.X = graphics.GraphicsDevice.Viewport.Width / 2;
+            ptower.position.X = graphics.GraphicsDevice.Viewport.Width / 10;
             ptower.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            ptower.load_projectile_texture(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
             ptower.is_active = true;
+
+            badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
+            badguy.position.X = graphics.GraphicsDevice.Viewport.Width / 2;
+            badguy.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            badguy.is_active = true;
+            badguy.velocity.X = -5;
+
+            active_badguys.Add(badguy);
+               
 
             // TODO: use this.Content to load your game content here
         }
@@ -107,6 +120,11 @@ namespace vgpc_tower_defense
 
             // TODO: Add your update logic here
 
+            foreach (GameObjects.EnemyMob badguy in active_badguys)
+            {
+                badguy.Update_Position();
+            }
+
             base.Update(gameTime);
         }
 
@@ -122,6 +140,10 @@ namespace vgpc_tower_defense
             spriteBatch.Begin();
 
             spriteBatch.Draw(ptower.default_texture, ptower.position, Color.White);
+            foreach (GameObjects.EnemyMob badguy in active_badguys)
+            {
+                badguy.Draw(spriteBatch);
+            }
            
 
             spriteBatch.End();

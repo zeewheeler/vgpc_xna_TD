@@ -14,8 +14,17 @@ namespace vgpc_tower_defense.GameObjects
     {
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
-            {
-                //m_Active = false;
-            }
+        {
+            mob_health = 100;
+        }
+
+        protected int mob_health;
+
+        public void damage_me(int damage)
+        {
+            mob_health -= damage;
+        }
+       
+
     }
 }

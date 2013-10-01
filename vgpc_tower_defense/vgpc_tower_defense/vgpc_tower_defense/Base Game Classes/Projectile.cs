@@ -17,8 +17,10 @@ namespace vgpc_tower_defense.GameObjects
             public Projectile(Texture2D loaded_texture)
                 : base(loaded_texture)
             {
-                //
+                speed = 1;
             }
+
+            public float speed;
 
            
             

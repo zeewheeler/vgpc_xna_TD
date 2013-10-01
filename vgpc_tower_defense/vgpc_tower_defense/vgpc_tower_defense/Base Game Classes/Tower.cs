@@ -42,11 +42,35 @@ namespace vgpc_tower_defense.GameObjects
             cost_to_build  = 1;
             cost_upgrade_1 = 2;
             cost_upgrade_2 = 3;
-            
+
+            projectile_speed = 2;
+
+            max_projectiles = 20;
+
+            for (int i = 0; i < max_projectiles; i++)
+            {
+                Projectile new_projectile = new Projectile(null);
+                new_projectile.speed = projectile_speed;
+                projectiles.Add(new Projectile(null));
+            }
+
+          
            
  
             
         }
+
+        public void load_projectile_texture(Texture2D projectile_texture)
+        {
+            texture_projectile = projectile_texture;
+        }
+
+        private void update_projectiles()
+        {
+        }
+
+
+
 
         //sounds
         protected SoundEffect sound_shoot;
@@ -57,8 +81,9 @@ namespace vgpc_tower_defense.GameObjects
        
             
         //projectiles
-        protected Texture2D texture_projectile; //texture
+        protected static Texture2D texture_projectile; //texture
         
+        //Weapon Numbers
         
         protected float damage_level_1;
         protected float damage_level_2;
@@ -75,6 +100,13 @@ namespace vgpc_tower_defense.GameObjects
         protected float cost_to_build;
         protected float cost_upgrade_1;
         protected float cost_upgrade_2;
+
+        protected float projectile_speed;
+
+        protected int max_projectiles;
+
+        protected List<Projectile> projectiles;
+
 
 
         

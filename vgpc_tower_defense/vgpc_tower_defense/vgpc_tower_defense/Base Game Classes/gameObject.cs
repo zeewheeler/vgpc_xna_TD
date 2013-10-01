@@ -43,7 +43,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         //draws the game object
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (is_active)
             {
@@ -54,7 +54,7 @@ namespace vgpc_tower_defense.GameObjects
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
      
 
-        public void Update_Position()
+        public virtual void Update_Position()
         {
             if (is_active)
             {
@@ -63,9 +63,7 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-        public virtual void Draw()
-        {
-        }
+        
 
         
  
