@@ -30,12 +30,12 @@ namespace vgpc_tower_defense.GameObjects
             direction = 0.0f;
             position = Vector2.Zero;
 
-            default_texture = loadedTexture;
+           
 
             position = new Vector2(0,0);
             velocity = new Vector2(0, 0);
-            center = new Vector2((default_texture.Width / 2), (default_texture.Height / 2));
 
+            load_default_texture(loadedTexture);
                 
             
             velocity = Vector2.Zero;
@@ -52,7 +52,16 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
-     
+
+        protected virtual void load_default_texture(Texture2D texture)
+        {
+            if (texture != null)
+            {
+                default_texture = texture;
+                center = new Vector2((default_texture.Width / 2), (default_texture.Height / 2));
+            }
+        }
+
 
         public virtual void Update_Position()
         {

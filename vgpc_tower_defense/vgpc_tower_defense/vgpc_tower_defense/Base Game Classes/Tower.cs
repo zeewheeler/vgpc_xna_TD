@@ -43,15 +43,21 @@ namespace vgpc_tower_defense.GameObjects
             cost_upgrade_1 = 2;
             cost_upgrade_2 = 3;
 
+            weapon_range_level_1 = 20;
+            weapon_range_level_2 = 30;
+            weapon_range_level_3 = 40;
+
             projectile_speed = 2;
 
             max_projectiles = 20;
+
+            projectiles = new List<Projectile>();
 
             for (int i = 0; i < max_projectiles; i++)
             {
                 Projectile new_projectile = new Projectile(null);
                 new_projectile.speed = projectile_speed;
-                projectiles.Add(new Projectile(null));
+                projectiles.Add(new_projectile);
             }
 
           
@@ -96,6 +102,10 @@ namespace vgpc_tower_defense.GameObjects
         protected float rate_of_fire_level_1;
         protected float rate_of_fire_level_2;
         protected float rate_of_fire_level_3;
+
+        protected float weapon_range_level_1;
+        protected float weapon_range_level_2;
+        protected float weapon_range_level_3;
 
         protected float cost_to_build;
         protected float cost_upgrade_1;
