@@ -35,9 +35,10 @@ namespace vgpc_tower_defense.GameObjects
             area_of_effect_level_2 = 1;
             area_of_effect_level_3 = 1;
 
-            rate_of_fire_level_1 = 1;
-            rate_of_fire_level_2 = 2;
-            rate_of_fire_level_3 = 3;
+            //
+            rate_of_fire_level_shoots_per_second_1 = 3;
+            rate_of_fire_level_shoots_per_second_2 = 2;
+            rate_of_fire_level_shoots_per_second_3 = 1;
 
             cost_to_build  = 1;
             cost_upgrade_1 = 2;
@@ -50,6 +51,8 @@ namespace vgpc_tower_defense.GameObjects
             projectile_speed = 2;
 
             max_projectiles = 20;
+
+            weapon_shoot_timer = TimeSpan.Zero;
 
             projectiles = new List<Projectile>();
 
@@ -71,9 +74,34 @@ namespace vgpc_tower_defense.GameObjects
             texture_projectile = projectile_texture;
         }
 
-        private void update_projectiles()
+        protected virtual void update_projectiles()
         {
+            foreach (Projectile projectile in projectiles)
+            {
+
+            }
         }
+
+        protected virtual void update_weapon_fire( List<EnemyMob> enemy_mobs )
+        {
+            if ((float)weapon_shoot_timer.Seconds > rate_of_fire_level_shoots_per_second_1)
+            {
+                weapon_shoot_timer = TimeSpan.Zero;
+
+                for (int i = 0; i < projectiles.Count; i++)
+                {
+                    if (!projectiles[i].is_active)
+                    {
+                        Vector2 target_pos;
+                        projectiles[i].is_active = true;
+                        target_pos = Util.vgpc_math.find_nearest_mob(this.position, enemy_mobs);
+                        projectiles[i].velocity = 
+                    }
+
+                }
+            }
+        }
+        
 
 
 
@@ -99,9 +127,9 @@ namespace vgpc_tower_defense.GameObjects
         protected float area_of_effect_level_2;
         protected float area_of_effect_level_3;
 
-        protected float rate_of_fire_level_1;
-        protected float rate_of_fire_level_2;
-        protected float rate_of_fire_level_3;
+        protected float rate_of_fire_level_shoots_per_second_1;
+        protected float rate_of_fire_level_shoots_per_second_2;
+        protected float rate_of_fire_level_shoots_per_second_3;
 
         protected float weapon_range_level_1;
         protected float weapon_range_level_2;
@@ -116,6 +144,8 @@ namespace vgpc_tower_defense.GameObjects
         protected int max_projectiles;
 
         protected List<Projectile> projectiles;
+
+        protected TimeSpan weapon_shoot_timer;
 
 
 
