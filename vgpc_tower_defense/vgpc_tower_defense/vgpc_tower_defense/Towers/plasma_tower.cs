@@ -18,8 +18,8 @@ namespace vgpc_tower_defense.GameObjects
     {
 
         //constructor
-        public plasma_tower(Texture2D default_tex)
-            : base(default_tex)
+        public plasma_tower(Texture2D default_tex, Texture2D projectile_texture)
+            : base(default_tex, projectile_texture)
         {
            
         }
