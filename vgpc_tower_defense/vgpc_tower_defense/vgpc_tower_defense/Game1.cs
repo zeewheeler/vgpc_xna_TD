@@ -80,10 +80,9 @@ namespace vgpc_tower_defense
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
+            ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\starcharge"));
             ptower.position.X = graphics.GraphicsDevice.Viewport.Width / 10;
             ptower.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
-            ptower.load_projectile_texture(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
             ptower.is_active = true;
 
             badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"));
@@ -139,7 +138,7 @@ namespace vgpc_tower_defense
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            spriteBatch.Draw(ptower.default_texture, ptower.position, Color.White);
+            spriteBatch.Draw(GameObjects.plasma_tower.default_texture, ptower.position, Color.White);
             foreach (GameObjects.EnemyMob badguy in active_badguys)
             {
                 badguy.Draw(spriteBatch);

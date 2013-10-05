@@ -13,7 +13,7 @@ namespace vgpc_tower_defense.GameObjects
     public class GameObject
     {
         //Class variables. The class "glues" all of these variables together. 
-        public Texture2D default_texture;
+        public static Texture2D default_texture;
         public Vector2 position;
         public float direction;
         public Vector2 center;
@@ -55,10 +55,11 @@ namespace vgpc_tower_defense.GameObjects
 
         protected virtual void load_default_texture(Texture2D texture)
         {
-            if (texture != null)
+            if (default_texture == null)
             {
                 default_texture = texture;
-                center = new Vector2((default_texture.Width / 2), (default_texture.Height / 2));
+                center = new Vector2((texture.Width / 2), (texture.Height / 2));
+                
             }
         }
 

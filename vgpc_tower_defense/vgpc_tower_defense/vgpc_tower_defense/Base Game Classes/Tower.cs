@@ -47,7 +47,7 @@ namespace vgpc_tower_defense.GameObjects
            
             //Initializations
             projectiles = new List<Projectile>();
-            status_effects = new List<string>();
+            status_effects = new List<Common.status_effect>();
             weapon_shoot_timer = TimeSpan.Zero;
 
             for (int i = 0; i < max_projectiles; i++)
@@ -121,7 +121,7 @@ namespace vgpc_tower_defense.GameObjects
         protected virtual void damage_and_affect_mop(EnemyMob mob)
         {
             mob.damage_me((int)current_weapon_damage);
-
+            mob.add_status_effects(status_effects);
             
         }
 
@@ -190,7 +190,7 @@ namespace vgpc_tower_defense.GameObjects
 
         //Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
         // The mob will process it's own status effects
-        protected List<string> status_effects;
+        protected List<Common.status_effect> status_effects;
         
 
 

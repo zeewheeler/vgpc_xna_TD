@@ -52,7 +52,7 @@ namespace vgpc_tower_defense.GameObjects
 
 
         //takes a list of incomming status effects, adds them to the mobs list of status effects, if there are not there already
-        protected void add_status_effects(List<Common.status_effect> incomming_status_effects)
+        public void add_status_effects(List<Common.status_effect> incomming_status_effects)
         {
             foreach (Common.status_effect inc_status_effect in incomming_status_effects)
             {
