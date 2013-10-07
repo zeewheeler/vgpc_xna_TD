@@ -31,7 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sounds\" />
-    <Folder Include="Sprites\Bad guys\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Towers\Plasma\Plasma_Down.png">
@@ -85,6 +84,50 @@
   <ItemGroup>
     <Compile Include="Sprites\Projectiles\starcharge.png">
       <Name>starcharge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Bad guys\Enemy 2 - 1.png">
+      <Name>Enemy 2 - 1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\Projectiles\cannonball.tga">
+      <Name>cannonball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballwhite.tga">
+      <Name>cannonballwhite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonball_blue.tga">
+      <Name>cannonball_blue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonball_blue_big.tga">
+      <Name>cannonball_blue_big</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonball_yellow.tga">
+      <Name>cannonball_yellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonball_yellow2.tga">
+      <Name>cannonball_yellow2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\rocket.png">
+      <Name>rocket</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

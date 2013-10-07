@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 namespace vgpc_tower_defense.GameObjects
 {
    
-        public class Projectile : GameObject
+        public class Projectile : DrawableGameObject
         {
            
             public Projectile(Texture2D loaded_texture)
@@ -20,6 +20,8 @@ namespace vgpc_tower_defense.GameObjects
                 speed = 1;
             }
 
+
+           
             public float speed;
 
            

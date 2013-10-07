@@ -10,22 +10,39 @@ using Microsoft.Xna.Framework.Input;
 
 namespace vgpc_tower_defense.GameObjects
 {
-    public class GameObject
+    
+    //The DrawableGameObject defines a set of variables and functions that can define a basic game object such as a tower, enemy mob, projectile, etc 
+    public class DrawableGameObject
     {
-        //Class variables. The class "glues" all of these variables together. 
-        public static Texture2D default_texture;
-        public Vector2 position;
+        
+        public Texture2D current_texture;
+       
+        public  Vector2 position;
+        public Vector2 get_center()
+        {
+            if (current_texture == null)
+            {
+                throw new Exception("A gameObject tried to do texture operations without a texture defined");
+            } 
+
+            return new Vector2(this.position.X + this.current_texture.Width / 2, this.position.Y + this.current_texture.Height / 2);
+            
+        }
+       
         public float direction;
-        public Vector2 center;
         public Vector2 velocity;
         public bool is_active;
+
+        public float rotation;
+        public float scale;
+       
 
 
         //This is the class constructor, notice that is a function that is call the same thing as the
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.
         //This mechanism allows us to set up default values of it's variables.
-       
-        public GameObject(Texture2D loadedTexture)
+
+        public DrawableGameObject(Texture2D loadedTexture)
         {
             direction = 0.0f;
             position = Vector2.Zero;
@@ -35,36 +52,48 @@ namespace vgpc_tower_defense.GameObjects
             position = new Vector2(0,0);
             velocity = new Vector2(0, 0);
 
-            load_default_texture(loadedTexture);
+            if (loadedTexture != null)
+            {
+                current_texture = loadedTexture;
+            }
                 
             
             velocity = Vector2.Zero;
             is_active = false;
         }
 
-        //draws the game object
-        public virtual void Draw(SpriteBatch spriteBatch)
+
+
+        //Public Functions. These funcations can be called "outside" the class. They provide an interface with which to interact with the class.
+
+
+        //draws the game object with default texture
+        public virtual void draw(SpriteBatch spriteBatch)
         {
             if (is_active)
             {
-                spriteBatch.Draw(default_texture, position, Color.White);
+                spriteBatch.Draw(current_texture, position, Color.White);
             }
         }
+
+        
+
+
+        //draws game object with specified texture
+        public virtual void draw(SpriteBatch spriteBatch, Texture2D texture)
+        {
+            if (is_active)
+            {
+                spriteBatch.Draw(texture, this.get_center(), Color.White);
+            }
+        }
+                
+
+
+       
 
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
-
-        protected virtual void load_default_texture(Texture2D texture)
-        {
-            if (default_texture == null)
-            {
-                default_texture = texture;
-                center = new Vector2((texture.Width / 2), (texture.Height / 2));
-                
-            }
-        }
-
-
-        public virtual void Update_Position()
+        public virtual void update_position()
         {
             if (is_active)
             {
@@ -72,6 +101,8 @@ namespace vgpc_tower_defense.GameObjects
                 position.Y += velocity.Y;
             }
         }
+
+       
 
         
 

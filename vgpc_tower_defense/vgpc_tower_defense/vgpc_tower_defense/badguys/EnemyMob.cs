@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace vgpc_tower_defense.GameObjects
 {
-    public class EnemyMob : GameObject
+    public class EnemyMob : DrawableGameObject
     {
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
@@ -80,6 +80,11 @@ namespace vgpc_tower_defense.GameObjects
             this.is_active = false;
 
         }
+
+
+     
+
+      
 
     }
 }
