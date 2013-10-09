@@ -1,0 +1,18 @@
+#ContentSounds
+//example
+contentSound LazerTowerShootSound //sounds/towers//lazerTower//LazerTowerShootSound.wav
+
+
+#ContentSongs
+//example
+contentSong LevelOneThemeSong //songs//levelone//LevelOnethemeSong.mp3
+
+
+#Content_Sprites
+contentSprite LazerTowerDefaultSprite //sprites//towers//lasertower//LTDefaultSprite.png
+
+
+
+
+
+
