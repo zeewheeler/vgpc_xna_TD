@@ -75,9 +75,7 @@ namespace vgpc_tower_defense
         GameObjects.Tower ptower2;
         GameObjects.Tower ptower3;
         GameObjects.Tower ptower4;
-        GameObjects.Tower ptower5;
-        GameObjects.Tower ptower6;
-        GameObjects.Tower ptower7;
+      
         GameObjects.EnemyMob badguy;
 
         
@@ -104,46 +102,33 @@ namespace vgpc_tower_defense
             //AssetManager.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
+            ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
             ptower.Position.Y = graphics.GraphicsDevice.Viewport.Height / 10;
             ptower.IsActive = true;
 
 
             ptower2 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
             ptower2.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower2.Position.Y = graphics.GraphicsDevice.Viewport.Height / 8;
+            ptower2.Position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
             ptower2.IsActive = true;
 
             ptower3 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower3.Position.X = graphics.GraphicsDevice.Viewport.Width / 7;
-            ptower3.Position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
+            ptower3.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            ptower3.Position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
             ptower3.IsActive = true;
 
             ptower4 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower4.Position.X = graphics.GraphicsDevice.Viewport.Width / 6;
-            ptower4.Position.Y = graphics.GraphicsDevice.Viewport.Height / 5;
+            ptower4.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            ptower4.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
             ptower4.IsActive = true;
 
-            ptower5 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower5.Position.X = graphics.GraphicsDevice.Viewport.Width / 7;
-            ptower5.Position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
-            ptower5.IsActive = true;
-
-            ptower6 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower6.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
-            ptower6.Position.Y = graphics.GraphicsDevice.Viewport.Height / 3;
-            ptower6.IsActive = true;
-
-            ptower7 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower7.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
-            ptower7.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
-            ptower7.IsActive = true;
+          
 
             badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Bad guys\\enemy 2 - 1"));
             badguy.Position.X = graphics.GraphicsDevice.Viewport.Width - 500;
-            badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 1.2f;
             badguy.IsActive = true;
-            badguy.Velocity.Y = -1f;
+            badguy.Velocity.Y = -3f;
 
 
             active_badguys.Add(badguy);
@@ -192,9 +177,7 @@ namespace vgpc_tower_defense
             ptower2.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
             ptower3.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
             ptower4.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower5.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower6.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower7.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
+         
            
           
 
@@ -217,9 +200,7 @@ namespace vgpc_tower_defense
             ptower2.draw(spriteBatch);
             ptower3.draw(spriteBatch);
             ptower4.draw(spriteBatch);
-            ptower5.draw(spriteBatch);
-            ptower6.draw(spriteBatch);
-            ptower7.draw(spriteBatch);
+         
 
             //AssetManager.SpriteBatch.Begin();
             //AssetManager.SpriteBatch.Draw(AssetManager.LoadedSprites["test1"], new Vector2(AssetManager.Graphics.GraphicsDevice.Viewport.Width / 2 ,
