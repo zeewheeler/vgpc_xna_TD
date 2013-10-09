@@ -89,7 +89,7 @@
     <Compile Include="Common\display.cs" />
     <Compile Include="Common\GameComponent1.cs" />
     <Compile Include="Globals\globals.cs" />
-    <Compile Include="Managers\Resource Manager.cs" />
+    <Compile Include="Managers\Asset Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Automatic\Program.cs" />
     <Compile Include="vgcpTowerDefenseGame.cs" />

@@ -1,15 +1,15 @@
 #ContentSounds
 //example
-contentSound LazerTowerShootSound //sounds/towers//lazerTower//LazerTowerShootSound.wav
+#contentSound LazerTowerShootSound //sounds/towers//lazerTower//LazerTowerShootSound
 
 
 #ContentSongs
 //example
-contentSong LevelOneThemeSong //songs//levelone//LevelOnethemeSong.mp3
+#contentSong LevelOneThemeSong //songs//levelone//LevelOnethemeSong
 
 
 #Content_Sprites
-contentSprite LazerTowerDefaultSprite //sprites//towers//lasertower//LTDefaultSprite.png
+contentSprite LazerTowerDefaultSprite Sprites\Towers\Plasma\Plasma_Right
 
 
 

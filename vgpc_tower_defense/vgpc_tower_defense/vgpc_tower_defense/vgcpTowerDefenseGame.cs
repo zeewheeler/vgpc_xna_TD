@@ -22,16 +22,18 @@ namespace vgpc_tower_defense
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        Managers.AssetManager AssetManager;
+       
 
 
-        
-
-      
        
         public vgcp_tower_defense_game()
         {
-            graphics = new GraphicsDeviceManager(this);
+            //AssetManager = new Managers.AssetManager(this);
+
+            
+            
+           graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             //define what screen resolution the game should run in
@@ -76,8 +78,9 @@ namespace vgpc_tower_defense
         GameObjects.Tower ptower5;
         GameObjects.Tower ptower6;
         GameObjects.Tower ptower7;
-        GameObjects.Tower ptower8;
         GameObjects.EnemyMob badguy;
+
+        
 
         List<GameObjects.EnemyMob> active_badguys = new List<GameObjects.EnemyMob>();
         
@@ -88,8 +91,17 @@ namespace vgpc_tower_defense
         /// </summary>
         protected override void LoadContent()
         {
+
+
+
+            
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //AssetManager.LoadSprite("test1", @"Sprites\Towers\Plasma\Plasma_Right");
+            //AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
+            //AssetManager.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
             ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
@@ -128,16 +140,16 @@ namespace vgpc_tower_defense
             ptower7.IsActive = true;
 
             badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Bad guys\\enemy 2 - 1"));
-            badguy.Position.X = graphics.GraphicsDevice.Viewport.Width  - 500;
+            badguy.Position.X = graphics.GraphicsDevice.Viewport.Width - 500;
             badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
             badguy.IsActive = true;
-            badguy.Velocity.Y = -0f;
-            
+            badguy.Velocity.Y = -1f;
+
 
             active_badguys.Add(badguy);
 
 
-            Config.config_reader.ReadContentConfig();
+           
 
 
             // TODO: use this.Content to load your game content here
@@ -200,7 +212,7 @@ namespace vgpc_tower_defense
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-           
+
             ptower.draw(spriteBatch);
             ptower2.draw(spriteBatch);
             ptower3.draw(spriteBatch);
@@ -208,6 +220,11 @@ namespace vgpc_tower_defense
             ptower5.draw(spriteBatch);
             ptower6.draw(spriteBatch);
             ptower7.draw(spriteBatch);
+
+            //AssetManager.SpriteBatch.Begin();
+            //AssetManager.SpriteBatch.Draw(AssetManager.LoadedSprites["test1"], new Vector2(AssetManager.Graphics.GraphicsDevice.Viewport.Width / 2 ,
+            //    AssetManager.Graphics.GraphicsDevice.Viewport.Height /2 ), Color.White);
+            //AssetManager.SpriteBatch.End();
 
             foreach (GameObjects.EnemyMob badguy in active_badguys)
             {
