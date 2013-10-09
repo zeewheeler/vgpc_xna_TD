@@ -46,11 +46,11 @@ namespace vgpc_tower_defense.Util
             foreach(GameObjects.EnemyMob bad_guy in enemy_mobs)
             {
                 //utilize the build in vector class do the the math for us
-                distance = Vector2.Distance(tower_center, bad_guy.get_center());
+                distance = Vector2.Distance(tower_center, bad_guy.GetCenter());
                 
                 if (distance < min_distance)
                 {
-                    position_of_closest_mob = bad_guy.get_center();
+                    position_of_closest_mob = bad_guy.GetCenter();
                 }
             }
 

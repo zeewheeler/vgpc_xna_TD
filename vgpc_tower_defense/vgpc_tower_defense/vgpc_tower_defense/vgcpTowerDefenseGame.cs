@@ -18,7 +18,7 @@ namespace vgpc_tower_defense
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class vgcp_tower_defense_game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -29,7 +29,7 @@ namespace vgpc_tower_defense
 
       
        
-        public Game1()
+        public vgcp_tower_defense_game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -92,50 +92,53 @@ namespace vgpc_tower_defense
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower.position.X = graphics.GraphicsDevice.Viewport.Width / 10;
-            ptower.position.Y = graphics.GraphicsDevice.Viewport.Height / 10;
-            ptower.is_active = true;
+            ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
+            ptower.Position.Y = graphics.GraphicsDevice.Viewport.Height / 10;
+            ptower.IsActive = true;
 
 
             ptower2 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower2.position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower2.position.Y = graphics.GraphicsDevice.Viewport.Height / 8;
-            ptower2.is_active = true;
+            ptower2.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            ptower2.Position.Y = graphics.GraphicsDevice.Viewport.Height / 8;
+            ptower2.IsActive = true;
 
             ptower3 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower3.position.X = graphics.GraphicsDevice.Viewport.Width / 7;
-            ptower3.position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
-            ptower3.is_active = true;
+            ptower3.Position.X = graphics.GraphicsDevice.Viewport.Width / 7;
+            ptower3.Position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
+            ptower3.IsActive = true;
 
             ptower4 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower4.position.X = graphics.GraphicsDevice.Viewport.Width / 6;
-            ptower4.position.Y = graphics.GraphicsDevice.Viewport.Height / 5;
-            ptower4.is_active = true;
+            ptower4.Position.X = graphics.GraphicsDevice.Viewport.Width / 6;
+            ptower4.Position.Y = graphics.GraphicsDevice.Viewport.Height / 5;
+            ptower4.IsActive = true;
 
             ptower5 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower5.position.X = graphics.GraphicsDevice.Viewport.Width / 7;
-            ptower5.position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
-            ptower5.is_active = true;
+            ptower5.Position.X = graphics.GraphicsDevice.Viewport.Width / 7;
+            ptower5.Position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
+            ptower5.IsActive = true;
 
             ptower6 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower6.position.X = graphics.GraphicsDevice.Viewport.Width / 10;
-            ptower6.position.Y = graphics.GraphicsDevice.Viewport.Height / 3;
-            ptower6.is_active = true;
+            ptower6.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
+            ptower6.Position.Y = graphics.GraphicsDevice.Viewport.Height / 3;
+            ptower6.IsActive = true;
 
             ptower7 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower7.position.X = graphics.GraphicsDevice.Viewport.Width / 10;
-            ptower7.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
-            ptower7.is_active = true;
+            ptower7.Position.X = graphics.GraphicsDevice.Viewport.Width / 10;
+            ptower7.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            ptower7.IsActive = true;
 
             badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Bad guys\\enemy 2 - 1"));
-            badguy.position.X = graphics.GraphicsDevice.Viewport.Width  - 500;
-            badguy.position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
-            badguy.is_active = true;
-            badguy.velocity.Y = -2f;
+            badguy.Position.X = graphics.GraphicsDevice.Viewport.Width  - 500;
+            badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            badguy.IsActive = true;
+            badguy.Velocity.Y = -0f;
             
 
             active_badguys.Add(badguy);
-               
+
+
+            Config.config_reader.ReadContentConfig();
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -167,9 +170,9 @@ namespace vgpc_tower_defense
                 badguy.update_position();
 
 
-                if (!Util.vgpc_math.does_rectangle_contain(Common.display.viewport_rectangle, badguy.position))
+                if (!Util.vgpc_math.does_rectangle_contain(Common.display.viewport_rectangle, badguy.Position))
                 {
-                    badguy.velocity.Y *= -1f;
+                    badguy.Velocity.Y *= -1f;
                 }
             }
 

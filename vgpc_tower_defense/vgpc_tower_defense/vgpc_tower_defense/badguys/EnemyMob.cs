@@ -16,17 +16,17 @@ namespace vgpc_tower_defense.GameObjects
                 : base(loadedTexture)
         {
             
-            mob_health = 100;
+            Health = 100;
 
             //initializations
             current_status_effects = new List<Common.status_effect>();
         }
 
-        protected int mob_health;
+        protected int Health;
 
         public void damage_me(int damage)
         {
-            mob_health -= damage;
+            Health -= damage;
         }
 
 
@@ -35,7 +35,7 @@ namespace vgpc_tower_defense.GameObjects
 
 
         //removes status effects that have timed out
-        protected void update_status_effects(GameTime game_time)
+        protected void UpdateStatusEffects(GameTime game_time)
         {
 
             // remove each status from the list which effect timer is zero or less
@@ -52,7 +52,7 @@ namespace vgpc_tower_defense.GameObjects
 
 
         //takes a list of incomming status effects, adds them to the mobs list of status effects, if there are not there already
-        public void add_status_effects(List<Common.status_effect> incomming_status_effects)
+        public void AddStatusEffects(List<Common.status_effect> incomming_status_effects)
         {
             foreach (Common.status_effect inc_status_effect in incomming_status_effects)
             {
@@ -67,17 +67,17 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-        protected virtual void update_health()
+        protected virtual void UpdateHealth()
         {
-            if (this.mob_health <= 0)
+            if (this.Health <= 0)
             {
-                kill_this_mob();
+                KillThisMob();
             }
         }
 
-        protected virtual void kill_this_mob()
+        protected virtual void KillThisMob()
         {
-            this.is_active = false;
+            this.IsActive = false;
 
         }
 

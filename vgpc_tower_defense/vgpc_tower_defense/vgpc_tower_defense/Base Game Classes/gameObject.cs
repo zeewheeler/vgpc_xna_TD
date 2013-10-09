@@ -15,26 +15,25 @@ namespace vgpc_tower_defense.GameObjects
     public class DrawableGameObject
     {
         
-        public Texture2D current_texture;
+        public Texture2D CurrentTexture;
        
-        public  Vector2 position;
-        public Vector2 get_center()
+        public  Vector2 Position;
+        public Vector2 GetCenter()
         {
-            if (current_texture == null)
+            if (CurrentTexture == null)
             {
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             } 
 
-            return new Vector2(this.position.X + this.current_texture.Width / 2, this.position.Y + this.current_texture.Height / 2);
+            return new Vector2(this.Position.X + this.CurrentTexture.Width / 2, this.Position.Y + this.CurrentTexture.Height / 2);
             
         }
        
-        public float direction;
-        public Vector2 velocity;
-        public bool is_active;
-
-        public float rotation;
-        public float scale;
+        public float Direction;
+        public Vector2 Velocity;
+        public bool IsActive;
+        public float Rotation;
+        public float Scale;
        
 
 
@@ -44,22 +43,22 @@ namespace vgpc_tower_defense.GameObjects
 
         public DrawableGameObject(Texture2D loadedTexture)
         {
-            direction = 0.0f;
-            position = Vector2.Zero;
+            Direction = 0.0f;
+            Position = Vector2.Zero;
 
            
 
-            position = new Vector2(0,0);
-            velocity = new Vector2(0, 0);
+            Position = new Vector2(0,0);
+            Velocity = new Vector2(0, 0);
 
             if (loadedTexture != null)
             {
-                current_texture = loadedTexture;
+                CurrentTexture = loadedTexture;
             }
                 
             
-            velocity = Vector2.Zero;
-            is_active = false;
+            Velocity = Vector2.Zero;
+            IsActive = false;
         }
 
 
@@ -70,9 +69,9 @@ namespace vgpc_tower_defense.GameObjects
         //draws the game object with default texture
         public virtual void draw(SpriteBatch spriteBatch)
         {
-            if (is_active)
+            if (IsActive)
             {
-                spriteBatch.Draw(current_texture, position, Color.White);
+                spriteBatch.Draw(CurrentTexture, Position, Color.White);
             }
         }
 
@@ -82,9 +81,9 @@ namespace vgpc_tower_defense.GameObjects
         //draws game object with specified texture
         public virtual void draw(SpriteBatch spriteBatch, Texture2D texture)
         {
-            if (is_active)
+            if (IsActive)
             {
-                spriteBatch.Draw(texture, this.get_center(), Color.White);
+                spriteBatch.Draw(texture, this.GetCenter(), Color.White);
             }
         }
                 
@@ -95,10 +94,10 @@ namespace vgpc_tower_defense.GameObjects
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
         public virtual void update_position()
         {
-            if (is_active)
+            if (IsActive)
             {
-                position.X += velocity.X;
-                position.Y += velocity.Y;
+                Position.X += Velocity.X;
+                Position.Y += Velocity.Y;
             }
         }
 

@@ -10,7 +10,7 @@ namespace vgpc_tower_defense
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (vgcp_tower_defense_game game = new vgcp_tower_defense_game())
             {
                 game.Run();
             }
