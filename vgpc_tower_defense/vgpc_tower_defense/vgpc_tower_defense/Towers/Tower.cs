@@ -97,7 +97,7 @@ namespace vgpc_tower_defense.GameObjects
 
 
 
-        protected virtual void UpdateProjectiles(GameTime gameTime, Rectangle viewPort, List<EnemyMob> enemyMobs)
+        protected virtual void UpdateProjectiles(GameTime gameTime)
         {
             foreach (Projectile Projectile in Projectiles)
             {
@@ -105,7 +105,7 @@ namespace vgpc_tower_defense.GameObjects
                 {
 
                     //check if projectile is off the screen, if so, mark as inactive
-                    if (!Util.vgpc_math.does_rectangle_contain(viewPort, Projectile.Position))
+                    if (!Util.vgpc_math.does_rectangle_contain(globals.viewport_rectangle, Projectile.Position))
                     {
                         Projectile.IsActive = false;
                         continue;
@@ -115,7 +115,7 @@ namespace vgpc_tower_defense.GameObjects
                           this.TextureProjectile.Width, this.TextureProjectile.Height);
 
                     //check if projectile has collided with a mob
-                    foreach (EnemyMob mob in enemyMobs)
+                    foreach (EnemyMob mob in globals.Mobs)
                     {
                         Rectangle mob_bounding_box = new Rectangle((int)mob.Position.X, (int)mob.Position.Y,
                             this.CurrentTexture.Width, this.CurrentTexture.Height);
@@ -124,7 +124,7 @@ namespace vgpc_tower_defense.GameObjects
                         if (mob_bounding_box.Intersects(projectileBoundingBox))
                         {
                             Projectile.IsActive = false;
-                            damage_and_affect_mop(mob);
+                            DamageAndAffectMob(mob);
                             break;
                         }
                     }
@@ -138,10 +138,10 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-        public virtual void update_tower(GameTime game_time, List<EnemyMob> enemy_mobs, Rectangle view_port)
+        public virtual void Update(GameTime game_time)
         {
-            UpdateWeapon(enemy_mobs, game_time);
-            UpdateProjectiles(game_time, view_port, enemy_mobs);
+            UpdateWeapon(game_time);
+            UpdateProjectiles(game_time);
             UpdateAnimation(game_time);
 
         }
@@ -153,7 +153,7 @@ namespace vgpc_tower_defense.GameObjects
             //todo
         }
 
-        protected virtual void fire_at_closest_mob(List<EnemyMob> enemyMobs)
+        protected virtual void FireAtClosestMob(List<EnemyMob> enemyMobs)
         {
             if (!IsDisabled && (enemyMobs.Count > 0))
             {
@@ -190,7 +190,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         //
-        protected virtual void damage_and_affect_mop(EnemyMob mob)
+        protected virtual void DamageAndAffectMob(EnemyMob mob)
         {
             mob.damage_me((int)CurrentWeaponDamage);
             mob.AddStatusEffects(StatusEffects);
@@ -209,7 +209,7 @@ namespace vgpc_tower_defense.GameObjects
                     float distance = Util.vgpc_math.get_distance_between(this.Position, mob.Position);
                     if (distance <= CurrentWeaponRange)
                     {
-                        damage_and_affect_mop(mob);
+                        DamageAndAffectMob(mob);
                     }
                 }
             }
@@ -217,7 +217,7 @@ namespace vgpc_tower_defense.GameObjects
 
 
 
-        protected virtual void UpdateWeapon(List<EnemyMob> enemy_mobs, GameTime game_time)
+        protected virtual void UpdateWeapon(GameTime game_time)
         {
             WeaponShootTimer += game_time.ElapsedGameTime;
 
@@ -228,11 +228,11 @@ namespace vgpc_tower_defense.GameObjects
                 WeaponShootTimer = TimeSpan.Zero;
                 if (!is_point_blank_area_damage_tower)
                 {
-                    fire_at_closest_mob(enemy_mobs);
+                    FireAtClosestMob(globals.Mobs);
                 }
                 else
                 {
-                    fire_point_blank_weapon(enemy_mobs);
+                    fire_point_blank_weapon(globals.Mobs);
                 }
 
             }

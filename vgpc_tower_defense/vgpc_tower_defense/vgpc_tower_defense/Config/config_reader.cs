@@ -7,7 +7,7 @@ using System.Configuration;
 
 namespace vgpc_tower_defense.Config
 {
-    class ContentConfigEntry
+    public class ContentConfigEntry
     {
         public string ContentItemType;
         public string ContentStringIdentifier;
@@ -19,11 +19,16 @@ namespace vgpc_tower_defense.Config
             ContentStringIdentifier = key;
             ContentPath = value;
         }
+
+
+        public ContentConfigEntry()
+        {
+        }
     }
     
 
    
-    static class config_reader
+    public static class config_reader
     {
         const string ContentPath = @"\config\content.txt";
         

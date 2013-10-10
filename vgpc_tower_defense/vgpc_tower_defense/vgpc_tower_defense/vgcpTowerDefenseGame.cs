@@ -12,6 +12,10 @@ using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+using vgpc_tower_defense.GameObjects;
+using vgpc_tower_defense.Managers;
+
+
 
 namespace vgpc_tower_defense
 {
@@ -29,16 +33,20 @@ namespace vgpc_tower_defense
        
         public vgcp_tower_defense_game()
         {
-            //AssetManager = new Managers.AssetManager(this);
-
-            
-            
-           graphics = new GraphicsDeviceManager(this);
+            AssetManager = new Managers.AssetManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            globals.Mobs = new List<GameObjects.EnemyMob>();
+            globals.Towers = new List<GameObjects.Tower>();
+
+           
 
             //define what screen resolution the game should run in
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
+
+            
         }
 
         /// <summary>
@@ -52,35 +60,25 @@ namespace vgpc_tower_defense
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            this.IsMouseVisible = true;
+            
 
-            //using (StreamReader file_reader = File.OpenText("towers.json"))
-            //{
-            //    JsonTextReader json_reader = new JsonTextReader(file_reader);
-            //    while (json_reader.Read())
-            //    {
-            //        if (json_reader.Value != null)
-            //            Console.WriteLine("Token: {0}, Value: {1}", json_reader.TokenType, json_reader.Value);
-            //        else
-            //            Console.WriteLine("Token: {0}", json_reader.TokenType);
-            //    }
-            //}
+           //initialize global variables
+           
 
-
-            Common.display.viewport_rectangle = new Rectangle(0, 0,
-                graphics.GraphicsDevice.Viewport.Width,
-                graphics.GraphicsDevice.Viewport.Height);
+         
         }
 
-        GameObjects.Tower ptower;
-        GameObjects.Tower ptower2;
-        GameObjects.Tower ptower3;
-        GameObjects.Tower ptower4;
+        //GameObjects.Tower ptower;
+        //GameObjects.Tower ptower2;
+        //GameObjects.Tower ptower3;
+        //GameObjects.Tower ptower4;
       
-        GameObjects.EnemyMob badguy;
+        //GameObjects.EnemyMob badguy;
 
         
 
-        List<GameObjects.EnemyMob> active_badguys = new List<GameObjects.EnemyMob>();
+        //List<GameObjects.EnemyMob> active_badguys = new List<GameObjects.EnemyMob>();
         
 
         /// <summary>
@@ -89,49 +87,63 @@ namespace vgpc_tower_defense
         /// </summary>
         protected override void LoadContent()
         {
+            globals.viewport_rectangle = new Rectangle(0, 0,
+              graphics.GraphicsDevice.Viewport.Width,
+              graphics.GraphicsDevice.Viewport.Height);
+
+           
 
 
-
-            
+            AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+
+           
+            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["badGuy1"]));
+
+
+            globals.Mobs[0].Position.X = globals.viewport_rectangle.Center.X;
+            globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
+            globals.Mobs[0].IsActive = true;
+
 
             //AssetManager.LoadSprite("test1", @"Sprites\Towers\Plasma\Plasma_Right");
             //AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
             //AssetManager.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower.Position.Y = graphics.GraphicsDevice.Viewport.Height / 10;
-            ptower.IsActive = true;
+            //ptower = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
+            //ptower.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            //ptower.Position.Y = graphics.GraphicsDevice.Viewport.Height / 10;
+            //ptower.IsActive = true;
 
 
-            ptower2 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower2.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower2.Position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
-            ptower2.IsActive = true;
+            //ptower2 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
+            //ptower2.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            //ptower2.Position.Y = graphics.GraphicsDevice.Viewport.Height / 6;
+            //ptower2.IsActive = true;
 
-            ptower3 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower3.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower3.Position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
-            ptower3.IsActive = true;
+            //ptower3 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
+            //ptower3.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            //ptower3.Position.Y = graphics.GraphicsDevice.Viewport.Height / 4;
+            //ptower3.IsActive = true;
 
-            ptower4 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
-            ptower4.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
-            ptower4.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
-            ptower4.IsActive = true;
+            //ptower4 = new GameObjects.Tower(Content.Load<Texture2D>("Sprites\\Towers\\Plasma\\Plasma_Right"), Content.Load<Texture2D>("Sprites\\Projectiles\\cannonball"));
+            //ptower4.Position.X = graphics.GraphicsDevice.Viewport.Width / 8;
+            //ptower4.Position.Y = graphics.GraphicsDevice.Viewport.Height / 2;
+            //ptower4.IsActive = true;
 
           
 
-            badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Bad guys\\enemy 2 - 1"));
-            badguy.Position.X = graphics.GraphicsDevice.Viewport.Width - 500;
-            badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 1.2f;
-            badguy.IsActive = true;
-            badguy.Velocity.Y = -3f;
+            //badguy = new GameObjects.EnemyMob(Content.Load<Texture2D>("Sprites\\Bad guys\\enemy 2 - 1"));
+            //badguy.Position.X = graphics.GraphicsDevice.Viewport.Width - 500;
+            //badguy.Position.Y = graphics.GraphicsDevice.Viewport.Height / 1.2f;
+            //badguy.IsActive = true;
+            //badguy.Velocity.Y = -3f;
 
 
-            active_badguys.Add(badguy);
+            //active_badguys.Add(badguy);
 
 
            
@@ -154,34 +166,46 @@ namespace vgpc_tower_defense
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime game_time)
+        protected override void Update(GameTime GameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
 
-            foreach (GameObjects.EnemyMob badguy in active_badguys)
+            foreach (EnemyMob Mob in globals.Mobs)
             {
-                badguy.update_position();
-
-
-                if (!Util.vgpc_math.does_rectangle_contain(Common.display.viewport_rectangle, badguy.Position))
-                {
-                    badguy.Velocity.Y *= -1f;
-                }
+                Mob.Update(GameTime);
+              
             }
 
-            ptower.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower2.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower3.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
-            ptower4.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
+            foreach (Tower Tower in globals.Towers)
+            {
+                Tower.Update(GameTime);
+               
+            }
+            // TODO: Add your update logic here
+
+            //foreach (GameObjects.EnemyMob badguy in active_badguys)
+            //{
+            //    badguy.update_position();
+
+
+            //    if (!Util.vgpc_math.does_rectangle_contain(Common.display.viewport_rectangle, badguy.Position))
+            //    {
+            //        badguy.Velocity.Y *= -1f;
+            //    }
+            //}
+
+            //ptower.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
+            //ptower2.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
+            //ptower3.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
+            //ptower4.update_tower(game_time, active_badguys, Common.display.viewport_rectangle);
          
            
           
 
-            base.Update(game_time);
+            base.Update(GameTime);
         }
 
         /// <summary>
@@ -195,11 +219,20 @@ namespace vgpc_tower_defense
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            foreach (EnemyMob Mob in globals.Mobs)
+            {
+                Mob.draw(spriteBatch);
+            }
 
-            ptower.draw(spriteBatch);
-            ptower2.draw(spriteBatch);
-            ptower3.draw(spriteBatch);
-            ptower4.draw(spriteBatch);
+            foreach (Tower Tower in globals.Towers)
+            {
+                Tower.draw(spriteBatch);
+            }
+
+            //ptower.draw(spriteBatch);
+            //ptower2.draw(spriteBatch);
+            //ptower3.draw(spriteBatch);
+            //ptower4.draw(spriteBatch);
          
 
             //AssetManager.SpriteBatch.Begin();
@@ -207,10 +240,10 @@ namespace vgpc_tower_defense
             //    AssetManager.Graphics.GraphicsDevice.Viewport.Height /2 ), Color.White);
             //AssetManager.SpriteBatch.End();
 
-            foreach (GameObjects.EnemyMob badguy in active_badguys)
-            {
-                badguy.draw(spriteBatch);
-            }
+            //foreach (GameObjects.EnemyMob badguy in active_badguys)
+            //{
+            //    badguy.draw(spriteBatch);
+            //}
            
 
             spriteBatch.End();

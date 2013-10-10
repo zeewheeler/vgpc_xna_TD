@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using vgpc_tower_defense.GameObjects;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace vgpc_tower_defense
 {
@@ -20,9 +28,16 @@ namespace vgpc_tower_defense
 
         //config
         //items in config.txt file will be lable with the following prefixes
-        public  const string ContentConfigSOUNDIdentifier = "contentSound";
-        public  const string ContentConfigSONGIdentifier = "contentSong";
-        public  const string ContentConfigSPRITEIdentifier = "contentSprite";
+        public  const string ContentConfigSOUNDIdentifier = "content_sound";
+        public const string ContentConfigSONGIdentifier = "content_song";
+        public const string ContentConfigSPRITEIdentifier = "content_sprite";
+
+        //Lists to hold instantiated units
+        public static List<EnemyMob> Mobs;
+        public static List<Tower> Towers;
+
+        //display related stuff
+        public static Rectangle viewport_rectangle;
 
     }
 

@@ -22,6 +22,18 @@ namespace vgpc_tower_defense.GameObjects
             current_status_effects = new List<Common.status_effect>();
         }
 
+
+        public EnemyMob()
+            : base()
+        {
+
+            Health = 100;
+
+            //initializations
+            current_status_effects = new List<Common.status_effect>();
+        }
+
+
         protected int Health;
 
         public void damage_me(int damage)
@@ -67,6 +79,12 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
+        public virtual void Update(GameTime GameTime)
+        {
+            this.update_position();
+            this.UpdateHealth();
+            this.UpdateStatusEffects(GameTime);
+        }
         protected virtual void UpdateHealth()
         {
             if (this.Health <= 0)

@@ -16,24 +16,13 @@ namespace vgpc_tower_defense.GameObjects
     {
         
         public Texture2D CurrentTexture;
-       
+        public string CurrentTextureStringIdentifier;
         public  Vector2 Position;
-        public Vector2 GetCenter()
-        {
-            if (CurrentTexture == null)
-            {
-                throw new Exception("A gameObject tried to do texture operations without a texture defined");
-            } 
-
-            return new Vector2(this.Position.X + this.CurrentTexture.Width / 2, this.Position.Y + this.CurrentTexture.Height / 2);
-            
-        }
-       
-        public float Direction;
         public Vector2 Velocity;
         public bool IsActive;
         public float Rotation;
         public float Scale;
+        public Color Color;
        
 
 
@@ -41,29 +30,63 @@ namespace vgpc_tower_defense.GameObjects
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.
         //This mechanism allows us to set up default values of it's variables.
 
-        public DrawableGameObject(Texture2D loadedTexture)
+
+        public DrawableGameObject()
         {
-            Direction = 0.0f;
-            Position = Vector2.Zero;
 
-           
-
-            Position = new Vector2(0,0);
+            Position = new Vector2(0, 0);
             Velocity = new Vector2(0, 0);
 
-            if (loadedTexture != null)
-            {
-                CurrentTexture = loadedTexture;
-            }
-                
-            
+          
+            Scale = 1f;
+            Rotation = 0f;
+            Position = Vector2.Zero;
             Velocity = Vector2.Zero;
             IsActive = false;
+            Color = Color.White;
+        }
+        
+        public DrawableGameObject(Texture2D loadedTexture)
+        {
+
+            Position = new Vector2(0, 0);
+            Velocity = new Vector2(0, 0);
+            
+            Scale = 1f;
+            Rotation = 0f;
+            Position = Vector2.Zero;
+            Velocity = Vector2.Zero;
+            IsActive = false;
+            Color = Color.White;
+            CurrentTexture = loadedTexture;
         }
 
 
 
+
+
         //Public Functions. These funcations can be called "outside" the class. They provide an interface with which to interact with the class.
+
+
+        public Vector2 GetCenter()
+        {
+            if (CurrentTexture == null)
+            {
+                throw new Exception("A gameObject tried to do texture operations without a texture defined");
+            }
+
+            return new Vector2(this.Position.X + this.CurrentTexture.Width / 2, this.Position.Y + this.CurrentTexture.Height / 2);
+        }
+
+        public Vector2 GetOrigin()
+        {
+            if (CurrentTexture == null)
+            {
+                throw new Exception("A gameObject tried to do texture operations without a texture defined");
+            }
+
+            return new Vector2(this.CurrentTexture.Width / 2, this.CurrentTexture.Height / 2);
+        }
 
 
         //draws the game object with default texture
@@ -71,25 +94,24 @@ namespace vgpc_tower_defense.GameObjects
         {
             if (IsActive)
             {
-                spriteBatch.Draw(CurrentTexture, Position, Color.White);
+                //spriteBatch.Draw(CurrentTexture, Position, Color.White);
+                spriteBatch.Draw(CurrentTexture, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
+                    
             }
         }
-
-        
-
 
         //draws game object with specified texture
         public virtual void draw(SpriteBatch spriteBatch, Texture2D texture)
         {
             if (IsActive)
             {
-                spriteBatch.Draw(texture, this.GetCenter(), Color.White);
+                //spriteBatch.Draw(texture, this.GetCenter(), Color.White);
+                spriteBatch.Draw(texture, Position, null, Color, Rotation, this.GetCenter(), Scale, SpriteEffects.None, 1);
+                
             }
         }
-                
 
-
-       
+            
 
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
         public virtual void update_position()

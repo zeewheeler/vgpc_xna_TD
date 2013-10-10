@@ -1,15 +1,16 @@
 #ContentSounds
-//example
+#example
 #contentSound LazerTowerShootSound //sounds/towers//lazerTower//LazerTowerShootSound
 
-
 #ContentSongs
-//example
+#example
 #contentSong LevelOneThemeSong //songs//levelone//LevelOnethemeSong
 
 
 #Content_Sprites
-contentSprite LazerTowerDefaultSprite Sprites\Towers\Plasma\Plasma_Right
+content_sprite 	PlasmaRight 		Sprites\Towers\Plasma\PlasmaRight
+content_sprite 	StandardCannonBall 	sprites\Projectiles\cannonball
+content_sprite 	badGuy1 		Sprites\badGuys\enemy2Down
 
 
 

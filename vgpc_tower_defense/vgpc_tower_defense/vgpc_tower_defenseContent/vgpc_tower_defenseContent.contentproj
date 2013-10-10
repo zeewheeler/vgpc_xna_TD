@@ -33,55 +33,53 @@
     <Folder Include="Sounds\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Down.png">
-      <Name>Plasma_Down</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Down_Left.png">
-      <Name>Plasma_Down_Left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Down_right.png">
-      <Name>Plasma_Down_right</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Left.png">
-      <Name>Plasma_Left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Right.png">
-      <Name>Plasma_Right</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Up.png">
-      <Name>Plasma_Up</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Up_Left.png">
-      <Name>Plasma_Up_Left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Sprites\Towers\Plasma\Plasma_Up_Right.png">
-      <Name>Plasma_Up_Right</Name>
+    <Compile Include="Sprites\BadGuys\enemy2Down.png">
+      <Name>enemy2Down</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Projectiles\Bullet Tower 2.png">
-      <Name>Bullet Tower 2</Name>
+    <Compile Include="Sprites\Projectiles\BulletTower2.png">
+      <Name>BulletTower2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Sprites\Projectiles\cannonball.tga">
+      <Name>cannonball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballBlue.tga">
+      <Name>cannonballBlue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballBlueBig.tga">
+      <Name>cannonballBlueBig</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballWhite.tga">
+      <Name>cannonballWhite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballYellow.tga">
+      <Name>cannonballYellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\cannonballYellow2.tga">
+      <Name>cannonballYellow2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Sprites\Projectiles\rocket.png">
+      <Name>rocket</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Sprites\Projectiles\starcharge.png">
       <Name>starcharge</Name>
       <Importer>TextureImporter</Importer>
@@ -89,45 +87,43 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Bad guys\Enemy 2 - 1.png">
-      <Name>Enemy 2 - 1</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaDown.png">
+      <Name>PlasmaDown</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sprites\Projectiles\cannonball.tga">
-      <Name>cannonball</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaDownRight.png">
+      <Name>PlasmaDownRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\cannonballwhite.tga">
-      <Name>cannonballwhite</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaDown_Left.png">
+      <Name>PlasmaDown_Left</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\cannonball_blue.tga">
-      <Name>cannonball_blue</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaLeft.png">
+      <Name>PlasmaLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\cannonball_blue_big.tga">
-      <Name>cannonball_blue_big</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaRight.png">
+      <Name>PlasmaRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\cannonball_yellow.tga">
-      <Name>cannonball_yellow</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaUp.png">
+      <Name>PlasmaUp</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\cannonball_yellow2.tga">
-      <Name>cannonball_yellow2</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaUpLeft.png">
+      <Name>PlasmaUpLeft</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Projectiles\rocket.png">
-      <Name>rocket</Name>
+    <Compile Include="Sprites\Towers\Plasma\PlasmaUpRight.png">
+      <Name>PlasmaUpRight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

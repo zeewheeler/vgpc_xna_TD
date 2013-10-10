@@ -8,6 +8,6 @@ namespace vgpc_tower_defense.Common
 {
     class display
     {
-        public static Rectangle viewport_rectangle;
+       
     }
 }
