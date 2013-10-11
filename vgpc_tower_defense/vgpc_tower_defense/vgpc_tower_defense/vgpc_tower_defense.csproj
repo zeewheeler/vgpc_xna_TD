@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\common.cs" />
-    <Compile Include="Base Game Classes\tower_config.cs" />
+    <Compile Include="Config\tower_config.cs" />
     <Compile Include="Badguys\EnemyMob.cs" />
     <Compile Include="Base Game Classes\gameObject.cs" />
     <Compile Include="Base Game Classes\game_object_config.cs" />

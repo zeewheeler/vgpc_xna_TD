@@ -77,24 +77,29 @@ namespace vgpc_tower_defense
               graphics.GraphicsDevice.Viewport.Height);
 
 
-            AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
+            //AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
+            AssetManager.LoadAllContent();
+
+            Config.JsonConfigOperations.CreateExampleJsonConfigFile();
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
     
-            globals.Mobs.Add( new EnemyMob(AssetManager.LoadedSprites["badGuy1"]) );
+            globals.Mobs.Add( new EnemyMob(AssetManager.LoadedSprites["enemy2Down"]) );
             globals.Mobs[0].Position.X = globals.viewport_rectangle.Center.X;
             globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Mobs[0].IsActive = true;
 
-           
 
-            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"], 
-                AssetManager.LoadedSprites["StandardCannonBall"]));
+
+            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
+                AssetManager.LoadedSprites["cannonball"]));
 
             globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 4;
             globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Towers[0].IsActive = true;
+
+            globals.Towers[0].CreateExampleJsonTowerConfigFile();
             
 
 

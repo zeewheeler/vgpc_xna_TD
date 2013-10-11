@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -139,6 +140,47 @@ namespace vgpc_tower_defense.GameObjects
         public void load_projectile_texture(Texture2D projectile_texture)
         {
             TextureProjectile = projectile_texture;
+        }
+
+
+        public void CreateExampleJsonTowerConfigFile()
+        {
+            TowerConfig TowerConfig = new TowerConfig();
+
+            TowerConfig.AreaOfEffectGainedPerLevel = 1;
+            TowerConfig.AttacksPerSecondGainedPerLevel = 2;
+            TowerConfig.CostToBuild = 3;
+            TowerConfig.CurrentCostToUpgrade = 4;
+            TowerConfig.CurrentWeaponAreaOfEffect = 5;
+            TowerConfig.CurrentWeaponAttacksPerSecond = 6;
+            TowerConfig.CurrentWeaponDamage = 7;
+            TowerConfig.CurrentWeaponRange = 8;
+            TowerConfig.DamageGainedPerLevel = 10;
+            TowerConfig.is_point_blank_area_damage_tower = false;
+            TowerConfig.MaxTowerLevel = 11;
+            TowerConfig.ProjectileSpeed = 12;
+            TowerConfig.WeaponRangeGainedPerLevel = 13;
+
+            TowerConfig.scale = 1.0f;
+            TowerConfig.rotation = 0.0f;
+
+            TowerConfig.TextureProjectile = "TextureProjectile";
+            TowerConfig.SoundShoot = "SoundShoot";
+            TowerConfig.SoundBuild = "soundBuild";
+            TowerConfig.SoundUpgrade = "SoundUpdate";
+
+            TowerConfig.StatusEffects.Add(new Common.status_effect("Slow", 10000));
+            TowerConfig.StatusEffects.Add(new Common.status_effect("ArmorReduce", 10000));
+
+            String JsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(TowerConfig, Formatting.Indented);
+
+            File.WriteAllText(Directory.GetCurrentDirectory() + @"\config\Example_Json_Tower_Definition.txt", JsonOutput, Encoding.ASCII);
+            //string JsonFromFile = File.ReadAllText("JsonInput.txt");
+            //TowerConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<TowerConfig>(JsonFromFile);
+           
+            
+            int noop = 1;
+
         }
 
 

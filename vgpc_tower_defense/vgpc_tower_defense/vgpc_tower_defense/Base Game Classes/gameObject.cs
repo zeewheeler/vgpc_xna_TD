@@ -63,8 +63,6 @@ namespace vgpc_tower_defense.GameObjects
 
 
 
-
-
         //Public Functions. These funcations can be called "outside" the class. They provide an interface with which to interact with the class.
 
 

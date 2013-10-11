@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,39 +35,40 @@ namespace vgpc_tower_defense.Managers
 
         }
 
-        public void LoadContentFromConfig(List<Config.ContentConfigEntry> configEntries)
+      
+
+        public void LoadAllContent()
         {
 
-            Config.ContentConfigEntry TempEntry = new Config.ContentConfigEntry();
-            foreach (Config.ContentConfigEntry Entry in configEntries)
+            DirectoryInfo dir = new DirectoryInfo(Game.Content.RootDirectory);
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException();
+
+            FileInfo[] files = dir.GetFiles("*.*", SearchOption.AllDirectories);
+
+            foreach (FileInfo file in files)
             {
+                string RootPath = Game.Content.RootDirectory;
+                string Path = file.DirectoryName.ToString();
+                Path = (Path.Split(new string[]{@"Content\"}, 20, StringSplitOptions.RemoveEmptyEntries))[1];
 
-                TempEntry.ContentPath = Entry.ContentPath;
-                TempEntry.ContentStringIdentifier = Entry.ContentStringIdentifier;
-                TempEntry.ContentItemType = Entry.ContentItemType;
+                string Name = file.Name.Split('.')[0].ToString();
+                string PathPlusName = Path + @"\" + Name;
 
-
-                TempEntry.ContentPath = TempEntry.ContentPath.Trim();
-                TempEntry.ContentStringIdentifier = TempEntry.ContentStringIdentifier.Trim();
-                TempEntry.ContentStringIdentifier = TempEntry.ContentStringIdentifier.Trim();
-
-                switch (TempEntry.ContentItemType.ToLower())
+                if( (Path.Contains("Song")) && !(Path.Contains("Sprite")) && !(Path.Contains("Sounds")) ) 
                 {
-                    case globals.ContentConfigSOUNDIdentifier:
-                        LoadedSounds.Add(TempEntry.ContentStringIdentifier, Game.Content.Load<SoundEffect>(TempEntry.ContentPath));
-                        break;
-
-                    case globals.ContentConfigSONGIdentifier:
-                        LoadedSongs.Add(TempEntry.ContentStringIdentifier, Game.Content.Load<Song>(TempEntry.ContentPath));
-                        break;
-
-                    case globals.ContentConfigSPRITEIdentifier:
-                        LoadedSprites.Add(TempEntry.ContentStringIdentifier, Game.Content.Load<Texture2D>(TempEntry.ContentPath));
-                        break;
-
-                    default:
-                        throw new Exception("Error in LoadContentFromConfig: Unrecognized content type");
+                    LoadSound(Name, PathPlusName);
                 }
+                else if ( (Path.Contains("Sprite")) && !(Path.Contains("Song")) && !(Path.Contains("Sounds")) )
+                {
+                    LoadSprite(Name, PathPlusName);
+                }
+                else if ( (Path.Contains("Sounds")) && !(Path.Contains("Song")) && !(Path.Contains("Sprite")) )
+                {
+                    LoadSound(Name, PathPlusName);
+                }
+
+
             }
         }
 
