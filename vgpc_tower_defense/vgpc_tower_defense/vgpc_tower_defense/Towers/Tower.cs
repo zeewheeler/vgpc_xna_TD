@@ -12,9 +12,70 @@ using System.Diagnostics;
 
 namespace vgpc_tower_defense.GameObjects
 {
+    
+    
     public class Tower : DrawableGameObject
     {
 
+
+        //sounds
+        protected SoundEffect SoundShoot;
+        protected SoundEffect SoundUpgrade;
+        protected SoundEffect SoundBuild;
+
+        //tower level 
+        protected int MaxTowerLevel;
+
+
+
+
+        //projectiles
+        protected Texture2D TextureProjectile; //texture
+
+        //Weapon Numbers
+
+
+        protected float CurrentWeaponDamage;
+        protected float CurrentWeaponAreaOfEffect;
+        protected float CurrentWeaponAttacksPerSecond;
+        protected float CurrentWeaponRange;
+
+        //Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
+        // The mob will process it's own status effects
+        protected List<Common.status_effect> StatusEffects;
+
+
+
+
+        protected float DamageGainedPerLevel;
+        protected float AreaOfEffectGainedPerLevel;
+        protected float AttacksPerSecondGainedPerLevel;
+        protected float WeaponRangeGainedPerLevel;
+
+        public int CostToBuild { get; protected set; }
+
+        protected int CurrentCostToUpgrade;
+
+        protected float ProjectileSpeed;
+
+        protected int MaxProjectiles;
+
+
+
+        protected List<Projectile> Projectiles;
+
+        protected TimeSpan WeaponShootTimer;
+
+        //tower state variables
+
+        //true if doesn't doesn't shoot projectile but rather damages a point blank area around it
+        protected bool is_point_blank_area_damage_tower;
+        //true if some effect is present that disables the tower(causes it not to fire)
+        public bool IsDisabled { get; set; }
+        int current_tower_level;
+        
+        
+        
         //constructor
         public Tower(Texture2D defaultTexture, Texture2D textureProjectile)
             : base(defaultTexture)
@@ -63,6 +124,12 @@ namespace vgpc_tower_defense.GameObjects
             : base(null)
         {
 
+        }
+
+        
+        public virtual bool TowerConfigReader(String configString)
+        {
+            return false;
         }
 
         
@@ -138,11 +205,11 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-        public virtual void Update(GameTime game_time)
+        public virtual void Update(GameTime gameTime)
         {
-            UpdateWeapon(game_time);
-            UpdateProjectiles(game_time);
-            UpdateAnimation(game_time);
+            UpdateWeapon(gameTime);
+            UpdateProjectiles(gameTime);
+            UpdateAnimation(gameTime);
 
         }
 
@@ -248,69 +315,5 @@ namespace vgpc_tower_defense.GameObjects
                 projectile.draw(spriteBatch, this.TextureProjectile);
             }
         }
-
-
-
-
-
-        //sounds
-        protected SoundEffect SoundShoot;
-        protected SoundEffect SoundUpgrade;
-        protected SoundEffect SoundBuild;
-
-        //tower level 
-        protected int MaxTowerLevel;
-
-
-
-
-        //projectiles
-        protected Texture2D TextureProjectile; //texture
-
-        //Weapon Numbers
-
-
-        protected float CurrentWeaponDamage;
-        protected float CurrentWeaponAreaOfEffect;
-        protected float CurrentWeaponAttacksPerSecond;
-        protected float CurrentWeaponRange;
-
-        //Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
-        // The mob will process it's own status effects
-        protected List<Common.status_effect> StatusEffects;
-
-
-
-
-        protected float DamageGainedPerLevel;
-        protected float AreaOfEffectGainedPerLevel;
-        protected float AttacksPerSecondGainedPerLevel;
-        protected float WeaponRangeGainedPerLevel;
-
-        public int CostToBuild { get; protected set; }
-
-        protected int CurrentCostToUpgrade;
-
-        protected float ProjectileSpeed;
-
-        protected int MaxProjectiles;
-
-
-
-        protected List<Projectile> Projectiles;
-
-        protected TimeSpan WeaponShootTimer;
-
-        //tower state variables
-
-        //true if doesn't doesn't shoot projectile but rather damages a point blank area around it
-        protected bool is_point_blank_area_damage_tower;
-        //true if some effect is present that disables the tower(causes it not to fire)
-        public bool IsDisabled { get; set; }
-        int current_tower_level;
-
-
-
     }
-    
 }

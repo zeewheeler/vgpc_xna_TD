@@ -8,9 +8,9 @@
 
 
 #Content_Sprites
-content_sprite 	PlasmaRight 		Sprites\Towers\Plasma\PlasmaRight
-content_sprite 	StandardCannonBall 	sprites\Projectiles\cannonball
-content_sprite 	badGuy1 		Sprites\badGuys\enemy2Down
+content_sprite 		PlasmaRight 		Sprites\Towers\Plasma\PlasmaRight
+content_sprite 		StandardCannonBall 	sprites\Projectiles\cannonball
+content_sprite 		badGuy1 			Sprites\badGuys\enemy2Down
 
 
 

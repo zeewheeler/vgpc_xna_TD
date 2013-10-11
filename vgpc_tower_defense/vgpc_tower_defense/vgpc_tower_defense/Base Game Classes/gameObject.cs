@@ -14,17 +14,17 @@ namespace vgpc_tower_defense.GameObjects
     //The DrawableGameObject defines a set of variables and functions that can define a basic game object such as a tower, enemy mob, projectile, etc 
     public class DrawableGameObject
     {
-        
-        public Texture2D CurrentTexture;
-        public string CurrentTextureStringIdentifier;
-        public  Vector2 Position;
+
+        protected Texture2D CurrentTexture;
+        protected string CurrentTextureStringIdentifier;
+        public Vector2 Position;
         public Vector2 Velocity;
         public bool IsActive;
         public float Rotation;
         public float Scale;
-        public Color Color;
+        public Color Color { get; set; }
        
-
+        
 
         //This is the class constructor, notice that is a function that is call the same thing as the
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.
@@ -37,7 +37,7 @@ namespace vgpc_tower_defense.GameObjects
             Position = new Vector2(0, 0);
             Velocity = new Vector2(0, 0);
 
-          
+            
             Scale = 1f;
             Rotation = 0f;
             Position = Vector2.Zero;
@@ -106,7 +106,7 @@ namespace vgpc_tower_defense.GameObjects
             if (IsActive)
             {
                 //spriteBatch.Draw(texture, this.GetCenter(), Color.White);
-                spriteBatch.Draw(texture, Position, null, Color, Rotation, this.GetCenter(), Scale, SpriteEffects.None, 1);
+                spriteBatch.Draw(texture, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
                 
             }
         }
@@ -118,8 +118,8 @@ namespace vgpc_tower_defense.GameObjects
         {
             if (IsActive)
             {
-                Position.X += Velocity.X;
-                Position.Y += Velocity.Y;
+                this.Position += Velocity;
+                
             }
         }
 
