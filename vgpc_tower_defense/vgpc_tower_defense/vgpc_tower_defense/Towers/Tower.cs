@@ -108,6 +108,8 @@ namespace vgpc_tower_defense.GameObjects
             CurrentCostToUpgrade = 1;
             MaxTowerLevel = 3;
 
+            Scale = .8f;
+
             //Initializations
             Projectiles = new List<Projectile>();
             StatusEffects = new List<Common.status_effect>();
@@ -179,7 +181,7 @@ namespace vgpc_tower_defense.GameObjects
             //TowerConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<TowerConfig>(JsonFromFile);
            
             
-            int noop = 1;
+     
 
         }
 
@@ -220,17 +222,16 @@ namespace vgpc_tower_defense.GameObjects
                         continue;
                     }
 
-                    Rectangle projectileBoundingBox = new Rectangle((int)Projectile.Position.X, (int)Projectile.Position.Y,
-                          this.TextureProjectile.Width, this.TextureProjectile.Height);
+                    Rectangle ProjectileBoundingBox = Projectile.GetBoundingRectangle();
 
                     //check if projectile has collided with a mob
                     foreach (EnemyMob mob in globals.Mobs)
                     {
-                        Rectangle mob_bounding_box = new Rectangle((int)mob.Position.X, (int)mob.Position.Y,
-                            this.CurrentTexture.Width, this.CurrentTexture.Height);
+
+                        Rectangle mob_bounding_box = mob.GetBoundingRectangle();
 
                         //if mob is 
-                        if (mob_bounding_box.Intersects(projectileBoundingBox))
+                        if (mob_bounding_box.Intersects(ProjectileBoundingBox))
                         {
                             Projectile.IsActive = false;
                             DamageAndAffectMob(mob);
@@ -283,14 +284,14 @@ namespace vgpc_tower_defense.GameObjects
                             Projectiles[i].IsActive = true;
 
                             //create a vector from this tower to the nearest mob
-                            Projectiles[i].Velocity = Util.vgpc_math.create_target_unit_vector(this.GetCenter(), TargetPosition);
+                            Projectiles[i].Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, TargetPosition);
 
                             //since the function creates a unit vecor(lenth, which in this case is the speed portion of the vector), we need to multiply the vectoy
                             //by the turrent projectile speed
                             Projectiles[i].Velocity *= ProjectileSpeed;
 
                             //set the projectile position equal to this tower's position
-                            Projectiles[i].Position = this.GetCenter();
+                            Projectiles[i].Position = this.Position;
                             break;
                         }
                     }

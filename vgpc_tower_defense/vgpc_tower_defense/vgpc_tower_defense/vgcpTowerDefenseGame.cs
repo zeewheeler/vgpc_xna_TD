@@ -89,15 +89,33 @@ namespace vgpc_tower_defense
             globals.Mobs[0].Position.X = globals.viewport_rectangle.Center.X;
             globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Mobs[0].IsActive = true;
+            globals.Mobs[0].Velocity.Y = -2f;
 
 
 
             globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
                 AssetManager.LoadedSprites["cannonball"]));
 
-            globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 4;
+            globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
             globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Towers[0].IsActive = true;
+
+            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
+               AssetManager.LoadedSprites["cannonball"]));
+
+            globals.Towers[1].Position.X = globals.viewport_rectangle.Center.X / 3;
+            globals.Towers[1].Position.Y = globals.viewport_rectangle.Center.Y + 200;
+            globals.Towers[1].IsActive = true;
+
+            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
+               AssetManager.LoadedSprites["cannonball"]));
+
+            globals.Towers[2].Position.X = globals.viewport_rectangle.Center.X / 3;
+            globals.Towers[2].Position.Y = globals.viewport_rectangle.Center.Y - 200;
+            globals.Towers[2].IsActive = true;
+
+
+
 
             globals.Towers[0].CreateExampleJsonTowerConfigFile();
             
@@ -128,6 +146,13 @@ namespace vgpc_tower_defense
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            
+            if(!(Util.vgpc_math.does_rectangle_contain(globals.viewport_rectangle, globals.Mobs[0].Position)))
+            {
+                globals.Mobs[0].Velocity.Y *= -1;
+            }
+            
+            
             foreach (EnemyMob Mob in globals.Mobs)
             {
                 Mob.Update(gameTime);

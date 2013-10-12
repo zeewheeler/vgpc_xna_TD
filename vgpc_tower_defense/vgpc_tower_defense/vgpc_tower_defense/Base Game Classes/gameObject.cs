@@ -73,7 +73,7 @@ namespace vgpc_tower_defense.GameObjects
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             }
 
-            return new Vector2(this.Position.X + this.CurrentTexture.Width / 2, this.Position.Y + this.CurrentTexture.Height / 2);
+            return new Vector2(this.Position.X + (this.CurrentTexture.Width / 2), this.Position.Y + (this.CurrentTexture.Height / 2) );
         }
 
         public Vector2 GetOrigin()
@@ -85,6 +85,20 @@ namespace vgpc_tower_defense.GameObjects
 
             return new Vector2(this.CurrentTexture.Width / 2, this.CurrentTexture.Height / 2);
         }
+
+        public virtual Rectangle GetBoundingRectangle()
+        {
+            Rectangle BoundingRec = new Rectangle(
+                (int)this.Position.X,
+                (int)this.Position.Y,
+                this.CurrentTexture.Width,
+                this.CurrentTexture.Height);
+            
+            return BoundingRec;
+
+        }
+
+   
 
 
         //draws the game object with default texture

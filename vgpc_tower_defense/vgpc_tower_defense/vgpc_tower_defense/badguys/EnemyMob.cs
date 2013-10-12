@@ -17,6 +17,7 @@ namespace vgpc_tower_defense.GameObjects
         {
             
             Health = 100;
+            Scale = .8f;
 
             //initializations
             current_status_effects = new List<Common.status_effect>();
