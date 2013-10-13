@@ -90,7 +90,7 @@ namespace vgpc_tower_defense.GameObjects
             TextureProjectile = textureProjectile;
 
             //weapon metrics       
-            CurrentWeaponDamage = 1;
+            CurrentWeaponDamage = 10;
             CurrentWeaponAreaOfEffect = 10;
             CurrentWeaponAttacksPerSecond = 1;
             CurrentWeaponRange = 10000;
@@ -136,9 +136,6 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         
-
-
-
         public void load_projectile_texture(Texture2D projectile_texture)
         {
             TextureProjectile = projectile_texture;
@@ -216,7 +213,7 @@ namespace vgpc_tower_defense.GameObjects
                 {
 
                     //check if projectile is off the screen, if so, mark as inactive
-                    if (!Util.vgpc_math.does_rectangle_contain(globals.viewport_rectangle, Projectile.Position))
+                    if (!Util.vgpc_math.DoesRectangleContainVector(globals.viewport_rectangle, Projectile.Position))
                     {
                         Projectile.IsActive = false;
                         continue;
@@ -268,32 +265,33 @@ namespace vgpc_tower_defense.GameObjects
             if (!IsDisabled && (enemyMobs.Count > 0))
             {
 
-
-                Vector2 TargetPosition = Util.vgpc_math.find_nearest_mob(this.Position, enemyMobs);
-
-
-                //find the nearest mob to this tower
-                float distance_to_closest_mob = Util.vgpc_math.get_distance_between(this.GetCenter(), TargetPosition);
-
-                if (TargetPosition != null && (distance_to_closest_mob <= this.CurrentWeaponRange))
+                List<Util.vgpc_math.FindNearestMobResult> Results = Util.vgpc_math.FindNearestMob(this.Position, enemyMobs);
+                if (1 != Results.Count)
                 {
-                    for (int i = 0; i < this.Projectiles.Count; i++)
+                    return;
+                }
+                if (Results[0].Distance > this.CurrentWeaponRange)
+                {
+                    return;
+                }
+
+
+                for (int i = 0; i < this.Projectiles.Count; i++)
+                {
+                    if (!Projectiles[i].IsActive)
                     {
-                        if (!Projectiles[i].IsActive)
-                        {
-                            Projectiles[i].IsActive = true;
+                        Projectiles[i].IsActive = true;
 
-                            //create a vector from this tower to the nearest mob
-                            Projectiles[i].Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, TargetPosition);
+                        //create a vector from this tower to the nearest mob
+                        Projectiles[i].Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, Results[0].EnemyMob.Position);
 
-                            //since the function creates a unit vecor(lenth, which in this case is the speed portion of the vector), we need to multiply the vectoy
-                            //by the turrent projectile speed
-                            Projectiles[i].Velocity *= ProjectileSpeed;
+                        //since the function creates a unit vecor(lenth, which in this case is the speed portion of the vector), we need to multiply the vectoy
+                        //by the turrent projectile speed
+                        Projectiles[i].Velocity *= ProjectileSpeed;
 
-                            //set the projectile position equal to this tower's position
-                            Projectiles[i].Position = this.Position;
-                            break;
-                        }
+                        //set the projectile position equal to this tower's position
+                        Projectiles[i].Position = this.Position;
+                        break;
                     }
                 }
             }
@@ -316,7 +314,7 @@ namespace vgpc_tower_defense.GameObjects
             {
                 foreach (EnemyMob mob in enemy_mobs)
                 {
-                    float distance = Util.vgpc_math.get_distance_between(this.Position, mob.Position);
+                    float distance = Util.vgpc_math.GetDistanceBetweenTwoVectors(this.Position, mob.Position);
                     if (distance <= CurrentWeaponRange)
                     {
                         DamageAndAffectMob(mob);

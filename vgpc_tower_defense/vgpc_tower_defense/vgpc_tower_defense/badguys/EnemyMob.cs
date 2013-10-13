@@ -12,6 +12,9 @@ namespace vgpc_tower_defense.GameObjects
 {
     public class EnemyMob : DrawableGameObject
     {
+        public int Health;
+        
+        
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
         {
@@ -35,7 +38,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
 
-        protected int Health;
+
 
         public void damage_me(int damage)
         {

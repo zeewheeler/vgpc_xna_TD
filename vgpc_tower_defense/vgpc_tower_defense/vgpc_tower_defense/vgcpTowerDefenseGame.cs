@@ -86,10 +86,10 @@ namespace vgpc_tower_defense
             spriteBatch = new SpriteBatch(GraphicsDevice);
     
             globals.Mobs.Add( new EnemyMob(AssetManager.LoadedSprites["enemy2Down"]) );
-            globals.Mobs[0].Position.X = globals.viewport_rectangle.Center.X;
+            globals.Mobs[0].Position.X = globals.viewport_rectangle.Width - 100;
             globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Mobs[0].IsActive = true;
-            globals.Mobs[0].Velocity.Y = -2f;
+            globals.Mobs[0].Velocity.X = -1f;
 
 
 
@@ -147,16 +147,23 @@ namespace vgpc_tower_defense
                 this.Exit();
 
             
-            if(!(Util.vgpc_math.does_rectangle_contain(globals.viewport_rectangle, globals.Mobs[0].Position)))
-            {
-                globals.Mobs[0].Velocity.Y *= -1;
-            }
+            //if(!(Util.vgpc_math.DoesRectangleContainVector(globals.viewport_rectangle, globals.Mobs[0].Position)))
+            //{
+            //    globals.Mobs[0].Velocity.Y *= -1;
+            //}
             
             
             foreach (EnemyMob Mob in globals.Mobs)
             {
                 Mob.Update(gameTime);
-              
+            }
+
+            if (!globals.Mobs[0].IsActive)
+            {
+                globals.Mobs[0].Position.X = globals.viewport_rectangle.Width - 100;
+                globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
+                globals.Mobs[0].Health = 100;
+                globals.Mobs[0].IsActive = true;
             }
 
             foreach (Tower Tower in globals.Towers)
