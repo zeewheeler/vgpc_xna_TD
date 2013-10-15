@@ -65,9 +65,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FuncWorks.XNA.XTiledExtensions">
-      <HintPath>..\..\..\..\..\..\..\Users\zwheeler\Downloads\xtiled\XTiledExtensions\bin\x86\Debug\FuncWorks.XNA.XTiledExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -85,7 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\common.cs" />
-    <Compile Include="Config\tower_config.cs" />
     <Compile Include="Badguys\EnemyMob.cs" />
     <Compile Include="Base Game Classes\gameObject.cs" />
     <Compile Include="Base Game Classes\game_object_config.cs" />
