@@ -28,51 +28,70 @@ namespace vgpc_tower_defense.Util
         }
 
 
+        public class FindNearestMobResult
+        {
+            public GameObjects.EnemyMob EnemyMob;
+            public float Distance;
+            
+        }
 
         //returns the position of the closest enemy mob to the given position
-        public static Vector2 find_nearest_mob(Vector2 tower_center, List<GameObjects.EnemyMob> enemy_mobs)
+        public static List<FindNearestMobResult> FindNearestMob(Vector2 towerCenter, List<GameObjects.EnemyMob> enemyMobs)
         {
+            List<FindNearestMobResult> ReturnClass = new List<FindNearestMobResult>();
             //if no enemies in list, return a null via default keyword
-            if (enemy_mobs.Count == 0)
+            if (enemyMobs.Count == 0)
             {
-                return default(Vector2);
+                return ReturnClass;
             }
              
             float distance;
-            float min_distance = float.MaxValue;
-            Vector2 position_of_closest_mob = new Vector2();
+            float MinDistance = float.MaxValue;
 
+
+           
             //iterate through each mob, if it has a lower distance that current min, update it to the new closest mob
-            foreach(GameObjects.EnemyMob bad_guy in enemy_mobs)
+            foreach(GameObjects.EnemyMob BadGuy in enemyMobs)
             {
-                //utilize the build in vector class do the the math for us
-                distance = Vector2.Distance(tower_center, bad_guy.GetCenter());
-                
-                if (distance < min_distance)
+                if(BadGuy.IsActive)
                 {
-                    position_of_closest_mob = bad_guy.GetCenter();
+                    //utilize the build in vector class do the the math for us
+                    if (0 == ReturnClass.Count)
+                    {
+                        FindNearestMobResult Result = new FindNearestMobResult();
+                        ReturnClass.Add(Result);
+                    }
+                   
+                    distance = Vector2.Distance(towerCenter, BadGuy.GetCenter());
+                
+                    if (distance < MinDistance)
+                    {
+                        ReturnClass[0].EnemyMob = BadGuy;
+                        ReturnClass[0].Distance = distance;
+                    }
                 }
             }
 
-            return position_of_closest_mob;
+            return ReturnClass;
+            
         }
 
 
         //returns the distance between two points
-        public static float get_distance_between(Vector2 point_a, Vector2 point_b)
+        public static float GetDistanceBetweenTwoVectors(Vector2 PointA, Vector2 PointB)
         {
                 Vector2 difference = new Vector2();
-                difference = point_b - point_a;
+                difference = PointB - PointA;
 
                 return (float)difference.Length();
         }
 
-        public static bool does_rectangle_contain(Rectangle rectangle, Vector2 vector_position)
+        public static bool DoesRectangleContainVector(Rectangle rectangle, Vector2 vectorPosition)
         {
             Point point = new Point();
 
-            point.X = (int)vector_position.X;
-            point.Y = (int)vector_position.Y;
+            point.X = (int)vectorPosition.X;
+            point.Y = (int)vectorPosition.Y;
             return rectangle.Contains(point);
 
         }

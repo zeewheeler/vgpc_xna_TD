@@ -12,11 +12,15 @@ namespace vgpc_tower_defense.GameObjects
 {
     public class EnemyMob : DrawableGameObject
     {
+        public int Health;
+        
+        
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
         {
             
             Health = 100;
+            Scale = .8f;
 
             //initializations
             current_status_effects = new List<Common.status_effect>();
@@ -34,7 +38,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
 
-        protected int Health;
+
 
         public void damage_me(int damage)
         {

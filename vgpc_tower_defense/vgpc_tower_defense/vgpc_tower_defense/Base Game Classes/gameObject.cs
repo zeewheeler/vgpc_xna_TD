@@ -36,7 +36,6 @@ namespace vgpc_tower_defense.GameObjects
 
             Position = new Vector2(0, 0);
             Velocity = new Vector2(0, 0);
-
             
             Scale = 1f;
             Rotation = 0f;
@@ -62,10 +61,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
 
-
         //Public Functions. These funcations can be called "outside" the class. They provide an interface with which to interact with the class.
-
-
         public Vector2 GetCenter()
         {
             if (CurrentTexture == null)
@@ -73,7 +69,8 @@ namespace vgpc_tower_defense.GameObjects
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             }
 
-            return new Vector2(this.Position.X + this.CurrentTexture.Width / 2, this.Position.Y + this.CurrentTexture.Height / 2);
+            return new Vector2(this.Position.X + ((this.CurrentTexture.Width * this.Scale) / 2), 
+                this.Position.Y + ((this.CurrentTexture.Width * this.Scale) / 2));
         }
 
         public Vector2 GetOrigin()
@@ -83,7 +80,19 @@ namespace vgpc_tower_defense.GameObjects
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             }
 
-            return new Vector2(this.CurrentTexture.Width / 2, this.CurrentTexture.Height / 2);
+            return new Vector2( (this.CurrentTexture.Width * this.Scale) / 2, (this.CurrentTexture.Height * this.Scale) / 2);
+        }
+
+        public virtual Rectangle GetBoundingRectangle()
+        {
+            Rectangle BoundingRec = new Rectangle(
+                (int)this.Position.X,
+                (int)this.Position.Y,
+                (int)(this.CurrentTexture.Width * this.Scale),
+                (int)(this.CurrentTexture.Height * this.Scale));
+            
+            return BoundingRec;
+
         }
 
 
@@ -109,8 +118,7 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-            
-
+  
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
         public virtual void update_position()
         {
@@ -121,11 +129,5 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-       
-
-        
-
-        
- 
     }
 }
