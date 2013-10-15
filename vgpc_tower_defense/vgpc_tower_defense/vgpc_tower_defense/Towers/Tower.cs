@@ -21,49 +21,50 @@ public class Tower : DrawableGameObject
 {
 
 
-//sounds
-protected SoundEffect SoundShoot;   /*SoundEffect to be played when the tower shoots*/
-protected SoundEffect SoundUpgrade; /*SoundEffect, if any, to be played when tower is upgraded*/
-protected SoundEffect SoundBuild;   /*SoundEffect to be played when tower is built*/
+    public string TowerName; /*String to hold the name of this tower*/
+    
+    //sounds
+    protected SoundEffect SoundShoot;   /*SoundEffect to be played when the tower shoots*/
+    protected SoundEffect SoundUpgrade; /*SoundEffect, if any, to be played when tower is upgraded*/
+    protected SoundEffect SoundBuild;   /*SoundEffect to be played when tower is built*/
 
-//tower level 
-protected int MaxTowerLevel; /* The maximum allowed level of tower*/
+    //projectiles
+    protected Texture2D TextureProjectile; /*The texture of the tower's projectile*/
+    //baseclass holds TextureCurrent which holds the currentTexture of the tower
 
-//projectiles
-protected Texture2D TextureProjectile; /*The texture of the tower's projectile*/
+    //Weapon Numbers
+    protected float CurrentWeaponDamage;            /*Starting weapon damage of tower*/
+    protected float CurrentWeaponAreaOfEffect;      /*Starting weapon area of effect of the tower's weapon */
+    protected float CurrentWeaponAttacksPerSecond;  /*Starting weapon attacks per second*/
+    protected float CurrentWeaponRange;             /*Starting weapon range of the weapon*/
 
-//Weapon Numbers
+    //Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
+    // The mob will process it's own status effects
+    protected List<Common.status_effect> StatusEffects;
 
+    protected float DamageGainedPerLevel;           /*The amount of damage gained per level*/
+    protected float AttacksPerSecondGainedPerLevel; /*The amount of weapon ranged gained per level*/
+    protected float WeaponRangeGainedPerLevel;      /*The speed of the tower's projectiles*/
 
-protected float CurrentWeaponDamage;            /*Starting weapon damage of tower*/
-protected float CurrentWeaponAreaOfEffect;      /*Starting weapon area of effect of the tower's weapon */
-protected float CurrentWeaponAttacksPerSecond;  /*Starting weapon attacks per second*/
-protected float CurrentWeaponRange;             /*Starting weapon range of the weapon*/
-
-//Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
-// The mob will process it's own status effects
-protected List<Common.status_effect> StatusEffects;
-
-protected float DamageGainedPerLevel;           /*The amount of damage gained per level*/
-protected float AreaOfEffectGainedPerLevel;     /*The amount of attacks per second gained per level*/
-protected float AttacksPerSecondGainedPerLevel; /*The amount of weapon ranged gained per level*/
-protected float WeaponRangeGainedPerLevel;      /*The speed of the tower's projectiles*/
-
-public int CostToBuild;                     /*Cost to build this tower*/
-protected int CurrentCostToUpgrade;         /*Initial cost to upgrade this tower*/
-protected int UpgradeCostIncreasePerLevel;  /*The amount the upgrade cost increased each level*/
+    //Build Cost and Level Related
+    public int CostToBuild;                     /*Cost to build this tower*/
+    protected int CurrentCostToUpgrade;         /*Initial cost to upgrade this tower*/
+    protected int UpgradeCostIncreasePerLevel;  /*The amount the upgrade cost increased each level*/
+    protected int MaxTowerLevel; /* The maximum allowed level of tower*/
         
-protected float ProjectileSpeed;            /*The speed of this tower's projectiles*/
-protected int MaxProjectiles;               /*The maximum amount of projectiles this tower can have active at any given time*/
-protected List<Projectile> Projectiles;     /*A list that holds the projectiles associated with this tower*/ 
-protected TimeSpan WeaponShootTimer;        /*A TimeSpan that is used as this towers weapon attack timer*/
+    protected float ProjectileSpeed;            /*The speed of this tower's projectiles*/
+    protected int MaxProjectiles;               /*The maximum amount of projectiles this tower can have active at any given time*/
+    protected List<Projectile> Projectiles;     /*A list that holds the projectiles associated with this tower*/ 
+    protected TimeSpan WeaponShootTimer;        /*A TimeSpan that is used as this towers weapon attack timer*/
+
+    //Base Class holds :  float Scale
+    //Base Class holds :  float rotation
 
 
+    protected bool is_point_blank_area_damage_tower;/*True if this tower is a point-blank area effect tower, false if it is a ranged single mob attack tower*/
 
-protected bool is_point_blank_area_damage_tower;/*True if this tower is a point-blank area effect tower, false if it is a ranged single mob attack tower*/
-
-public bool IsDisabled;     /*Flag that is true if tower is disable and thus not upgrade, false if tower is active and is updated*/
-int current_tower_level;    /*The current level of this tower*/
+    public bool IsDisabled;     /*Flag that is true if tower is disable and thus not upgrade, false if tower is active and is updated*/
+    int current_tower_level;    /*The current level of this tower*/
         
         
         
@@ -89,20 +90,18 @@ public Tower(Texture2D defaultTexture, Texture2D textureProjectile)
     CurrentWeaponRange = 10000;
 
     DamageGainedPerLevel = 10;
-    AreaOfEffectGainedPerLevel = 0;
     AttacksPerSecondGainedPerLevel = 0;
     WeaponRangeGainedPerLevel = 20;
 
     ProjectileSpeed = 25;
-    MaxProjectiles = 20;
-
+  
     //build and upgrade
     CostToBuild = 1;
     CurrentCostToUpgrade = 1;
     MaxTowerLevel = 3;
 
     Scale = .8f;
-    }
+}
 
 
 
@@ -114,82 +113,80 @@ public Tower(string jsonConfigFile, Managers.AssetManager assetManager)
     : base(null)
 {
     this.Intialize();
-    // SetVarsFromConfigTowerVars(TowerConfig.GetTowerConfigFromJsonFile(jsonConfigFile), assetManager);
+    SetVarsFromConfigVars(TowerConfig.GetTowerConfigFromJsonFile(jsonConfigFile), assetManager);
 
 }
 
+/// <summary>
+/// Takes a ConfigTowerVars and uses it to initilize the relavent class members
+/// </summary>
+/// <param name="configVars"></param>
+/// <param name="assetManager"></param>
 protected virtual void SetVarsFromConfigVars(ConfigTowerVars configVars, Managers.AssetManager assetManager)
 {
-    //sounds
-    //protected SoundEffect SoundShoot;   /*SoundEffect to be played when the tower shoots*/
-    if(configVars.SoundShoot != "")
+
+    //Load Sounds from AssetManager
+    if (configVars.SoundShoot != "") //If not empty string, then get appropriate  sound from assetManager
     {
         this.SoundShoot = assetManager.LoadedSounds[configVars.SoundShoot];
     }
-    //protected SoundEffect SoundUpgrade; /*SoundEffect, if any, to be played when tower is upgraded*/
+
     if (configVars.SoundUpgrade != "")
     {
         this.SoundUpgrade = assetManager.LoadedSounds[configVars.SoundUpgrade];
     }
-    //protected SoundEffect SoundBuild;   /*SoundEffect to be played when tower is built*/
+
     if (configVars.SoundBuild != "")
     {
         this.SoundBuild = assetManager.LoadedSounds[configVars.SoundBuild];
     }
 
-    //tower level 
-    //protected int MaxTowerLevel; /* The maximum allowed level of tower*/
-    this.MaxTowerLevel = configVars.MaxTowerLevel;
-
-    //projectiles
-    //protected Texture2D TextureProjectile; /*The texture of the tower's projectile*/
+    this.TowerName = configVars.TowerName;
+    
+    //Load Textures from AssetManager
+    this.TextureCurrent = assetManager.LoadedSprites[configVars.TextureTower];
     this.TextureProjectile = assetManager.LoadedSprites[configVars.TextureProjectile];
 
-    //Weapon Numbers
-
-
-    //protected float CurrentWeaponDamage;            /*Starting weapon damage of tower*/
+    //Set Weapon Numbers
     this.CurrentWeaponDamage = configVars.CurrentWeaponDamage;
-    //protected float CurrentWeaponAreaOfEffect;      /*Starting weapon area of effect of the tower's weapon */
     this.CurrentWeaponAreaOfEffect = configVars.CurrentWeaponAreaOfEffect;
-    //protected float CurrentWeaponAttacksPerSecond;  /*Starting weapon attacks per second*/
     this.CurrentWeaponAttacksPerSecond = configVars.CurrentWeaponAttacksPerSecond;
-    //protected float CurrentWeaponRange;             /*Starting weapon range of the weapon*/
     this.CurrentWeaponRange = configVars.CurrentWeaponRange;
-
-    //Some towers may cause various effects, such as slow or damage over time. They will just be strings and will be copied over to mob
-    // The mob will process it's own status effects
-    //protected List<Common.status_effect> StatusEffects;
-    this.StatusEffects = 
-
-    //protected float DamageGainedPerLevel;           /*The amount of damage gained per level*/
-    //protected float AreaOfEffectGainedPerLevel;     /*The amount of attacks per second gained per level*/
-    //protected float AttacksPerSecondGainedPerLevel; /*The amount of weapon ranged gained per level*/
-    //protected float WeaponRangeGainedPerLevel;      /*The speed of the tower's projectiles*/
-
-    //public int CostToBuild;                     /*Cost to build this tower*/
-    //protected int CurrentCostToUpgrade;         /*Initial cost to upgrade this tower*/
-    //protected int UpgradeCostIncreasePerLevel;  /*The amount the upgrade cost increased each level*/
-        
-    //protected float ProjectileSpeed;            /*The speed of this tower's projectiles*/
-    //protected int MaxProjectiles;               /*The maximum amount of projectiles this tower can have active at any given time*/
-    //protected List<Projectile> Projectiles;     /*A list that holds the projectiles associated with this tower*/ 
-    //protected TimeSpan WeaponShootTimer;        /*A TimeSpan that is used as this towers weapon attack timer*/
+    this.DamageGainedPerLevel = configVars.DamageGainedPerLevel;
+    this.AttacksPerSecondGainedPerLevel = configVars.AttacksPerSecondGainedPerLevel;
+    this.WeaponRangeGainedPerLevel = configVars.WeaponRangeGainedPerLevel;
+    this.ProjectileSpeed = configVars.ProjectileSpeed;
+    this.is_point_blank_area_damage_tower = configVars.is_point_blank_area_damage_tower;
+    
 
 
+    //Set Build Numbers
+    this.CostToBuild = configVars.CostToBuild;
+    this.CurrentCostToUpgrade = configVars.CurrentCostToUpgrade;
+    this.UpgradeCostIncreasePerLevel = configVars.UpgradeCostIncreasePerLevel;
+    this.MaxTowerLevel = configVars.MaxTowerLevel;
 
-    //protected bool is_point_blank_area_damage_tower;/*True if this tower is a point-blank area effect tower, false if it is a ranged single mob attack tower*/
+    //Set miscellaneous 
+    this.StatusEffects = configVars.StatusEffects;
+    this.Scale = configVars.scale;
+    this.Rotation = configVars.rotation;
 
-    //public bool IsDisabled;     /*Flag that is true if tower is disable and thus not upgrade, false if tower is active and is updated*/
-    //int current_tower_level;    /*The current level of this tower*/
+
 }
         
 
 /// <summary>
-/// Initializes reference-type class properties and fields.
+/// Initializes reference-type and non-configurable class properties and fields. 
 /// </summary>
 protected virtual void Intialize()
 {
+    
+    //Initialize non-configurable members and properties
+    this.current_tower_level = 1;
+    this.MaxProjectiles = 20;
+    
+    
+    
     Projectiles = new List<Projectile>();
     StatusEffects = new List<Common.status_effect>();
     WeaponShootTimer = TimeSpan.Zero;
@@ -232,7 +229,6 @@ protected virtual bool level_up_tower()
         globals.PlayerCash -= CurrentCostToUpgrade;
 
         CurrentWeaponDamage += DamageGainedPerLevel;
-        CurrentWeaponAreaOfEffect += AreaOfEffectGainedPerLevel;
         CurrentWeaponAttacksPerSecond += AttacksPerSecondGainedPerLevel;
         CurrentWeaponRange += WeaponRangeGainedPerLevel;
         return true;

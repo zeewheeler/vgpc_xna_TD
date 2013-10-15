@@ -82,6 +82,7 @@ namespace vgpc_tower_defense
             AssetManager.LoadAllContent();
 
             Config.JsonConfigOperations.CreateExampleJsonConfigFile();
+            Config.TowerConfig.WriteExampleJsonTowerConfig();
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

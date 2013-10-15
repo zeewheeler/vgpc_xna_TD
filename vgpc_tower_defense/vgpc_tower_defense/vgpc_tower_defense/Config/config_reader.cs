@@ -55,22 +55,29 @@ namespace vgpc_tower_defense.Config
     }
 
 
-
-
     /// <summary>
     /// Struct used to store config definable tower properties.
     /// </summary>
-    public struct ConfigTowerVars
+    public class ConfigTowerVars
     {
+
+        //Constructor that initializes all reference objects;
+        public ConfigTowerVars()
+        {
+            StatusEffects = new List<Common.status_effect>();
+        }
+
+
+        public string TowerName; /*String to hold the name of this tower*/
+
+        //Sounds
         public String SoundShoot; /*SoundEffect to be played when the tower shoots*/
         public String SoundUpgrade; /*SoundEffect, if any, to be played when tower is upgraded*/
         public String SoundBuild; /*SoundEffect to be played when tower is built*/
 
-        //tower level 
-        public int MaxTowerLevel; /* The maximum allowed level of tower*/
-
-        //projectiles
+        //Textures
         public String TextureProjectile; /*The texture of the tower's projectile*/
+        public String TextureTower;     /*The Texture of the Tower*/
 
         //Weapon Numbers
         public float CurrentWeaponDamage; /*Starting weapon damage of tower*/
@@ -87,10 +94,11 @@ namespace vgpc_tower_defense.Config
         public float WeaponRangeGainedPerLevel; /*The amount of weapon ranged gained per level*/
         public float ProjectileSpeed; /*The speed of the tower's projectiles*/
 
-        //Costs
+        //Build Cost and Level Related
         public int CostToBuild; /*Cost to build the tower*/
         public int CurrentCostToUpgrade; /*Cost to upgrade the tower*/
         public int UpgradeCostIncreasePerLevel; /*The amount the cost to upgrade the tower increase each level*/
+        public int MaxTowerLevel; /* The maximum allowed level of tower*/
 
         //tower state variables
 
@@ -128,6 +136,7 @@ namespace vgpc_tower_defense.Config
         {
             ConfigTowerVars TowerConfigVars = new ConfigTowerVars();
 
+
             TowerConfigVars.AttacksPerSecondGainedPerLevel = 2;
             TowerConfigVars.CostToBuild = 3;
             TowerConfigVars.UpgradeCostIncreasePerLevel = 10;
@@ -149,6 +158,7 @@ namespace vgpc_tower_defense.Config
             TowerConfigVars.SoundShoot = "SoundShoot";
             TowerConfigVars.SoundBuild = "soundBuild";
             TowerConfigVars.SoundUpgrade = "SoundUpdate";
+            TowerConfigVars.TowerName = "ExampleJsonDefinedTower";
 
             TowerConfigVars.StatusEffects.Add(new Common.status_effect("Slow", 10000));
             TowerConfigVars.StatusEffects.Add(new Common.status_effect("ArmorReduce", 10000));

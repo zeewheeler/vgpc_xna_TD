@@ -15,17 +15,14 @@ namespace vgpc_tower_defense.GameObjects
     public class DrawableGameObject
     {
 
-        protected Texture2D CurrentTexture;
-        protected string CurrentTextureStringIdentifier;
+        protected Texture2D TextureCurrent;
         public Vector2 Position;
         public Vector2 Velocity;
         public bool IsActive;
         public float Rotation;
         public float Scale;
         public Color Color { get; set; }
-       
-        
-
+  
         //This is the class constructor, notice that is a function that is call the same thing as the
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.
         //This mechanism allows us to set up default values of it's variables.
@@ -57,30 +54,30 @@ namespace vgpc_tower_defense.GameObjects
             Velocity = Vector2.Zero;
             IsActive = false;
             Color = Color.White;
-            CurrentTexture = loadedTexture;
+            TextureCurrent = loadedTexture;
         }
 
 
         //Public Functions. These funcations can be called "outside" the class. They provide an interface with which to interact with the class.
         public Vector2 GetCenter()
         {
-            if (CurrentTexture == null)
+            if (TextureCurrent == null)
             {
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             }
 
-            return new Vector2(this.Position.X + ((this.CurrentTexture.Width * this.Scale) / 2), 
-                this.Position.Y + ((this.CurrentTexture.Width * this.Scale) / 2));
+            return new Vector2(this.Position.X + ((this.TextureCurrent.Width * this.Scale) / 2), 
+                this.Position.Y + ((this.TextureCurrent.Width * this.Scale) / 2));
         }
 
         public Vector2 GetOrigin()
         {
-            if (CurrentTexture == null)
+            if (TextureCurrent == null)
             {
                 throw new Exception("A gameObject tried to do texture operations without a texture defined");
             }
 
-            return new Vector2( (this.CurrentTexture.Width * this.Scale) / 2, (this.CurrentTexture.Height * this.Scale) / 2);
+            return new Vector2( (this.TextureCurrent.Width * this.Scale) / 2, (this.TextureCurrent.Height * this.Scale) / 2);
         }
 
         public virtual Rectangle GetBoundingRectangle()
@@ -88,13 +85,12 @@ namespace vgpc_tower_defense.GameObjects
             Rectangle BoundingRec = new Rectangle(
                 (int)this.Position.X,
                 (int)this.Position.Y,
-                (int)(this.CurrentTexture.Width * this.Scale),
-                (int)(this.CurrentTexture.Height * this.Scale));
+                (int)(this.TextureCurrent.Width * this.Scale),
+                (int)(this.TextureCurrent.Height * this.Scale));
             
             return BoundingRec;
 
         }
-
 
         //draws the game object with default texture
         public virtual void draw(SpriteBatch spriteBatch)
@@ -102,7 +98,7 @@ namespace vgpc_tower_defense.GameObjects
             if (IsActive)
             {
                 //spriteBatch.Draw(CurrentTexture, Position, Color.White);
-                spriteBatch.Draw(CurrentTexture, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
+                spriteBatch.Draw(TextureCurrent, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
                     
             }
         }
