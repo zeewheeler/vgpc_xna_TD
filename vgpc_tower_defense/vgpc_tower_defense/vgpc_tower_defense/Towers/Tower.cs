@@ -18,6 +18,7 @@ namespace vgpc_tower_defense.GameObjects
     public class Tower : DrawableGameObject
     {
 
+        public TowerConfig TowerVars;
 
         //sounds
         protected SoundEffect SoundShoot;
@@ -45,29 +46,18 @@ namespace vgpc_tower_defense.GameObjects
         // The mob will process it's own status effects
         protected List<Common.status_effect> StatusEffects;
 
-
-
-
         protected float DamageGainedPerLevel;
         protected float AreaOfEffectGainedPerLevel;
         protected float AttacksPerSecondGainedPerLevel;
         protected float WeaponRangeGainedPerLevel;
 
         public int CostToBuild { get; protected set; }
-
         protected int CurrentCostToUpgrade;
-
         protected float ProjectileSpeed;
-
         protected int MaxProjectiles;
-
-
-
         protected List<Projectile> Projectiles;
-
         protected TimeSpan WeaponShootTimer;
 
-        //tower state variables
 
         //true if doesn't doesn't shoot projectile but rather damages a point blank area around it
         protected bool is_point_blank_area_damage_tower;
@@ -121,10 +111,10 @@ namespace vgpc_tower_defense.GameObjects
             }
         }
 
-        public Tower(String config_file_path)
+        public Tower(TowerConfig TowerConfig)
             : base(null)
         {
-
+            TowerVars = TowerConfig;
         }
 
         
@@ -145,42 +135,10 @@ namespace vgpc_tower_defense.GameObjects
 
         public void CreateExampleJsonTowerConfigFile()
         {
-            TowerConfig TowerConfig = new TowerConfig();
-
-            TowerConfig.AreaOfEffectGainedPerLevel = 1;
-            TowerConfig.AttacksPerSecondGainedPerLevel = 2;
-            TowerConfig.CostToBuild = 3;
-            TowerConfig.CurrentCostToUpgrade = 4;
-            TowerConfig.CurrentWeaponAreaOfEffect = 5;
-            TowerConfig.CurrentWeaponAttacksPerSecond = 6;
-            TowerConfig.CurrentWeaponDamage = 7;
-            TowerConfig.CurrentWeaponRange = 8;
-            TowerConfig.DamageGainedPerLevel = 10;
-            TowerConfig.is_point_blank_area_damage_tower = false;
-            TowerConfig.MaxTowerLevel = 11;
-            TowerConfig.ProjectileSpeed = 12;
-            TowerConfig.WeaponRangeGainedPerLevel = 13;
-
-            TowerConfig.scale = 1.0f;
-            TowerConfig.rotation = 0.0f;
-
-            TowerConfig.TextureProjectile = "TextureProjectile";
-            TowerConfig.SoundShoot = "SoundShoot";
-            TowerConfig.SoundBuild = "soundBuild";
-            TowerConfig.SoundUpgrade = "SoundUpdate";
-
-            TowerConfig.StatusEffects.Add(new Common.status_effect("Slow", 10000));
-            TowerConfig.StatusEffects.Add(new Common.status_effect("ArmorReduce", 10000));
-
-            String JsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(TowerConfig, Formatting.Indented);
-
-            File.WriteAllText(Directory.GetCurrentDirectory() + @"\config\Example_Json_Tower_Definition.txt", JsonOutput, Encoding.ASCII);
+         
             //string JsonFromFile = File.ReadAllText("JsonInput.txt");
             //TowerConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<TowerConfig>(JsonFromFile);
            
-            
-            int noop = 1;
-
         }
 
 
@@ -241,8 +199,6 @@ namespace vgpc_tower_defense.GameObjects
                     //finally,  update the position of each active projectile
                     Projectile.update_position();
 
-
-
                 }
             }
         }
@@ -254,8 +210,6 @@ namespace vgpc_tower_defense.GameObjects
             UpdateAnimation(gameTime);
 
         }
-
-
 
         protected virtual void UpdateAnimation(GameTime game_time)
         {
@@ -307,8 +261,6 @@ namespace vgpc_tower_defense.GameObjects
         }
 
 
-
-
         protected virtual void fire_point_blank_weapon(List<EnemyMob> enemy_mobs)
         {
             if (!IsDisabled)
@@ -323,7 +275,6 @@ namespace vgpc_tower_defense.GameObjects
                 }
             }
         }
-
 
 
         protected virtual void UpdateWeapon(GameTime game_time)
