@@ -54,7 +54,7 @@ public class Tower : DrawableGameObject
         
     protected float ProjectileSpeed;            /*The speed of this tower's projectiles*/
     protected int MaxProjectiles;               /*The maximum amount of projectiles this tower can have active at any given time*/
-    protected List<Projectile> Projectiles;     /*A list that holds the projectiles associated with this tower*/ 
+    public List<Projectile> Projectiles;     /*A list that holds the projectiles associated with this tower*/ 
     protected TimeSpan WeaponShootTimer;        /*A TimeSpan that is used as this towers weapon attack timer*/
 
     //Base Class holds :  float Scale
@@ -72,6 +72,8 @@ public class Tower : DrawableGameObject
 public Tower(Texture2D defaultTexture, Texture2D textureProjectile)
     : base(defaultTexture)
 {
+    //The projectile texture MUST be set before Intialize is called, else it will load a null texture 
+    TextureProjectile = textureProjectile;
 
     this.Intialize();
             
@@ -80,8 +82,7 @@ public Tower(Texture2D defaultTexture, Texture2D textureProjectile)
     SoundUpgrade = null;
     SoundBuild = null;
 
-    //textures
-    TextureProjectile = textureProjectile;
+  
 
     //weapon metrics       
     CurrentWeaponDamage = 10;
@@ -128,17 +129,17 @@ protected virtual void SetVarsFromConfigVars(ConfigTowerVars configVars, Manager
     //Load Sounds from AssetManager
     if (configVars.SoundShoot != "") //If not empty string, then get appropriate  sound from assetManager
     {
-        this.SoundShoot = assetManager.LoadedSounds[configVars.SoundShoot];
+        //this.SoundShoot = assetManager.LoadedSounds[configVars.SoundShoot];
     }
 
     if (configVars.SoundUpgrade != "")
     {
-        this.SoundUpgrade = assetManager.LoadedSounds[configVars.SoundUpgrade];
+        //this.SoundUpgrade = assetManager.LoadedSounds[configVars.SoundUpgrade];
     }
 
     if (configVars.SoundBuild != "")
     {
-        this.SoundBuild = assetManager.LoadedSounds[configVars.SoundBuild];
+        //this.SoundBuild = assetManager.LoadedSounds[configVars.SoundBuild];
     }
 
     this.TowerName = configVars.TowerName;
@@ -146,6 +147,9 @@ protected virtual void SetVarsFromConfigVars(ConfigTowerVars configVars, Manager
     //Load Textures from AssetManager
     this.TextureCurrent = assetManager.LoadedSprites[configVars.TextureTower];
     this.TextureProjectile = assetManager.LoadedSprites[configVars.TextureProjectile];
+
+    //Must call Initialize after assigning texture values in each Tower constructor
+    this.Intialize();
 
     //Set Weapon Numbers
     this.CurrentWeaponDamage = configVars.CurrentWeaponDamage;
@@ -176,7 +180,7 @@ protected virtual void SetVarsFromConfigVars(ConfigTowerVars configVars, Manager
         
 
 /// <summary>
-/// Initializes reference-type and non-configurable class properties and fields. 
+/// Initializes reference-type and non-configurable class properties and fields. To be called in all Tower class constructors
 /// </summary>
 protected virtual void Intialize()
 {
@@ -220,7 +224,9 @@ public void CreateExampleJsonTowerConfigFile()
 }
 
 
-
+/// <summary>
+/// This function "levels up" the tower, incrementing all appropriate tower variables by there "GainedPerLevel" values
+/// </summary>
 protected virtual bool level_up_tower()
 {
     if (globals.PlayerCash >= CurrentCostToUpgrade && (current_tower_level < MaxTowerLevel))

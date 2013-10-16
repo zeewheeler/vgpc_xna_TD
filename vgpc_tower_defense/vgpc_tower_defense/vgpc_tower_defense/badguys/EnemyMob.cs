@@ -67,7 +67,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
 
-        //takes a list of incomming status effects, adds them to the mobs list of status effects, if there are not there already
+        //takes a list of incomming status effects, adds them to the mobs list of status effects, if not there already
         public void AddStatusEffects(List<Common.status_effect> incomming_status_effects)
         {
             foreach (Common.status_effect inc_status_effect in incomming_status_effects)
@@ -78,7 +78,7 @@ namespace vgpc_tower_defense.GameObjects
                 }
                 else
                 {
-                    incomming_status_effects.Add(new Common.status_effect(inc_status_effect.status_effect_name, inc_status_effect.status_effect_time_ms) );
+                   this.current_status_effects.Add(new Common.status_effect(inc_status_effect.status_effect_name, inc_status_effect.status_effect_time_ms) );
                 }
             }
         }

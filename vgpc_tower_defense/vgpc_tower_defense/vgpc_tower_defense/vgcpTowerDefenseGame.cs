@@ -95,26 +95,33 @@ namespace vgpc_tower_defense
 
 
 
-            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-                AssetManager.LoadedSprites["cannonball"]));
+            /*globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
+                AssetManager.LoadedSprites["cannonball"]));*/
+
+            globals.Towers.Add( new Tower("Example_Json_Tower_Definition.txt", AssetManager) );
 
             globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
             globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
             globals.Towers[0].IsActive = true;
 
             globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-               AssetManager.LoadedSprites["cannonball"]));
+               AssetManager.LoadedSprites["rocket"]));
 
             globals.Towers[1].Position.X = globals.viewport_rectangle.Center.X / 3;
             globals.Towers[1].Position.Y = globals.viewport_rectangle.Center.Y + 200;
             globals.Towers[1].IsActive = true;
 
             globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-               AssetManager.LoadedSprites["cannonball"]));
+               AssetManager.LoadedSprites["starcharge"]));
 
             globals.Towers[2].Position.X = globals.viewport_rectangle.Center.X / 3;
             globals.Towers[2].Position.Y = globals.viewport_rectangle.Center.Y - 200;
             globals.Towers[2].IsActive = true;
+
+            foreach (Projectile projectile in globals.Towers[2].Projectiles)
+            {
+                projectile.Rotation = .01f;
+            }
 
 
 

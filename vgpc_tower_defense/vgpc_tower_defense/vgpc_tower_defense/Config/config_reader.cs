@@ -123,7 +123,7 @@ namespace vgpc_tower_defense.Config
         /// <param name="filename"></param>
         static public ConfigTowerVars GetTowerConfigFromJsonFile(string filename)
         {
-            string JsonFromFile = File.ReadAllText(@"\Definitions\Towers\" + filename);
+            string JsonFromFile = File.ReadAllText(@"Definitions\Towers\" + filename);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigTowerVars>(JsonFromFile);
         }
 
@@ -144,7 +144,7 @@ namespace vgpc_tower_defense.Config
             TowerConfigVars.CurrentWeaponAreaOfEffect = 5;
             TowerConfigVars.CurrentWeaponAttacksPerSecond = 6;
             TowerConfigVars.CurrentWeaponDamage = 7;
-            TowerConfigVars.CurrentWeaponRange = 8;
+            TowerConfigVars.CurrentWeaponRange = 10000;
             TowerConfigVars.DamageGainedPerLevel = 10;
             TowerConfigVars.is_point_blank_area_damage_tower = false;
             TowerConfigVars.MaxTowerLevel = 11;
@@ -154,7 +154,8 @@ namespace vgpc_tower_defense.Config
             TowerConfigVars.scale = 1.0f;
             TowerConfigVars.rotation = 0.0f;
 
-            TowerConfigVars.TextureProjectile = "TextureProjectile";
+            TowerConfigVars.TextureProjectile = "cannonball";
+            TowerConfigVars.TextureTower = "PlasmaRight";
             TowerConfigVars.SoundShoot = "SoundShoot";
             TowerConfigVars.SoundBuild = "soundBuild";
             TowerConfigVars.SoundUpgrade = "SoundUpdate";
