@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using vgpc_tower_defense.Config;
+using vgcpTowerDefense.Config;
 
-namespace vgpc_tower_defense.GameObjects
+namespace vgcpTowerDefense.GameObjects
 {
 
 
@@ -279,7 +279,7 @@ protected virtual void UpdateProjectiles(GameTime gameTime)
             }
 
             //finally,  update the position of each active projectile
-            Projectile.update_position();
+            Projectile.Update();
 
         }
     }
@@ -383,12 +383,12 @@ protected virtual void UpdateWeapon(GameTime game_time)
 
 //the base gameobject class just draws the default texture, but we the tower class to draw all if it's associated projectiles as well
 //thus we will override the base draw function and add this functionality
-public override void draw(SpriteBatch spriteBatch)
+public override void Draw(SpriteBatch spriteBatch)
 {
-    base.draw(spriteBatch);
+    base.Draw(spriteBatch);
     foreach (Projectile projectile in this.Projectiles)
     {
-        projectile.draw(spriteBatch, this.TextureProjectile);
+        projectile.Draw(spriteBatch, this.TextureProjectile);
     }
 }
 }

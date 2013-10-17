@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 
-namespace vgpc_tower_defense.Common
+namespace vgcpTowerDefense.Common
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.

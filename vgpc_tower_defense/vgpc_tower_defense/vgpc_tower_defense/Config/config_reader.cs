@@ -7,7 +7,7 @@ using System.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace vgpc_tower_defense.Config
+namespace vgcpTowerDefense.Config
 {
 
     public class ConfigEntry

@@ -12,13 +12,15 @@ using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using vgpc_tower_defense.GameObjects;
-using vgpc_tower_defense.Managers;
+using vgcpTowerDefense.GameObjects;
+using vgcpTowerDefense.Managers;
+
+using TomShane.Neoforce.Controls;
  
 
 
 
-namespace vgpc_tower_defense
+namespace vgcpTowerDefense
 {
     /// <summary>
     /// This is the main type for your game
@@ -26,6 +28,7 @@ namespace vgpc_tower_defense
     public class vgcp_tower_defense_game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
+        Manager NeoManager;
         SpriteBatch spriteBatch;
         Managers.AssetManager AssetManager;
        
@@ -37,6 +40,8 @@ namespace vgpc_tower_defense
             AssetManager = new Managers.AssetManager(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            NeoManager = new Manager(this, graphics, "Default");
 
             globals.Mobs = new List<GameObjects.EnemyMob>();
             globals.Towers = new List<GameObjects.Tower>();
@@ -197,12 +202,12 @@ namespace vgpc_tower_defense
 
             foreach (EnemyMob Mob in globals.Mobs)
             {
-                Mob.draw(spriteBatch);
+                Mob.Draw(spriteBatch);
             }
 
             foreach (Tower Tower in globals.Towers)
             {
-                Tower.draw(spriteBatch);
+                Tower.Draw(spriteBatch);
             }
 
             spriteBatch.End();

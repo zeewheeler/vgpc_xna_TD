@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace vgpc_tower_defense.GameObjects
+namespace vgcpTowerDefense.GameObjects
 {
    
         public class Projectile : DrawableGameObject

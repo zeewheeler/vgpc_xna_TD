@@ -1,6 +1,6 @@
 using System;
 
-namespace vgpc_tower_defense
+namespace vgcpTowerDefense
 {
 #if WINDOWS || XBOX
     static class Program

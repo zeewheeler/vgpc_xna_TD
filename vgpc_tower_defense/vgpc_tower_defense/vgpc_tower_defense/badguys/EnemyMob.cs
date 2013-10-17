@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace vgpc_tower_defense.GameObjects
+namespace vgcpTowerDefense.GameObjects
 {
     public class EnemyMob : DrawableGameObject
     {
@@ -85,7 +85,7 @@ namespace vgpc_tower_defense.GameObjects
 
         public virtual void Update(GameTime GameTime)
         {
-            this.update_position();
+            this.Update();
             this.UpdateHealth();
             this.UpdateStatusEffects(GameTime);
         }

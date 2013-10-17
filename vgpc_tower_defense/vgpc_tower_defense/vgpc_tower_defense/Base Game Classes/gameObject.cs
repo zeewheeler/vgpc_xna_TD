@@ -8,19 +8,21 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace vgpc_tower_defense.GameObjects
+
+namespace vgcpTowerDefense.GameObjects
 {
     
     //The DrawableGameObject defines a set of variables and functions that can define a basic game object such as a tower, enemy mob, projectile, etc 
     public class DrawableGameObject
     {
 
-        protected Texture2D TextureCurrent;
-        public Vector2 Position;
-        public Vector2 Velocity;
-        public bool IsActive;
-        public float Rotation;
-        public float Scale;
+        protected Texture2D TextureCurrent; /*The current texture to be drawn of this object*/
+        public Vector2 Position;            /*The position on the viewport in which this object will be drawn. Centered on Top Left of object*/
+        public Vector2 Velocity;            /*The magnitude and direction the object moves each update*/
+        public bool IsActive;               /*Flag, update with update each update if true, will not update if false*/
+        public float Rotation;              /*Describes the rotation to be applied to object's draw*/
+        public float AngularVelocity;       /* The magnitude and direction that the object's rotation changes each update*/
+        public float Scale;                 /*The amount the object's graphic and hit box are scaled.*/
         public Color Color { get; set; }
   
         //This is the class constructor, notice that is a function that is call the same thing as the
@@ -93,7 +95,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         //draws the game object with default texture
-        public virtual void draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (IsActive)
             {
@@ -104,7 +106,7 @@ namespace vgpc_tower_defense.GameObjects
         }
 
         //draws game object with specified texture
-        public virtual void draw(SpriteBatch spriteBatch, Texture2D texture)
+        public virtual void Draw(SpriteBatch spriteBatch, Texture2D texture)
         {
             if (IsActive)
             {
@@ -116,12 +118,12 @@ namespace vgpc_tower_defense.GameObjects
 
   
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
-        public virtual void update_position()
+        public virtual void Update()
         {
             if (IsActive)
             {
                 this.Position += Velocity;
-                
+  
             }
         }
 
