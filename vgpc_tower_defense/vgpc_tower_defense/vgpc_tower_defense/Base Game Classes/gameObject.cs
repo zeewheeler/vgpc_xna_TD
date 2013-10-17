@@ -123,6 +123,7 @@ namespace vgcpTowerDefense.GameObjects
             if (IsActive)
             {
                 this.Position += Velocity;
+                this.Rotation += AngularVelocity;
   
             }
         }

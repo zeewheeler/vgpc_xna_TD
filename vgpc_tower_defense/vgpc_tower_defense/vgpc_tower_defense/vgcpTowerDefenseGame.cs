@@ -15,7 +15,9 @@ using Newtonsoft.Json.Linq;
 using vgcpTowerDefense.GameObjects;
 using vgcpTowerDefense.Managers;
 
-using TomShane.Neoforce.Controls;
+
+using FuncWorks.XNA.XTiled;
+
  
 
 
@@ -28,9 +30,12 @@ namespace vgcpTowerDefense
     public class vgcp_tower_defense_game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        Manager NeoManager;
         SpriteBatch spriteBatch;
         Managers.AssetManager AssetManager;
+
+
+        Rectangle mapView;
+        Map map;
        
 
 
@@ -40,8 +45,6 @@ namespace vgcpTowerDefense
             AssetManager = new Managers.AssetManager(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            NeoManager = new Manager(this, graphics, "Default");
 
             globals.Mobs = new List<GameObjects.EnemyMob>();
             globals.Towers = new List<GameObjects.Tower>();
@@ -65,6 +68,8 @@ namespace vgcpTowerDefense
 
             base.Initialize();
             this.IsMouseVisible = true;
+
+            mapView = graphics.GraphicsDevice.Viewport.Bounds;
             
 
            //initialize global variables
@@ -82,9 +87,10 @@ namespace vgcpTowerDefense
               graphics.GraphicsDevice.Viewport.Width,
               graphics.GraphicsDevice.Viewport.Height);
 
-
-            //AssetManager.LoadContentFromConfig(Config.config_reader.ReadContentConfig());
+            //Load All content that is added to content project. This MUST be called before you try to use any content.
             AssetManager.LoadAllContent();
+
+            map = AssetManager.LoadedMaps["Desert"];
 
             Config.JsonConfigOperations.CreateExampleJsonConfigFile();
             Config.TowerConfig.WriteExampleJsonTowerConfig();
@@ -125,7 +131,7 @@ namespace vgcpTowerDefense
 
             foreach (Projectile projectile in globals.Towers[2].Projectiles)
             {
-                projectile.Rotation = .01f;
+                projectile.AngularVelocity = .1f;
             }
 
 
@@ -200,6 +206,10 @@ namespace vgcpTowerDefense
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            //draw background
+            map.Draw(spriteBatch, mapView);
+
+            //Draw Units
             foreach (EnemyMob Mob in globals.Mobs)
             {
                 Mob.Draw(spriteBatch);

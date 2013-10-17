@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 using vgcpTowerDefense.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -11,6 +12,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using FuncWorks.XNA.XTiled;
 
 namespace vgcpTowerDefense.Managers
 {
@@ -21,6 +23,7 @@ namespace vgcpTowerDefense.Managers
         public Dictionary<string, SoundEffect> LoadedSounds;
         public Dictionary<string, Song> LoadedSongs;
         public Dictionary<string, Texture2D> LoadedSprites;
+        public Dictionary<string, Map> LoadedMaps;
 
         protected Game Game;
 
@@ -30,6 +33,7 @@ namespace vgcpTowerDefense.Managers
             LoadedSprites = new Dictionary<string, Texture2D>();
             LoadedSongs = new Dictionary<string, Song>();
             LoadedSounds = new Dictionary<string, SoundEffect>();
+            LoadedMaps = new Dictionary<string, Map>();
 
             Game = game;
 
@@ -46,6 +50,8 @@ namespace vgcpTowerDefense.Managers
 
             FileInfo[] files = dir.GetFiles("*.*", SearchOption.AllDirectories);
 
+            CultureInfo CultureInfo = new CultureInfo("en-US");
+
             foreach (FileInfo file in files)
             {
                 string RootPath = Game.Content.RootDirectory;
@@ -55,17 +61,26 @@ namespace vgcpTowerDefense.Managers
                 string Name = file.Name.Split('.')[0].ToString();
                 string PathPlusName = Path + @"\" + Name;
 
-                if( (Path.Contains("Song")) && !(Path.Contains("Sprite")) && !(Path.Contains("Sounds")) ) 
+                if( (Path.StartsWith("Sounds", false, CultureInfo) )) 
                 {
                     LoadSound(Name, PathPlusName);
                 }
-                else if ( (Path.Contains("Sprite")) && !(Path.Contains("Song")) && !(Path.Contains("Sounds")) )
+                else if ( (Path.StartsWith("Songs", false, CultureInfo)))
+                {
+                    LoadSong(Name, PathPlusName);
+                }
+                else if ( (Path.StartsWith("Sprites", false, CultureInfo)))
                 {
                     LoadSprite(Name, PathPlusName);
                 }
-                else if ( (Path.Contains("Sounds")) && !(Path.Contains("Song")) && !(Path.Contains("Sprite")) )
+                else if ((Path.StartsWith("Maps", false, CultureInfo)))
                 {
-                    LoadSound(Name, PathPlusName);
+                    /*The FuncWorks Xtiled content pipeline creates addition files in a folder for each map it loads, we do NOT want to 
+                     * load these files, so we exclude any folders after the Maps directory*/
+                    if(!Path.Contains('\\') && !Path.Contains('/') )
+                    {
+                        LoadMap(Name, PathPlusName);
+                    }
                 }
 
 
@@ -85,6 +100,11 @@ namespace vgcpTowerDefense.Managers
         public void LoadSprite(String SpriteIdentifer, String spritePath)
         {
             LoadedSprites.Add(SpriteIdentifer, Game.Content.Load<Texture2D>(spritePath));
+        }
+
+        public void LoadMap(String MapIdentifer, String mapPath)
+        {
+            LoadedMaps.Add(MapIdentifer, Game.Content.Load<Map>(mapPath));
         }
 
 
