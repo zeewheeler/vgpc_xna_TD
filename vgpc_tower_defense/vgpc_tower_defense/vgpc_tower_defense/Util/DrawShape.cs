@@ -63,7 +63,7 @@ namespace vgcpTowerDefense.Util
     /// <summary>
     /// A class to make primitive 2D objects out of lines.
     /// </summary>
-    public class PrimitiveLine
+    public class DrawPrimatives
     {
         Texture2D pixel;
         ArrayList vectors;
@@ -98,7 +98,7 @@ namespace vgcpTowerDefense.Util
         /// Creates a new primitive line object.
         /// </summary>
         /// <param name="graphicsDevice">The Graphics Device object to use.</param>
-        public PrimitiveLine(GraphicsDevice graphicsDevice)
+        public DrawPrimatives(GraphicsDevice graphicsDevice)
         {
             // create pixels
 

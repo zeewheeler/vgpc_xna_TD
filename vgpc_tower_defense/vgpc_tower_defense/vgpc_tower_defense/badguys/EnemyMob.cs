@@ -133,7 +133,7 @@ namespace vgcpTowerDefense.GameObjects
 
                     debug.X -= 50;
                     debug.Y -= 50;
-                    bool IsTrue = Util.vgpc_math.DoesRectangleContainVector(debug, MobPath[CurrentWayPoint].Position);
+                    bool IsTrue = Util.vgpc_math.DoesRectangleContainVector(debug, MobPath[CurrentWayPoint - 1].Position);
                     if(IsTrue)
                     {
                         this.Velocity = Vector2.Zero;

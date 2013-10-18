@@ -39,6 +39,8 @@ namespace vgcpTowerDefense
         Map map;
 
         Vector2 MobSpawn;
+
+        Util.DrawRectangle RectangleDrawer; 
         
 
 
@@ -53,10 +55,12 @@ namespace vgcpTowerDefense
             globals.Mobs = new List<GameObjects.EnemyMob>();
             globals.Towers = new List<GameObjects.Tower>();
             globals.MobPath = new List<MobWayPoint>();
-            
-            
 
-           
+            RectangleDrawer = new Util.DrawRectangle(this);
+
+
+
+            Components.Add(RectangleDrawer);
 
             //define what screen resolution the game should run in
             graphics.PreferredBackBufferWidth = 1280;
@@ -107,9 +111,10 @@ namespace vgcpTowerDefense
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+     
     
        
-
 
 
 
@@ -180,7 +185,13 @@ namespace vgcpTowerDefense
                 projectile.AngularVelocity = .1f;
             }
 
-           
+
+            
+
+            //Debug: Visualize the enemies bounding rectangle
+            RectangleDrawer.Visible = true;
+            RectangleDrawer.SetColor(Color.Red);
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -230,6 +241,8 @@ namespace vgcpTowerDefense
                 Tower.Update(gameTime);
                
             }
+
+            RectangleDrawer.SetRectangle(globals.Mobs[0].GetBoundingRectangle());
 
             base.Update(gameTime);
         }
