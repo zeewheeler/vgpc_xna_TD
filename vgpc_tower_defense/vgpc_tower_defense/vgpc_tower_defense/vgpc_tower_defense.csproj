@@ -98,6 +98,7 @@
     <Compile Include="Managers\Asset Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Automatic\Program.cs" />
+    <Compile Include="Util\DrawShape.cs" />
     <Compile Include="vgcpTowerDefenseGame.cs" />
     <Compile Include="Towers\plasma_tower.cs" />
     <Compile Include="Util\vgpc_math.cs" />

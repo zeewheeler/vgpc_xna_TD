@@ -321,7 +321,7 @@ protected virtual void FireAtClosestMob(List<EnemyMob> enemyMobs)
                 Projectiles[i].IsActive = true;
 
                 //create a vector from this tower to the nearest mob
-                Projectiles[i].Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, Results[0].EnemyMob.Position);
+                Projectiles[i].Velocity = Util.vgpc_math.CreateTargetUnitVector(this.Position, Results[0].EnemyMob.Position);
 
                 //since the function creates a unit vecor(lenth, which in this case is the speed portion of the vector), we need to multiply the vectoy
                 //by the turrent projectile speed

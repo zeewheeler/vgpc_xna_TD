@@ -35,7 +35,7 @@ namespace vgcpTowerDefense.GameObjects
             Health = 1000;
             Scale = .8f;
             CurrentWayPoint = 1;
-            Speed = 10;
+            Speed = 3;
             CurrentlyTravelingToWayPoint = false;
 
             //initializations
@@ -105,12 +105,43 @@ namespace vgcpTowerDefense.GameObjects
             base.Update(gameTime);
             this.UpdateHealth();
             this.UpdateStatusEffects(gameTime);
+            this.UpdatePathing();
 
-            if (MobPath != null && !CurrentlyTravelingToWayPoint)
+            
+        }
+
+
+        protected virtual void UpdatePathing()
+        {
+            if (MobPath != null) /*Check if mob has a path defined*/
             {
-                this.Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, MobPath[CurrentWayPoint - 1].Position) * this.Speed;
-                this.CurrentlyTravelingToWayPoint = false;
-                this.CurrentWayPoint++;
+                if (!CurrentlyTravelingToWayPoint )
+                /*Mob has a path but is not heading towards a WayPoint, if one exists, find next waypoint and set mob velocity towards it*/
+                {
+                    if (this.CurrentWayPoint - 1 < this.MobPath.Count)
+                    {
+                        this.Velocity = Util.vgpc_math.CreateTargetUnitVector(this.Position, MobPath[CurrentWayPoint - 1].Position) * this.Speed;
+                        this.CurrentlyTravelingToWayPoint = true;
+                    }
+                }
+                else /*Mob is currently heading towards a waypoint. Check if mob has reached waypoint.*/
+                {
+
+                    Rectangle debug = this.GetBoundingRectangle();
+                    debug.Width += 100;
+                    debug.Height += 100;
+
+                    debug.X -= 50;
+                    debug.Y -= 50;
+                    bool IsTrue = Util.vgpc_math.DoesRectangleContainVector(debug, MobPath[CurrentWayPoint].Position);
+                    if(IsTrue)
+                    {
+                        this.Velocity = Vector2.Zero;
+                        this.CurrentlyTravelingToWayPoint = false;
+                        this.CurrentWayPoint++;
+                    }
+
+                }
             }
         }
 

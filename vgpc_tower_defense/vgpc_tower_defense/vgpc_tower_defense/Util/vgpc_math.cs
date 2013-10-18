@@ -16,7 +16,7 @@ namespace vgcpTowerDefense.Util
     {
         
         //returns a unit vector pointing to target, a unit vector has a length of 1
-        public static Vector2 create_target_unit_vector(Vector2 position_from, Vector2 position_to)
+        public static Vector2 CreateTargetUnitVector(Vector2 position_from, Vector2 position_to)
         {
 
             Vector2 target_vector = new Vector2();
