@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -36,7 +37,10 @@ namespace vgcpTowerDefense
 
         Rectangle mapView;
         Map map;
-       
+
+        Vector2 MobSpawn;
+        
+
 
 
        
@@ -48,6 +52,9 @@ namespace vgcpTowerDefense
 
             globals.Mobs = new List<GameObjects.EnemyMob>();
             globals.Towers = new List<GameObjects.Tower>();
+            globals.MobPath = new List<MobWayPoint>();
+            
+            
 
            
 
@@ -69,7 +76,7 @@ namespace vgcpTowerDefense
             base.Initialize();
             this.IsMouseVisible = true;
 
-            mapView = graphics.GraphicsDevice.Viewport.Bounds;
+           
             
 
            //initialize global variables
@@ -87,10 +94,13 @@ namespace vgcpTowerDefense
               graphics.GraphicsDevice.Viewport.Width,
               graphics.GraphicsDevice.Viewport.Height);
 
+            mapView = graphics.GraphicsDevice.Viewport.Bounds;
+
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["Desert"];
+            map = AssetManager.LoadedMaps["Map2"];
+            map.Orientation = MapOrientation.Isometric;
 
             Config.JsonConfigOperations.CreateExampleJsonConfigFile();
             Config.TowerConfig.WriteExampleJsonTowerConfig();
@@ -98,18 +108,54 @@ namespace vgcpTowerDefense
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
     
-            globals.Mobs.Add( new EnemyMob(AssetManager.LoadedSprites["enemy2Down"]) );
-            globals.Mobs[0].Position.X = globals.viewport_rectangle.Width - 100;
-            globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
+       
+
+
+
+
+          
+
+
+            IEnumerable<MapObject> MapObjects = map.GetObjectsInRegion(mapView);
+
+
+            foreach (MapObject MapObj in MapObjects)
+            {
+
+               if(MapObj.Properties.ContainsKey("WayPoint"))
+                {
+                   MobWayPoint wayPoint = new MobWayPoint();
+
+                   wayPoint.Position.X = MapObj.Bounds.Center.X;
+                   wayPoint.Position.Y = MapObj.Bounds.Center.Y;
+                   wayPoint.WayPointNumber = Int32.Parse(MapObj.Properties["WayPoint"].Value);
+
+                   globals.MobPath.Add(wayPoint);
+                }
+
+               if (MapObj.Properties.ContainsKey("spawn"))
+               {
+                   MobSpawn = new Vector2();
+                   MobSpawn.X = MapObj.Bounds.Center.X;
+                   MobSpawn.Y = MapObj.Bounds.Center.Y;
+               }
+            }
+
+
+
+            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["enemy2Down"]));
+            globals.Mobs[0].Position.X = MobSpawn.X;
+            globals.Mobs[0].Position.Y = MobSpawn.Y;
             globals.Mobs[0].IsActive = true;
             globals.Mobs[0].Velocity.X = -1f;
+            globals.Mobs[0].MobPath = globals.MobPath;
 
 
 
             /*globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
                 AssetManager.LoadedSprites["cannonball"]));*/
 
-            globals.Towers.Add( new Tower("Example_Json_Tower_Definition.txt", AssetManager) );
+            globals.Towers.Add(new Tower("Example_Json_Tower_Definition.txt", AssetManager));
 
             globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
             globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
@@ -133,13 +179,6 @@ namespace vgcpTowerDefense
             {
                 projectile.AngularVelocity = .1f;
             }
-
-
-
-
-            globals.Towers[0].CreateExampleJsonTowerConfigFile();
-            
-
 
            
 
@@ -180,8 +219,8 @@ namespace vgcpTowerDefense
 
             if (!globals.Mobs[0].IsActive)
             {
-                globals.Mobs[0].Position.X = globals.viewport_rectangle.Width - 100;
-                globals.Mobs[0].Position.Y = globals.viewport_rectangle.Center.Y;
+                globals.Mobs[0].Position.X = MobSpawn.X;
+                globals.Mobs[0].Position.Y = MobSpawn.Y;
                 globals.Mobs[0].Health = 100;
                 globals.Mobs[0].IsActive = true;
             }
@@ -208,7 +247,8 @@ namespace vgcpTowerDefense
 
             //draw background
             map.Draw(spriteBatch, mapView);
-
+ 
+            
             //Draw Units
             foreach (EnemyMob Mob in globals.Mobs)
             {

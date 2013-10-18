@@ -10,20 +10,36 @@ using Microsoft.Xna.Framework.Input;
 
 namespace vgcpTowerDefense.GameObjects
 {
+
+    public class MobWayPoint
+    {
+        public Vector2 Position;    /*This position on the map the waypoint points to*/
+        public int WayPointNumber;  /*Waypoint order number. The mob will go to each waypoint, in order, forming a path*/
+    }
+    
+    
     public class EnemyMob : DrawableGameObject
     {
         public int Health;
+        public List<MobWayPoint> MobPath;
+        protected int CurrentWayPoint; /*Which WayPoint the mob is currently headed to. It starts at 1 then heads to the next*/
+        protected bool CurrentlyTravelingToWayPoint; /*True if the mob is heading tower a waypoint, false if not. 
+* Used so the mob does not have recalculate a direction vector each update cycle*/
+        public float Speed; /*The movementspeed of the mob*/
         
         
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
         {
             
-            Health = 100;
+            Health = 1000;
             Scale = .8f;
+            CurrentWayPoint = 1;
+            Speed = 10;
+            CurrentlyTravelingToWayPoint = false;
 
             //initializations
-            current_status_effects = new List<Common.status_effect>();
+            CurrentStatusEffects = new List<Common.status_effect>();
         }
 
 
@@ -34,7 +50,7 @@ namespace vgcpTowerDefense.GameObjects
             Health = 100;
 
             //initializations
-            current_status_effects = new List<Common.status_effect>();
+            CurrentStatusEffects = new List<Common.status_effect>();
         }
 
 
@@ -46,21 +62,21 @@ namespace vgcpTowerDefense.GameObjects
         }
 
 
-        protected List<Common.status_effect> current_status_effects;
+        protected List<Common.status_effect> CurrentStatusEffects;
 
 
 
         //removes status effects that have timed out
-        protected void UpdateStatusEffects(GameTime game_time)
+        protected void UpdateStatusEffects(GameTime GameTime)
         {
 
             // remove each status from the list which effect timer is zero or less
-            current_status_effects.RemoveAll(x => x.status_effect_time_ms <= 0);
+            CurrentStatusEffects.RemoveAll(x => x.StatusEffectTimeMS <= 0);
 
             //decrement the status effect timers
-            foreach (Common.status_effect status_effect in current_status_effects)
+            foreach (Common.status_effect StatusEffect in CurrentStatusEffects)
             {
-                status_effect.status_effect_time_ms -= game_time.ElapsedGameTime.Milliseconds;
+                StatusEffect.StatusEffectTimeMS -= GameTime.ElapsedGameTime.Milliseconds;
             }
             
           
@@ -68,27 +84,36 @@ namespace vgcpTowerDefense.GameObjects
 
 
         //takes a list of incomming status effects, adds them to the mobs list of status effects, if not there already
-        public void AddStatusEffects(List<Common.status_effect> incomming_status_effects)
+        public void AddStatusEffects(List<Common.status_effect> incomingStatusEffects)
         {
-            foreach (Common.status_effect inc_status_effect in incomming_status_effects)
+            foreach (Common.status_effect incomingStatusEffect in incomingStatusEffects)
             {
-                if(this.current_status_effects.FindIndex(item => item.status_effect_name == inc_status_effect.status_effect_name) != -1)
+                if(this.CurrentStatusEffects.FindIndex(item => item.StatusEffectName == incomingStatusEffect.StatusEffectName) != -1)
                 {
                     //effect already exists, do nothing
                 }
                 else
                 {
-                   this.current_status_effects.Add(new Common.status_effect(inc_status_effect.status_effect_name, inc_status_effect.status_effect_time_ms) );
+                   this.CurrentStatusEffects.Add(new Common.status_effect(incomingStatusEffect.StatusEffectName, incomingStatusEffect.StatusEffectTimeMS) );
                 }
             }
         }
 
-        public virtual void Update(GameTime GameTime)
+
+        public override void Update(GameTime gameTime)
         {
-            this.Update();
+            base.Update(gameTime);
             this.UpdateHealth();
-            this.UpdateStatusEffects(GameTime);
+            this.UpdateStatusEffects(gameTime);
+
+            if (MobPath != null && !CurrentlyTravelingToWayPoint)
+            {
+                this.Velocity = Util.vgpc_math.create_target_unit_vector(this.Position, MobPath[CurrentWayPoint - 1].Position) * this.Speed;
+                this.CurrentlyTravelingToWayPoint = false;
+                this.CurrentWayPoint++;
+            }
         }
+
         protected virtual void UpdateHealth()
         {
             if (this.Health <= 0)

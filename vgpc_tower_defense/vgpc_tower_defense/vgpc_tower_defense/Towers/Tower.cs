@@ -279,7 +279,7 @@ protected virtual void UpdateProjectiles(GameTime gameTime)
             }
 
             //finally,  update the position of each active projectile
-            Projectile.Update();
+            Projectile.Update(gameTime);
 
         }
     }

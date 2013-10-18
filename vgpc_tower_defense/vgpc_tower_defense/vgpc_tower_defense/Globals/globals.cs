@@ -13,6 +13,8 @@ using Microsoft.Xna.Framework.Media;
 
 namespace vgcpTowerDefense
 {
+    
+    
     public static class globals
     {
         //player
@@ -38,6 +40,10 @@ namespace vgcpTowerDefense
 
         //display related stuff
         public static Rectangle viewport_rectangle;
+
+        public static List<MobWayPoint> MobPath;
+        //Pathing Related Stuff, TODO Move to pathing related class
+
 
     }
 

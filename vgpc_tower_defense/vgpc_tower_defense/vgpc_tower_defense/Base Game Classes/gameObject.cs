@@ -118,7 +118,7 @@ namespace vgcpTowerDefense.GameObjects
 
   
         //by adding the objects velocity to it's position every update cycle, we can make the object "move".
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             if (IsActive)
             {
