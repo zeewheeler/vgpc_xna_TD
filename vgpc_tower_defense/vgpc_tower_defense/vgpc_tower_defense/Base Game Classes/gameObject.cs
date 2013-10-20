@@ -29,21 +29,11 @@ namespace vgcpTowerDefense.GameObjects
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.
         //This mechanism allows us to set up default values of it's variables.
 
-
-        public DrawableGameObject()
-        {
-
-            Position = new Vector2(0, 0);
-            Velocity = new Vector2(0, 0);
-            
-            Scale = 1f;
-            Rotation = 0f;
-            Position = Vector2.Zero;
-            Velocity = Vector2.Zero;
-            IsActive = false;
-            Color = Color.White;
-        }
-        
+        /// <summary>
+        /// Constructor. Initializes the the object to default values the moment it is instantiated.
+        /// </summary>
+        /// <param name="loadedTexture"></param>
+ 
         public DrawableGameObject(Texture2D loadedTexture)
         {
 
@@ -72,7 +62,12 @@ namespace vgcpTowerDefense.GameObjects
                 this.Position.Y + ((this.TextureCurrent.Width * this.Scale) / 2));
         }
 
-        public Vector2 GetOrigin()
+        /// <summary>
+        /// Returns the offset the represents the distance between the center of the object and the "origin" of the object. The origin of the object is the point
+        /// which the object rotates about.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetOriginOffset()
         {
             if (TextureCurrent == null)
             {
@@ -85,11 +80,11 @@ namespace vgcpTowerDefense.GameObjects
         public virtual Rectangle GetBoundingRectangle()
         {
             Rectangle BoundingRec = new Rectangle(
-                (int)this.Position.X,
-                (int)this.Position.Y,
+                (int)(this.Position.X - this.TextureCurrent.Width * this.Scale / 2),
+                (int)(this.Position.Y - this.TextureCurrent.Height * this.Scale / 2),
                 (int)(this.TextureCurrent.Width * this.Scale),
                 (int)(this.TextureCurrent.Height * this.Scale));
-            
+
             return BoundingRec;
 
         }
@@ -100,7 +95,7 @@ namespace vgcpTowerDefense.GameObjects
             if (IsActive)
             {
                 //spriteBatch.Draw(CurrentTexture, Position, Color.White);
-                spriteBatch.Draw(TextureCurrent, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
+                spriteBatch.Draw(TextureCurrent, Position, null, Color, Rotation, this.GetOriginOffset(), Scale, SpriteEffects.None, 1);
                     
             }
         }
@@ -111,7 +106,7 @@ namespace vgcpTowerDefense.GameObjects
             if (IsActive)
             {
                 //spriteBatch.Draw(texture, this.GetCenter(), Color.White);
-                spriteBatch.Draw(texture, Position, null, Color, Rotation, this.GetOrigin(), Scale, SpriteEffects.None, 1);
+                spriteBatch.Draw(texture, Position, null, Color, Rotation, this.GetOriginOffset(), Scale, SpriteEffects.None, 1);
                 
             }
         }

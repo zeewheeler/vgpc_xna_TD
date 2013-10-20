@@ -100,7 +100,6 @@
     <Compile Include="Automatic\Program.cs" />
     <Compile Include="Util\DrawShape.cs" />
     <Compile Include="vgcpTowerDefenseGame.cs" />
-    <Compile Include="Towers\plasma_tower.cs" />
     <Compile Include="Util\vgpc_math.cs" />
   </ItemGroup>
   <ItemGroup>

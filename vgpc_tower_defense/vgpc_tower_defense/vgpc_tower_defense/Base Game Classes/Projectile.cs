@@ -10,7 +10,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace vgcpTowerDefense.GameObjects
 {
-   
+        /// <summary>
+        /// Defines functionality of 
+        /// </summary>
         public class Projectile : DrawableGameObject
         {
            

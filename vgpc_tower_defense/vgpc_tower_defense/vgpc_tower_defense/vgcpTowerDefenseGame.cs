@@ -40,9 +40,12 @@ namespace vgcpTowerDefense
 
         Vector2 MobSpawn;
 
-        Util.DrawRectangle RectangleDrawer; 
-        
+        Util.DrawRectangle RectangleDrawer;
 
+        MouseState PreviousMouseState;
+
+
+        int MobDeathCounter = 0;
 
 
        
@@ -57,6 +60,7 @@ namespace vgcpTowerDefense
             globals.MobPath = new List<MobWayPoint>();
 
             RectangleDrawer = new Util.DrawRectangle(this);
+            RectangleDrawer.Visible = false;
 
 
 
@@ -103,11 +107,11 @@ namespace vgcpTowerDefense
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["Map2"];
-            map.Orientation = MapOrientation.Isometric;
+            map = AssetManager.LoadedMaps["Map3"];
+           // map.Orientation = MapOrientation.Isometric;
 
-            Config.JsonConfigOperations.CreateExampleJsonConfigFile();
-            Config.TowerConfig.WriteExampleJsonTowerConfig();
+            //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
+            //Config.TowerConfig.WriteExampleJsonTowerConfig();
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -148,11 +152,10 @@ namespace vgcpTowerDefense
 
 
 
-            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["enemy2Down"]));
-            globals.Mobs[0].Position.X = MobSpawn.X;
+            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["badGuyOrcLeft"]));
+            globals.Mobs[0].Position.X = MobSpawn.X - 200;
             globals.Mobs[0].Position.Y = MobSpawn.Y;
             globals.Mobs[0].IsActive = true;
-            globals.Mobs[0].Velocity.X = -1f;
             globals.Mobs[0].MobPath = globals.MobPath;
 
 
@@ -160,36 +163,36 @@ namespace vgcpTowerDefense
             /*globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
                 AssetManager.LoadedSprites["cannonball"]));*/
 
-            globals.Towers.Add(new Tower("Example_Json_Tower_Definition.txt", AssetManager));
+            //globals.Towers.Add(new Tower("Example_Json_Tower_Definition.txt", AssetManager));
 
-            globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
-            globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
-            globals.Towers[0].IsActive = true;
+            //globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
+            //globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
+            //globals.Towers[0].IsActive = true;
 
-            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-               AssetManager.LoadedSprites["rocket"]));
+            //globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+            //   AssetManager.LoadedSprites["rocket"]));
 
-            globals.Towers[1].Position.X = globals.viewport_rectangle.Center.X / 3;
-            globals.Towers[1].Position.Y = globals.viewport_rectangle.Center.Y + 200;
-            globals.Towers[1].IsActive = true;
+            //globals.Towers[1].Position.X = globals.viewport_rectangle.Center.X / 3;
+            //globals.Towers[1].Position.Y = globals.viewport_rectangle.Center.Y + 200;
+            //globals.Towers[1].IsActive = true;
 
-            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-               AssetManager.LoadedSprites["starcharge"]));
+            //globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+            //   AssetManager.LoadedSprites["starcharge"]));
 
-            globals.Towers[2].Position.X = globals.viewport_rectangle.Center.X / 3;
-            globals.Towers[2].Position.Y = globals.viewport_rectangle.Center.Y - 200;
-            globals.Towers[2].IsActive = true;
+            //globals.Towers[2].Position.X = globals.viewport_rectangle.Center.X / 3;
+            //globals.Towers[2].Position.Y = globals.viewport_rectangle.Center.Y - 200;
+            //globals.Towers[2].IsActive = true;
 
-            foreach (Projectile projectile in globals.Towers[2].Projectiles)
-            {
-                projectile.AngularVelocity = .1f;
-            }
+            //foreach (Projectile projectile in globals.Towers[2].Projectiles)
+            //{
+            //    projectile.AngularVelocity = .1f;
+            //}
 
 
             
 
             //Debug: Visualize the enemies bounding rectangle
-            RectangleDrawer.Visible = true;
+            //RectangleDrawer.Visible = true;
             RectangleDrawer.SetColor(Color.Red);
 
 
@@ -221,20 +224,45 @@ namespace vgcpTowerDefense
             //{
             //    globals.Mobs[0].Velocity.Y *= -1;
             //}
-            
+
+            var MouseState = Mouse.GetState();
+            var MousePosition = new Vector2(MouseState.X, MouseState.Y);
+
+            if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
+            {
+                globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+             AssetManager.LoadedSprites["starcharge"]));
+
+                globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
+                globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
+                globals.Towers[globals.Towers.Count - 1].IsActive = true;
+            }
+            PreviousMouseState = MouseState;
             
             foreach (EnemyMob Mob in globals.Mobs)
             {
                 Mob.Update(gameTime);
             }
 
-            if (!globals.Mobs[0].IsActive)
+
+            for (int i = 0; i < globals.Mobs.Count; i++)
             {
-                globals.Mobs[0].Position.X = MobSpawn.X;
-                globals.Mobs[0].Position.Y = MobSpawn.Y;
-                globals.Mobs[0].Health = 100;
-                globals.Mobs[0].IsActive = true;
+                if (!globals.Mobs[i].IsActive)
+                {
+                    globals.Mobs[0].Position.X = MobSpawn.X;
+                    globals.Mobs[0].Position.Y = MobSpawn.Y;
+                    globals.Mobs[0].Health = 100;
+                    globals.Mobs[0].IsActive = true;
+                    MobDeathCounter++;
+                }
+
+                
             }
+
+            if (MobDeathCounter % 10 == 0)
+            {
+            }
+           
 
             foreach (Tower Tower in globals.Towers)
             {

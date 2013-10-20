@@ -16,14 +16,14 @@ namespace vgcpTowerDefense.Util
         SpriteBatch spriteBatch;
         Texture2D Texture;
         Rectangle RectangleToDraw;
-        Color Color;
+        Color TextureColor;
 
         public DrawRectangle(Game game)
             : base(game)
         {
 
             DrawOrder = 1000; /* Choose a high number, so we will draw on top of other components. */
-            Color = Color.White; /*Default to draw white*/
+            TextureColor = Color.White; /*Default to draw white*/
             this.Visible = false;
 
 
@@ -43,7 +43,9 @@ namespace vgcpTowerDefense.Util
 
         public void SetColor(Color color)
         {
+            color.A = 50;
             Texture.SetData(new Color[] { color});
+           
             
         }
 
@@ -52,7 +54,8 @@ namespace vgcpTowerDefense.Util
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(Texture, RectangleToDraw, Color);
+            
+            spriteBatch.Draw(Texture, RectangleToDraw, TextureColor);
             spriteBatch.End();
         }
     }

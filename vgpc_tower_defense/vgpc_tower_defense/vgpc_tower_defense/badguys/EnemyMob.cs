@@ -14,7 +14,7 @@ namespace vgcpTowerDefense.GameObjects
     public class MobWayPoint
     {
         public Vector2 Position;    /*This position on the map the waypoint points to*/
-        public int WayPointNumber;  /*Waypoint order number. The mob will go to each waypoint, in order, forming a path*/
+        public int WayPointNumber;  /*Waypoint number. The mob will go to each waypoint, in order, forming a path*/
     }
     
     
@@ -22,20 +22,24 @@ namespace vgcpTowerDefense.GameObjects
     {
         public int Health;
         public List<MobWayPoint> MobPath;
-        protected int CurrentWayPoint; /*Which WayPoint the mob is currently headed to. It starts at 1 then heads to the next*/
-        protected bool CurrentlyTravelingToWayPoint; /*True if the mob is heading tower a waypoint, false if not. 
-* Used so the mob does not have recalculate a direction vector each update cycle*/
+        protected int CurrentWayPoint; /*Which WayPoint the mob is currently headed to.*/
+        protected bool CurrentlyTravelingToWayPoint; /*True if the mob is heading tower a waypoint, false if not.*/
         public float Speed; /*The movementspeed of the mob*/
+        protected List<Common.status_effect> CurrentStatusEffects; /*A list of status effects currently affecting this mob*/
         
         
+        /// <summary>
+        /// Initializes a new EnemyMob at the moment it is created.
+        /// </summary>
+        /// <param name="loadedTexture"></param>
         public EnemyMob(Texture2D loadedTexture)
                 : base(loadedTexture)
         {
             
-            Health = 1000;
-            Scale = .8f;
+            Health = 100;
+            Scale = 1.0f;
             CurrentWayPoint = 1;
-            Speed = 3;
+            Speed = 1;
             CurrentlyTravelingToWayPoint = false;
 
             //initializations
@@ -43,26 +47,36 @@ namespace vgcpTowerDefense.GameObjects
         }
 
 
-        public EnemyMob()
-            : base()
+        
+        /// <summary>
+        /// Resets object to intial values and "spawns" the mob at the given position
+        /// </summary>
+        /// <param name="position"></param>
+        public virtual void Spawn(Vector2 position)
         {
-
             Health = 100;
+            Scale = 1.0f;
+            CurrentWayPoint = 1;
+            Speed = 1;
+            CurrentlyTravelingToWayPoint = false;
+            CurrentStatusEffects.Clear();
 
-            //initializations
-            CurrentStatusEffects = new List<Common.status_effect>();
+            this.Position = position;
+            this.IsActive = true;
         }
 
 
-
-
+        /// <summary>
+        /// Damages this mob by the amount passed in
+        /// </summary>
+        /// <param name="damage"></param>
         public void damage_me(int damage)
         {
             Health -= damage;
         }
 
 
-        protected List<Common.status_effect> CurrentStatusEffects;
+
 
 
 
@@ -100,6 +114,10 @@ namespace vgcpTowerDefense.GameObjects
         }
 
 
+        /// <summary>
+        /// Updates this mob. 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -110,7 +128,9 @@ namespace vgcpTowerDefense.GameObjects
             
         }
 
-
+        /// <summary>
+        /// Keeps mob moving on a path, if a path has been defined.
+        /// </summary>
         protected virtual void UpdatePathing()
         {
             if (MobPath != null) /*Check if mob has a path defined*/
@@ -145,6 +165,9 @@ namespace vgcpTowerDefense.GameObjects
             }
         }
 
+        /// <summary>
+        /// Updates health related factors on mob, if health is zero, kills mob.
+        /// </summary>
         protected virtual void UpdateHealth()
         {
             if (this.Health <= 0)
@@ -153,6 +176,10 @@ namespace vgcpTowerDefense.GameObjects
             }
         }
 
+
+        /// <summary>
+        /// Kills this mob.
+        /// </summary>
         protected virtual void KillThisMob()
         {
             this.IsActive = false;
