@@ -91,6 +91,8 @@
     <Compile Include="Base Game Classes\Projectile.cs" />
     <Compile Include="Config\config_reader.cs" />
     <Compile Include="Interfaces\interfaces.cs" />
+    <Compile Include="Managers\Game State Manager.cs" />
+    <Compile Include="Managers\Level Manager.cs" />
     <Compile Include="Towers\Tower.cs" />
     <Compile Include="Common\display.cs" />
     <Compile Include="Common\GameComponent1.cs" />

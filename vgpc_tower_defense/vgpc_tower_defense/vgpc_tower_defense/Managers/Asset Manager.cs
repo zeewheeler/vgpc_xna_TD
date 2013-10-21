@@ -75,7 +75,7 @@ namespace vgcpTowerDefense.Managers
                 }
                 else if ((Path.StartsWith("Maps", false, CultureInfo)))
                 {
-                    /*The FuncWorks Xtiled content pipeline creates addition files in a folder for each map it loads, we do NOT want to 
+                    /*The FuncWorks Xtiled content processor creates addition files in a folder for each map it loads, we do NOT want to 
                      * load these files, so we exclude any folders after the Maps directory*/
                     if(!Path.Contains('\\') && !Path.Contains('/') )
                     {
