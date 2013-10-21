@@ -47,6 +47,8 @@ namespace vgcpTowerDefense
 
         int MobDeathCounter = 0;
 
+        Random random;
+
 
        
         public vgcp_tower_defense_game()
@@ -116,11 +118,11 @@ namespace vgcpTowerDefense
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-     
-    
-       
 
 
+
+
+            random = new Random();
 
           
 
@@ -230,13 +232,32 @@ namespace vgcpTowerDefense
 
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
-                globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-             AssetManager.LoadedSprites["starcharge"]));
+                
+                        globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+            AssetManager.LoadedSprites["LaserBlue"]));
+             
+               
 
                 globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
                 globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
                 globals.Towers[globals.Towers.Count - 1].IsActive = true;
             }
+
+            if (MouseState.RightButton == ButtonState.Pressed && !(PreviousMouseState.RightButton == ButtonState.Pressed))
+            {
+
+                globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+    AssetManager.LoadedSprites["LaserRed"]));
+
+
+
+                globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
+                globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
+                globals.Towers[globals.Towers.Count - 1].IsActive = true;
+            }
+
+
+
             PreviousMouseState = MouseState;
             
             foreach (EnemyMob Mob in globals.Mobs)
@@ -249,11 +270,15 @@ namespace vgcpTowerDefense
             {
                 if (!globals.Mobs[i].IsActive)
                 {
-                    globals.Mobs[0].Position.X = MobSpawn.X;
-                    globals.Mobs[0].Position.Y = MobSpawn.Y;
-                    globals.Mobs[0].Health = 100;
-                    globals.Mobs[0].IsActive = true;
+                    globals.Mobs[i].Spawn(MobSpawn);
                     MobDeathCounter++;
+
+                    if (MobDeathCounter % 2 == 0)
+                    {
+                        globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["badGuyOrcLeft"]));
+                        globals.Mobs[globals.Mobs.Count - 1].Spawn(MobSpawn);
+                        globals.Mobs[globals.Mobs.Count - 1].MobPath = globals.MobPath;
+                    }
                 }
 
                 

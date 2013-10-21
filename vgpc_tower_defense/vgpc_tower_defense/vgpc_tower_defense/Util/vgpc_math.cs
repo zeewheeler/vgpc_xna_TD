@@ -38,11 +38,11 @@ namespace vgcpTowerDefense.Util
         //returns the position of the closest enemy mob to the given position
         public static List<FindNearestMobResult> FindNearestMob(Vector2 towerCenter, List<GameObjects.EnemyMob> enemyMobs)
         {
-            List<FindNearestMobResult> ReturnClass = new List<FindNearestMobResult>();
+            List<FindNearestMobResult> ReturnVal = new List<FindNearestMobResult>();
             //if no enemies in list, return a null via default keyword
             if (enemyMobs.Count == 0)
             {
-                return ReturnClass;
+                return ReturnVal;
             }
              
             float distance;
@@ -55,24 +55,26 @@ namespace vgcpTowerDefense.Util
             {
                 if(BadGuy.IsActive)
                 {
-                    //utilize the build in vector class do the the math for us
-                    if (0 == ReturnClass.Count)
+                    
+                    if (0 == ReturnVal.Count)
                     {
                         FindNearestMobResult Result = new FindNearestMobResult();
-                        ReturnClass.Add(Result);
+                        ReturnVal.Add(Result);
                     }
-                   
+                    //utilize the XNA vector class do the the math for us
                     distance = Vector2.Distance(towerCenter, BadGuy.GetCenter());
                 
                     if (distance < MinDistance)
                     {
-                        ReturnClass[0].EnemyMob = BadGuy;
-                        ReturnClass[0].Distance = distance;
+                        ReturnVal[0].EnemyMob = BadGuy;
+                        ReturnVal[0].Distance = distance;
+
+                        MinDistance = distance;
                     }
                 }
             }
 
-            return ReturnClass;
+            return ReturnVal;
             
         }
 
