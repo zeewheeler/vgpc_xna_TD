@@ -35,8 +35,11 @@ namespace vgcpTowerDefense
         public const string ContentConfigSPRITEIdentifier = "content_sprite";
 
         //Lists to hold instantiated units
-        public static List<EnemyMob> Mobs;
-        public static List<Tower> Towers;
+        public static List<EnemyMob> Mobs = new List<EnemyMob>();
+        public static List<Tower> Towers = new List<Tower>();
+
+        public static Dictionary<String, MobPathingInfo> MobPaths =
+            new Dictionary<string, MobPathingInfo>();
 
         //display related stuff
         public static Rectangle viewport_rectangle;

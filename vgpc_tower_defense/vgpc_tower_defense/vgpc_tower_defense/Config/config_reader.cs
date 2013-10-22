@@ -192,10 +192,35 @@ namespace vgcpTowerDefense.Config
     /// Defines methods to easily set towerConfigValues using values from Json config files
     /// </summary>
 
-
+    /// <summary>
+    /// Holds mob related vars
+    /// </summary>
+    public class MobVars
+    {
+    }
+    
+    /// <summary>
+    /// Reads EnemyMob vars from a file
+    /// </summary>
     static public class MobConfig
     {
         //public struct 
     }
+
+    /// <summary>
+    /// Holds level related variables
+    /// </summary>
+    public class LevelVars
+    {
+    }
+
+    /// <summary>
+    /// Reads Level vars from a file
+    /// </summary>
+    public static class LevelConfig
+    {
+    }
+
+    
     
 }

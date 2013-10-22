@@ -24,6 +24,8 @@ namespace vgcpTowerDefense.GameObjects
         public float AngularVelocity;       /* The magnitude and direction that the object's rotation changes each update*/
         public float Scale;                 /*The amount the object's graphic and hit box are scaled.*/
         public Color Color { get; set; }
+        public String IdentifierString;     /* String Identifier used to provide unique ID's to different instances of the same gameObject
+                                             class*/
   
         //This is the class constructor, notice that is a function that is call the same thing as the
         //class name, which in this game is "GameObject". It is automatically called whenever you create an instance of this class.

@@ -154,7 +154,8 @@ namespace vgcpTowerDefense
 
 
 
-            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["badGuyOrcLeft"]));
+            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["EvilRobotRight"],
+                "EvilRobotRight"));
             globals.Mobs[0].Position.X = MobSpawn.X - 200;
             globals.Mobs[0].Position.Y = MobSpawn.Y;
             globals.Mobs[0].IsActive = true;
@@ -273,9 +274,10 @@ namespace vgcpTowerDefense
                     globals.Mobs[i].Spawn(MobSpawn);
                     MobDeathCounter++;
 
-                    if (MobDeathCounter % 2 == 0)
+                    if ((MobDeathCounter % 2 == 0) && (globals.Mobs.Count < 100 ) )
                     {
-                        globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["badGuyOrcLeft"]));
+                        globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["EvilRobotRight"],
+                            "EvilRobotRight"));
                         globals.Mobs[globals.Mobs.Count - 1].Spawn(MobSpawn);
                         globals.Mobs[globals.Mobs.Count - 1].MobPath = globals.MobPath;
                     }
