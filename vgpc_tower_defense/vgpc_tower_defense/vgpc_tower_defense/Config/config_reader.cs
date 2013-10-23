@@ -195,8 +195,13 @@ namespace vgcpTowerDefense.Config
     /// <summary>
     /// Holds mob related vars
     /// </summary>
-    public class MobVars
+    public class ConfigMobVars
     {
+        public int Health;
+        public float Speed; /*The movementspeed of the mob*/
+        public string MobIdentifier;
+
+ 
     }
     
     /// <summary>
@@ -208,6 +213,7 @@ namespace vgcpTowerDefense.Config
     }
 
 
+    
 
     /// <summary>
     /// Reads Level vars from a file

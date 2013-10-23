@@ -11,12 +11,6 @@ using Microsoft.Xna.Framework.Input;
 namespace vgcpTowerDefense.Managers
 {
 
-   
-
-
-
-
-
 
     /// <summary>
     /// Manages a game level, which consists of multiple "waves". The level manager will spawn multiple waves in a 
@@ -129,19 +123,15 @@ namespace vgcpTowerDefense.Managers
                 }
                 else // Last mob in wave. Advance to Next wave, if there is one
                 {
-                    if ((CurrentWaveInLevel - 1)  < MobWaves.Count)
-                    {
-                        CurrentWaveInLevel++; //increment wave
-                        CurrentMobInWave = 1; //set current mob to first in new wave
-                        IsActive = false; /* Stop the spawning. After each wave, the spawning stops until the player triggers
-                                           * the next wave. To start again, set isActive to true. */
-
-                    }
-                    else // no more mobs or waves, level is done!
-                    {
-                        throw new Exception("What happens when you finish all mobs and waves?"); //reminder to implement some sort of end of level
-                    }
+                    CurrentWaveInLevel++; //increment wave
+                    CurrentMobInWave = 1; //set current mob to first in new wave
+                    IsActive = false; /* Stop the spawning. After each wave, the spawning stops until the player triggers
+                                       * the next wave. To start again, set isActive to true. */
                 }
+            }
+            else // no more mobs or waves, level is done!
+            {
+                throw new Exception("What happens when you finish all mobs and waves?"); //reminder to implement some sort of end of level
             }
         }
 

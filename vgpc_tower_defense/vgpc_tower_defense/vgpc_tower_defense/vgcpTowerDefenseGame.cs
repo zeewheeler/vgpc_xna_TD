@@ -58,6 +58,7 @@ namespace vgcpTowerDefense
         public vgcp_tower_defense_game()
         {
             AssetManager = new Managers.AssetManager(this);
+            Config.LevelConfig.WriteExampleJsonLevelConfig();
             LevelManager = new Managers.LevelManager(AssetManager,
                 Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt"));
             LevelManager.IsActive = true;
@@ -123,7 +124,7 @@ namespace vgcpTowerDefense
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
             //Config.TowerConfig.WriteExampleJsonTowerConfig();
-            Config.LevelConfig.WriteExampleJsonLevelConfig();
+            
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);

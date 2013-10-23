@@ -195,18 +195,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Maps\Exclude\base_out_atlas.png">
-      <Name>base_out_atlas</Name>
-      <Importer>TextureImporter</Importer>
+    <Compile Include="Maps\SciFi.tmx">
+      <Name>SciFi</Name>
+      <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Maps\Exclude\terrain_atlas.png">
-      <Name>terrain_atlas</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TMXContentProcessor</Processor>
-    </None>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
