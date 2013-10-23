@@ -99,19 +99,33 @@ namespace vgcpTowerDefense.Managers
                 {
                     MobIdentifer = MobWaves[WaveMarker - 1].MobSpawnEntries[MobMarker].MobIdentifier;
                     MobPathIdentifier = MobWaves[WaveMarker - 1].MobSpawnEntries[MobMarker].PathIdentifer;
-                    
+
                     /*Find an enemy mob that is currently not being used of the appropriate type.
                     * If one is not available, create a new one.*/
                     for (int i = 0; i < globals.Mobs.Count; i++)
                     {
-                        if(MobIdentifer == globals.Mobs[i].IdentifierString && 
-                            (false == globals.Mobs[i].IsActive) )
+                        if (MobIdentifer == globals.Mobs[i].IdentifierString &&
+                            (false == globals.Mobs[i].IsActive))
                         {
                             //Inactive yet instantiated mob of the proper type found, spawn it
-                            globals.Mobs[i].Spawn(globals.MobPaths["MobPathIdentifier"].MobSpawnLocation,
-                                );
+                            globals.Mobs[i].Spawn(globals.MobPaths["MobPathIdentifier"]);
+                            return;
 
                         }
+                    }
+                    //no available mobs of proper type, we'll have to add a new one
+                    GameObjects.EnemyMob NewMob = new GameObjects.EnemyMob(AssetManager.LoadedSprites[MobIdentifer],
+                        MobIdentifer);
+                    NewMob.Spawn(globals.MobPaths["MobPathIdentifier"]);
+                    globals.Mobs.Add(NewMob);
+                    return;
+
+                }
+                else // Last mob in wave. Advance to Next wave, if there is one
+                {
+                    if ((WaveMarker + 1) < MobWaves.Count)
+                    {
+                        WaveMarker++;
                     }
                 }
             }
@@ -119,5 +133,5 @@ namespace vgcpTowerDefense.Managers
 
 
 
-    }
+    }// End Level Manager Class
 }

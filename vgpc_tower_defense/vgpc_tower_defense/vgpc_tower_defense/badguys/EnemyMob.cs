@@ -75,11 +75,12 @@ namespace vgcpTowerDefense.GameObjects
             this.IsActive = true;
         }
 
-        public virtual void Spawn(Vector2 position, Rectangle mobEndZone, MobPathingInfo MobPathingInfo)
+        public virtual void Spawn(MobPathingInfo mobPathInfo)
         {
-            this.MobEndZone = mobEndZone;
-            this.MobPath = MobPathingInfo.PathWayPoints;
-            this.Spawn(position);
+            this.Spawn(mobPathInfo.MobSpawnLocation);
+            this.MobEndZone = mobPathInfo.MobEndZone;
+            this.MobPath = mobPathInfo.PathWayPoints;
+            
 
         }
 
