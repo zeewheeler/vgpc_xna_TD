@@ -207,18 +207,66 @@ namespace vgcpTowerDefense.Config
         //public struct 
     }
 
-    /// <summary>
-    /// Holds level related variables
-    /// </summary>
-    public class LevelVars
-    {
-    }
+
 
     /// <summary>
     /// Reads Level vars from a file
     /// </summary>
     public static class LevelConfig
     {
+
+        static public void WriteExampleJsonLevelConfig()
+        {
+            List<GameObjects.MobWave> LevelMobWaves = new List<GameObjects.MobWave>();
+
+            GameObjects.MobWave MobWave1 = new GameObjects.MobWave();
+            GameObjects.MobWave MobWave2 = new GameObjects.MobWave();
+            GameObjects.MobWave MobWave3 = new GameObjects.MobWave();
+
+            GameObjects.MobSpawnEntry MobEntry1 = new GameObjects.MobSpawnEntry();
+            GameObjects.MobSpawnEntry MobEntry2 = new GameObjects.MobSpawnEntry();
+            GameObjects.MobSpawnEntry MobEntry3 = new GameObjects.MobSpawnEntry();
+           
+
+            MobEntry1.DelayAfter_ms = 1000;
+            MobEntry1.MobIdentifier = "EvilRobotRight";
+            MobEntry1.PathIdentifer = "Path1";
+
+            MobEntry2.DelayAfter_ms = 2000;
+            MobEntry2.MobIdentifier = "EvilRobotRight";
+            MobEntry2.PathIdentifer = "Path1";
+
+            MobEntry3.DelayAfter_ms = 3000;
+            MobEntry3.MobIdentifier = "EvilRobotRight";
+            MobEntry3.PathIdentifer = "Path1";
+            
+          
+            MobWave1.MobSpawnEntries.Add(MobEntry1);
+            MobWave1.MobSpawnEntries.Add(MobEntry2);
+            MobWave1.MobSpawnEntries.Add(MobEntry3);
+
+            MobWave2.MobSpawnEntries.Add(MobEntry3);
+            MobWave2.MobSpawnEntries.Add(MobEntry2);
+            MobWave2.MobSpawnEntries.Add(MobEntry1);
+
+            MobWave3.MobSpawnEntries.Add(MobEntry2);
+            MobWave3.MobSpawnEntries.Add(MobEntry3);
+            MobWave3.MobSpawnEntries.Add(MobEntry1);
+
+            LevelMobWaves.Add(MobWave1);
+            LevelMobWaves.Add(MobWave2);
+            LevelMobWaves.Add(MobWave3);
+
+            String JsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(LevelMobWaves, Formatting.Indented);
+
+            File.WriteAllText(Directory.GetCurrentDirectory() + @"\Definitions\Levels\Example_Json_Level_Definition.txt", JsonOutput, Encoding.ASCII);
+        }
+
+        static public List<GameObjects.MobWave> GetLevelConfigFromJsonFile(string filename)
+        {
+            string JsonFromFile = File.ReadAllText(@"Definitions\Levels\" + filename);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameObjects.MobWave>>(JsonFromFile);
+        }
     }
 
     

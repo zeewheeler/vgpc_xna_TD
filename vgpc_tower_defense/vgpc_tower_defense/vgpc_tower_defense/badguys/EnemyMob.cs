@@ -23,6 +23,29 @@ namespace vgcpTowerDefense.GameObjects
         public List<MobWayPoint> PathWayPoints; /*List of successive mob way points*/
         public Rectangle MobEndZone; /*Bounding box in which a mob "scores" if the reach*/
     }
+
+
+    /// <summary>
+    /// Basic structure to define a signle mob spawn instance. Many of these comprise a "wave"
+    /// </summary>
+    public struct MobSpawnEntry
+    {
+        public String MobIdentifier; /*Name of mob to be spawned*/
+        public int DelayAfter_ms; /*The amount of delay before another mob can be spawned after this one.
+                            Used in the "Timed Mob Queue" mode.*/
+        public String PathIdentifer; /*String identifier of the path the mob is to follow*/
+
+    }
+
+    public class MobWave
+    {
+        public List<MobSpawnEntry> MobSpawnEntries; /*Collection of mobs spawn entries.*/
+
+        public MobWave()
+        {
+            MobSpawnEntries = new List<MobSpawnEntry>();
+        }
+    }
     
     
     public class EnemyMob : DrawableGameObject
@@ -109,7 +132,7 @@ namespace vgcpTowerDefense.GameObjects
             //decrement the status effect timers
             foreach (Common.status_effect StatusEffect in CurrentStatusEffects)
             {
-                StatusEffect.StatusEffectTimeMS -= GameTime.ElapsedGameTime.Milliseconds;
+                StatusEffect.StatusEffectTimeMS -= (int)GameTime.ElapsedGameTime.TotalMilliseconds;
             }
             
           

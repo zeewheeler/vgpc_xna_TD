@@ -254,7 +254,7 @@ public class Tower : DrawableGameObject
                     Rectangle mob_bounding_box = mob.GetBoundingRectangle();
 
                     //if mob is 
-                    if (mob_bounding_box.Intersects(ProjectileBoundingBox))
+                    if (mob_bounding_box.Intersects(ProjectileBoundingBox) && mob.IsActive)
                     {
                         Projectile.IsActive = false;
                         DamageAndAffectMob(mob);
