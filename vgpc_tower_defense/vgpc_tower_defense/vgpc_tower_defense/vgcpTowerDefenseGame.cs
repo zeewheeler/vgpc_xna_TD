@@ -60,7 +60,7 @@ namespace vgcpTowerDefense
             AssetManager = new Managers.AssetManager(this);
             Config.LevelConfig.WriteExampleJsonLevelConfig();
             LevelManager = new Managers.LevelManager(AssetManager,
-                Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt"));
+                Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt").LevelMobWaves);
             LevelManager.IsActive = true;
 
 
@@ -119,7 +119,7 @@ namespace vgcpTowerDefense
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["Map3"];
+            map = AssetManager.LoadedMaps["SciFi"];
            // map.Orientation = MapOrientation.Isometric;
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();

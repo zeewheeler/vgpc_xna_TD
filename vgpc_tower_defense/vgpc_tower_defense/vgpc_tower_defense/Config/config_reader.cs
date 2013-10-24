@@ -213,7 +213,19 @@ namespace vgcpTowerDefense.Config
     }
 
 
-    
+
+    public class ConfigLevelVars
+    {
+        public List<GameObjects.MobWave> LevelMobWaves;
+        public string LevelIdentifier;
+
+        public ConfigLevelVars()
+        {
+            LevelMobWaves = new List<GameObjects.MobWave>();
+        }
+    }
+
+
 
     /// <summary>
     /// Reads Level vars from a file
@@ -223,7 +235,11 @@ namespace vgcpTowerDefense.Config
 
         static public void WriteExampleJsonLevelConfig()
         {
-            List<GameObjects.MobWave> LevelMobWaves = new List<GameObjects.MobWave>();
+            //List<GameObjects.MobWave> LevelMobWaves = new List<GameObjects.MobWave>();
+            ConfigLevelVars ExampleLevel = new ConfigLevelVars();
+
+            ExampleLevel.LevelIdentifier = "Example Level Json Definition";
+
 
             GameObjects.MobWave MobWave1 = new GameObjects.MobWave();
             GameObjects.MobWave MobWave2 = new GameObjects.MobWave();
@@ -259,19 +275,20 @@ namespace vgcpTowerDefense.Config
             MobWave3.MobSpawnEntries.Add(MobEntry3);
             MobWave3.MobSpawnEntries.Add(MobEntry1);
 
-            LevelMobWaves.Add(MobWave1);
-            LevelMobWaves.Add(MobWave2);
-            LevelMobWaves.Add(MobWave3);
+            ExampleLevel.LevelMobWaves.Add(MobWave1);
+            ExampleLevel.LevelMobWaves.Add(MobWave2);
+            ExampleLevel.LevelMobWaves.Add(MobWave3);
 
-            String JsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(LevelMobWaves, Formatting.Indented);
+
+            String JsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(ExampleLevel, Formatting.Indented);
 
             File.WriteAllText(Directory.GetCurrentDirectory() + @"\Definitions\Levels\Example_Json_Level_Definition.txt", JsonOutput, Encoding.ASCII);
         }
 
-        static public List<GameObjects.MobWave> GetLevelConfigFromJsonFile(string filename)
+        static public ConfigLevelVars GetLevelConfigFromJsonFile(string filename)
         {
             string JsonFromFile = File.ReadAllText(@"Definitions\Levels\" + filename);
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<GameObjects.MobWave>>(JsonFromFile);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ConfigLevelVars>(JsonFromFile);
         }
     }
 
