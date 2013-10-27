@@ -119,7 +119,7 @@ namespace vgcpTowerDefense
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["SciFi"];
+            map = AssetManager.LoadedMaps["Map2"];
            // map.Orientation = MapOrientation.Isometric;
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
@@ -266,8 +266,10 @@ namespace vgcpTowerDefense
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
                 
-                        globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-            AssetManager.LoadedSprites["LaserBlue"]));
+                Tower newTower = new Tower(AssetManager.LoadedSprites["Ninja"],
+            AssetManager.LoadedSprites["LaserBlue"]);
+
+                globals.Towers.Add(newTower);
              
                
 

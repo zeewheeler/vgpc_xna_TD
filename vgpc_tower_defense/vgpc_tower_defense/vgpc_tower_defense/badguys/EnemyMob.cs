@@ -11,32 +11,47 @@ using Microsoft.Xna.Framework.Input;
 namespace vgcpTowerDefense.GameObjects
 {
 
+    /// <summary>
+    /// Structure that contains a single point defining a way point and a int describing the order of
+    /// the waypoint in the mobs overall path.
+    /// </summary>
     public class MobWayPoint
     {
         public Vector2 Position;    /*This position on the map the waypoint points to*/
         public int WayPointNumber;  /*Waypoint number. The mob will go to each waypoint, in order, forming a path*/
     }
 
+
+    /// <summary>
+    /// Structure that contains points for start, end and each way point in-between. A path.
+    /// </summary>
     public class MobPathingInfo
     {
         public Vector2 MobSpawnLocation; /*location in which the mob spawns*/
         public List<MobWayPoint> PathWayPoints; /*List of successive mob way points*/
         public Rectangle MobEndZone; /*Bounding box in which a mob "scores" if the reach*/
-    }
 
+        public MobPathingInfo()
+        {
+            MobSpawnLocation  = new Vector2(); 
+            PathWayPoints   = new List<MobWayPoint>();
+        }
+    }
 
     /// <summary>
     /// Basic structure to define a signle mob spawn instance. Many of these comprise a "wave"
     /// </summary>
-    public struct MobSpawnEntry
+    public class MobSpawnEntry
     {
         public String MobIdentifier; /*Name of mob to be spawned*/
         public int DelayAfter_ms; /*The amount of delay before another mob can be spawned after this one.
                             Used in the "Timed Mob Queue" mode.*/
         public String PathIdentifer; /*String identifier of the path the mob is to follow*/
-
     }
 
+    /// <summary>
+    /// A list structure that contains a definition for a wave of mobs.
+    /// </summary>
     public class MobWave
     {
         public List<MobSpawnEntry> MobSpawnEntries; /*Collection of mobs spawn entries.*/
@@ -51,14 +66,13 @@ namespace vgcpTowerDefense.GameObjects
     public class EnemyMob : DrawableGameObject
     {
         public int Health;
-        public List<MobWayPoint> MobPath;
-        protected int CurrentWayPoint; /*Which WayPoint the mob is currently headed to.*/
-        protected bool CurrentlyTravelingToWayPoint; /*True if the mob is heading tower a waypoint, false if not.*/
         public float Speed; /*The movementspeed of the mob*/
         protected List<Common.status_effect> CurrentStatusEffects; /*A list of status effects currently affecting this mob*/
 
-        public Rectangle MobEndZone; /* Bounding box for the "end zone" of the mov. It the mob reaches this area, it "scores"*/
-        
+        protected int CurrentWayPoint; /*Which WayPoint the mob is currently headed to.*/
+        protected bool CurrentlyTravelingToWayPoint; /*True if the mob is heading tower a waypoint, false if not.*/
+
+        public MobPathingInfo MobPath; /*Structure defining mob start, end, and a list of waypoints to get you from start to end*/
         
         /// <summary>
         /// Initializes a new EnemyMob at the moment it is created.
@@ -70,13 +84,12 @@ namespace vgcpTowerDefense.GameObjects
             
             Health = 100;
             Scale = 1.0f;
-            CurrentWayPoint = 1;
             Speed = 1;
-            CurrentlyTravelingToWayPoint = false;
 
             //initializations
             CurrentStatusEffects = new List<Common.status_effect>();
-            MobEndZone = new Rectangle();
+            MobPath = new MobPathingInfo();
+
         }
 
 
@@ -88,10 +101,8 @@ namespace vgcpTowerDefense.GameObjects
         public virtual void Spawn(Vector2 position)
         {
             Health = 100;
-            Scale = 1.0f;
-            CurrentWayPoint = 1;
-            Speed = 1;
             CurrentlyTravelingToWayPoint = false;
+            CurrentWayPoint = 1;
             CurrentStatusEffects.Clear();
 
             this.Position = position;
@@ -101,8 +112,10 @@ namespace vgcpTowerDefense.GameObjects
         public virtual void Spawn(MobPathingInfo mobPathInfo)
         {
             this.Spawn(mobPathInfo.MobSpawnLocation);
-            this.MobEndZone = mobPathInfo.MobEndZone;
-            this.MobPath = mobPathInfo.PathWayPoints;
+            this.MobPath = mobPathInfo;
+ 
+            CurrentlyTravelingToWayPoint = false;
+            CurrentWayPoint = 1;
             
 
         }
@@ -180,22 +193,18 @@ namespace vgcpTowerDefense.GameObjects
                 if (!CurrentlyTravelingToWayPoint )
                 /*Mob has a path but is not heading towards a WayPoint, if one exists, find next waypoint and set mob velocity towards it*/
                 {
-                    if (this.CurrentWayPoint - 1 < this.MobPath.Count)
+                    if ( (this.CurrentWayPoint - 1) < this.MobPath.PathWayPoints.Count)
                     {
-                        this.Velocity = Util.vgpc_math.CreateTargetUnitVector(this.Position, MobPath[CurrentWayPoint - 1].Position) * this.Speed;
+                        this.Velocity = Util.vgpc_math.CreateTargetUnitVector(this.Position, MobPath.PathWayPoints[CurrentWayPoint - 1].Position) * this.Speed;
                         this.CurrentlyTravelingToWayPoint = true;
                     }
                 }
                 else /*Mob is currently heading towards a waypoint. Check if mob has reached waypoint.*/
                 {
 
-                    Rectangle debug = this.GetBoundingRectangle();
-                    debug.Width += 100;
-                    debug.Height += 100;
+                    Rectangle MobHitBox = this.GetBoundingRectangle();
 
-                    debug.X -= 50;
-                    debug.Y -= 50;
-                    bool IsTrue = Util.vgpc_math.DoesRectangleContainVector(debug, MobPath[CurrentWayPoint - 1].Position);
+                    bool IsTrue = Util.vgpc_math.DoesRectangleContainVector(MobHitBox, MobPath.PathWayPoints[CurrentWayPoint - 1].Position);
                     if(IsTrue)
                     {
                         this.Velocity = Vector2.Zero;
@@ -206,9 +215,9 @@ namespace vgcpTowerDefense.GameObjects
                 }
             }
 
-            if (MobEndZone != null)
+            if (MobPath.MobEndZone != null)
             {
-                if (Util.vgpc_math.DoesRectangleContainVector(MobEndZone, Position))
+                if (Util.vgpc_math.DoesRectangleContainVector(MobPath.MobEndZone, Position))
                 {
                     throw new Exception("Hey, you should implement the mob score thing");
 
