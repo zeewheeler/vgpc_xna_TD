@@ -265,9 +265,10 @@ namespace vgcpTowerDefense
 
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
-                
-                Tower newTower = new Tower(AssetManager.LoadedSprites["Ninja"],
+
+                Tower newTower = new Tower(AssetManager.LoadedSprites["Laser001"],
             AssetManager.LoadedSprites["LaserBlue"]);
+                //Tower newTower = new Tower("laser_tower.txt", AssetManager);
 
                 globals.Towers.Add(newTower);
              

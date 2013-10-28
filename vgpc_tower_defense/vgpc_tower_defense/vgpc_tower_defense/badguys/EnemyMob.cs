@@ -11,61 +11,11 @@ using Microsoft.Xna.Framework.Input;
 namespace vgcpTowerDefense.GameObjects
 {
 
-    /// <summary>
-    /// Structure that contains a single point defining a way point and a int describing the order of
-    /// the waypoint in the mobs overall path.
-    /// </summary>
-    public class MobWayPoint
-    {
-        public Vector2 Position;    /*This position on the map the waypoint points to*/
-        public int WayPointNumber;  /*Waypoint number. The mob will go to each waypoint, in order, forming a path*/
-    }
-
-
-    /// <summary>
-    /// Structure that contains points for start, end and each way point in-between. A path.
-    /// </summary>
-    public class MobPathingInfo
-    {
-        public Vector2 MobSpawnLocation; /*location in which the mob spawns*/
-        public List<MobWayPoint> PathWayPoints; /*List of successive mob way points*/
-        public Rectangle MobEndZone; /*Bounding box in which a mob "scores" if the reach*/
-
-        public MobPathingInfo()
-        {
-            MobSpawnLocation  = new Vector2(); 
-            PathWayPoints   = new List<MobWayPoint>();
-        }
-    }
-
-    /// <summary>
-    /// Basic structure to define a signle mob spawn instance. Many of these comprise a "wave"
-    /// </summary>
-    public class MobSpawnEntry
-    {
-        public String MobIdentifier; /*Name of mob to be spawned*/
-        public int DelayAfter_ms; /*The amount of delay before another mob can be spawned after this one.
-                            Used in the "Timed Mob Queue" mode.*/
-        public String PathIdentifer; /*String identifier of the path the mob is to follow*/
-    }
-
-    /// <summary>
-    /// A list structure that contains a definition for a wave of mobs.
-    /// </summary>
-    public class MobWave
-    {
-        public List<MobSpawnEntry> MobSpawnEntries; /*Collection of mobs spawn entries.*/
-
-        public MobWave()
-        {
-            MobSpawnEntries = new List<MobSpawnEntry>();
-        }
-    }
-    
+  
     
     public class EnemyMob : DrawableGameObject
     {
-        public int Health;
+        public int Health; /*How much damage this mob can take before it is dead*/
         public float Speed; /*The movementspeed of the mob*/
         protected List<Common.status_effect> CurrentStatusEffects; /*A list of status effects currently affecting this mob*/
 
@@ -92,8 +42,6 @@ namespace vgcpTowerDefense.GameObjects
 
         }
 
-
-        
         /// <summary>
         /// Resets object to intial values and "spawns" the mob at the given position
         /// </summary>
@@ -109,6 +57,10 @@ namespace vgcpTowerDefense.GameObjects
             this.IsActive = true;
         }
 
+        /// <summary>
+        /// Resets object to intial values and "spawns" the mob on the given path
+        /// </summary>
+        /// <param name="mobPathInfo"></param>
         public virtual void Spawn(MobPathingInfo mobPathInfo)
         {
             this.Spawn(mobPathInfo.MobSpawnLocation);
@@ -130,11 +82,6 @@ namespace vgcpTowerDefense.GameObjects
             Health -= damage;
         }
 
-
-
-
-
-
         //removes status effects that have timed out
         protected void UpdateStatusEffects(GameTime GameTime)
         {
@@ -147,8 +94,6 @@ namespace vgcpTowerDefense.GameObjects
             {
                 StatusEffect.StatusEffectTimeMS -= (int)GameTime.ElapsedGameTime.TotalMilliseconds;
             }
-            
-          
         }
 
 
@@ -245,11 +190,58 @@ namespace vgcpTowerDefense.GameObjects
             this.IsActive = false;
 
         }
-
-
-     
-
-      
-
     }
+
+
+    /// <summary>
+    /// Structure that contains a single point defining a way point and a int describing the order of
+    /// the waypoint in the mobs overall path.
+    /// </summary>
+    public class MobWayPoint
+    {
+        public Vector2 Position;    /*This position on the map the waypoint points to*/
+        public int WayPointNumber;  /*Waypoint number. The mob will go to each waypoint, in order, forming a path*/
+    }
+
+
+    /// <summary>
+    /// Structure that contains points for start, end and each way point in-between. A path.
+    /// </summary>
+    public class MobPathingInfo
+    {
+        public Vector2 MobSpawnLocation; /*location in which the mob spawns*/
+        public List<MobWayPoint> PathWayPoints; /*List of successive mob way points*/
+        public Rectangle MobEndZone; /*Bounding box in which a mob "scores" if the reach*/
+
+        public MobPathingInfo()
+        {
+            MobSpawnLocation = new Vector2();
+            PathWayPoints = new List<MobWayPoint>();
+        }
+    }
+
+    /// <summary>
+    /// Basic structure to define a signle mob spawn instance. Many of these comprise a "wave"
+    /// </summary>
+    public class MobSpawnEntry
+    {
+        public String MobIdentifier; /*Name of mob to be spawned*/
+        public int DelayAfter_ms; /*The amount of delay before another mob can be spawned after this one.
+                            Used in the "Timed Mob Queue" mode.*/
+        public String PathIdentifer; /*String identifier of the path the mob is to follow*/
+    }
+
+    /// <summary>
+    /// A list structure that contains a definition for a wave of mobs.
+    /// </summary>
+    public class MobWave
+    {
+        public List<MobSpawnEntry> MobSpawnEntries; /*Collection of mobs spawn entries.*/
+
+        public MobWave()
+        {
+            MobSpawnEntries = new List<MobSpawnEntry>();
+        }
+    }
+    
 }

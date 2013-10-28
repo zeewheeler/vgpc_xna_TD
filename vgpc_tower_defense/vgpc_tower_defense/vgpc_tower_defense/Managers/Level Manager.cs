@@ -16,7 +16,7 @@ namespace vgcpTowerDefense.Managers
     /// Manages a game level, which consists of multiple "waves". The level manager will spawn multiple waves in a 
     /// time series, and the waves will spawn multiple EnemyMobs in a time series.
     /// </summary>
-    class LevelManager
+    public class LevelManager
     {
         public List<String> EnemyMobs; /*A list containing the identifier for each mob type that may be spawned for this level
                                  used to preload resources as well as ensure there is a definition for each supplied
