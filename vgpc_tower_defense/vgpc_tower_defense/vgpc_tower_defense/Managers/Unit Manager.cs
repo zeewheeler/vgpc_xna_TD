@@ -27,7 +27,16 @@ namespace vgcpTowerDefense.Managers
 
         public void Update(GameTime gameTime)
         {
-            for
+
+            foreach (EnemyMob Mob in Mobs)
+            {
+                Mob.Update(gameTime);
+            }
+
+            foreach (Tower Tower in Towers)
+            {
+                Tower.Update(gameTime);
+            }
         }
 
     }
