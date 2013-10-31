@@ -34,6 +34,7 @@ namespace vgcpTowerDefense
         SpriteBatch spriteBatch;
         Managers.AssetManager AssetManager;
         Managers.LevelManager LevelManager;
+        Managers.Game_Manager GameManager;
 
 
         Rectangle mapView;
@@ -57,19 +58,22 @@ namespace vgcpTowerDefense
        
         public vgcp_tower_defense_game()
         {
-            AssetManager = new Managers.AssetManager(this);
+            //AssetManager = new Managers.AssetManager(this);
             Config.LevelConfig.WriteExampleJsonLevelConfig();
-            LevelManager = new Managers.LevelManager(AssetManager,
-                Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt").LevelMobWaves);
-            LevelManager.IsActive = true;
+            //LevelManager = new Managers.LevelManager(AssetManager,
+            //    Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt").LevelMobWaves);
+
+            //LevelManager = new Managers.LevelManager(this);
+            //LevelManager.IsActive = true;
+            GameManager = new Game_Manager(this);
 
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            globals.Mobs = new List<GameObjects.EnemyMob>();
-            globals.Towers = new List<GameObjects.Tower>();
-            globals.MobPath = new List<MobWayPoint>();
+            //globals.Mobs = new List<GameObjects.EnemyMob>();
+            //globals.Towers = new List<GameObjects.Tower>();
+            //globals.MobPath = new List<MobWayPoint>();
 
             RectangleDrawer = new Util.DrawRectangle(this);
             RectangleDrawer.Visible = false;
@@ -117,6 +121,7 @@ namespace vgcpTowerDefense
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
 
             //Load All content that is added to content project. This MUST be called before you try to use any content.
+            
             AssetManager.LoadAllContent();
 
             map = AssetManager.LoadedMaps["Map2"];
