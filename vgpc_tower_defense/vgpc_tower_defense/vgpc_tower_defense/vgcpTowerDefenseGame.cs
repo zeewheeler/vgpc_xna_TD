@@ -32,8 +32,8 @@ namespace vgcpTowerDefense
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Managers.AssetManager AssetManager;
-        Managers.LevelManager LevelManager;
+        //Managers.AssetManager AssetManager;
+        //Managers.LevelManager LevelManager;
         Managers.Game_Manager GameManager;
 
 
@@ -122,9 +122,9 @@ namespace vgcpTowerDefense
 
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             
-            AssetManager.LoadAllContent();
+            //AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["Map2"];
+            //map = AssetManager.LoadedMaps["Map2"];
            // map.Orientation = MapOrientation.Isometric;
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
@@ -261,7 +261,7 @@ namespace vgcpTowerDefense
 
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
-                LevelManager.IsActive = true;
+                //LevelManager.IsActive = true;
             }
      
 
@@ -271,11 +271,11 @@ namespace vgcpTowerDefense
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
 
-                Tower newTower = new Tower(AssetManager.LoadedSprites["Laser001"],
-            AssetManager.LoadedSprites["LaserBlue"]);
+            //    Tower newTower = new Tower(AssetManager.LoadedSprites["Laser001"],
+            //AssetManager.LoadedSprites["LaserBlue"]);
                 //Tower newTower = new Tower("laser_tower.txt", AssetManager);
 
-                globals.Towers.Add(newTower);
+                //globals.Towers.Add(newTower);
              
                
 
@@ -287,8 +287,8 @@ namespace vgcpTowerDefense
             if (MouseState.RightButton == ButtonState.Pressed && !(PreviousMouseState.RightButton == ButtonState.Pressed))
             {
 
-                globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-    AssetManager.LoadedSprites["LaserRed"]));
+    //            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
+    //AssetManager.LoadedSprites["LaserRed"]));
 
 
 
@@ -341,7 +341,7 @@ namespace vgcpTowerDefense
             PreviousMouseState = MouseState;
             PreviousKeyboardState = KeyboardState;
 
-            LevelManager.Update(gameTime);
+            //LevelManager.Update(gameTime);
             base.Update(gameTime);
         }
 

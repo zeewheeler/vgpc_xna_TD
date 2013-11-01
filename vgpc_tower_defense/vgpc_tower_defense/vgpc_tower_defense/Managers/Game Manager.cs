@@ -49,6 +49,7 @@ namespace vgcpTowerDefense.Managers
              {
                  Tower.Update(gameTime);
              }
-        }        
+        }
+        
     }
 }
