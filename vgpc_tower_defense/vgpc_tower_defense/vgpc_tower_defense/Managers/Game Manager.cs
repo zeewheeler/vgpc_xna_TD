@@ -55,6 +55,8 @@ namespace vgcpTowerDefense.Managers
         protected override void LoadContent()
         {
             base.LoadContent();
+
+            AssetManager.LoadAllContent();
         }
 
         public override void Draw(GameTime gameTime)

@@ -124,7 +124,7 @@ namespace vgcpTowerDefense
             
             //AssetManager.LoadAllContent();
 
-            //map = AssetManager.LoadedMaps["Map2"];
+            map = AssetManager.LoadedMaps["Map2"];
            // map.Orientation = MapOrientation.Isometric;
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
