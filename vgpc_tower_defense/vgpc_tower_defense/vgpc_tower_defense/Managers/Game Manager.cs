@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using vgcpTowerDefense.GameObjects;
 
+
+using FuncWorks.XNA.XTiled;
+
 namespace vgcpTowerDefense.Managers 
 {
     /// <summary>
@@ -33,6 +36,15 @@ namespace vgcpTowerDefense.Managers
            
 
         enum GameState { Run, Pause, Menu, Etc };
+
+
+
+        public bool LoadLevel()
+        {
+            return false;
+        }
+
+        public bool 
 
         public Game_Manager(Game game)
             : base(game)
