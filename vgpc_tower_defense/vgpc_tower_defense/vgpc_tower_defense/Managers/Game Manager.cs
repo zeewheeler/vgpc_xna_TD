@@ -23,28 +23,15 @@ namespace vgcpTowerDefense.Managers
         
         protected LevelManager LevelManager;
         protected AssetManager AssetManager;
+        protected UnitManager UnitManager;
         
 
-        //A dictionary of lists that will hold instantiated Mobs grouped by type
-        public Dictionary<String,  List<EnemyMob>> Mobs;
-
-        //A dictionary of lists that will hold instantiaed towers grouped by type
-        public Dictionary<String, List<Tower>> Towers;
-
-        // Dictopnary containing defined mob way points. These describe the spawning point, the "end-zone" and a path connecting the two
-        public Dictionary<String, MobPathingInfo> MobPaths;
-           
+       
 
         enum GameState { Run, Pause, Menu, Etc };
 
 
-
-        public bool LoadLevel()
-        {
-            return false;
-        }
-
-        public bool 
+           
 
         public Game_Manager(Game game)
             : base(game)
@@ -53,10 +40,9 @@ namespace vgcpTowerDefense.Managers
 
             
             AssetManager = new Managers.AssetManager(game);
+            UnitManager = new UnitManager(AssetManager);
             LevelManager = new LevelManager(AssetManager);
 
-            Mobs    = new Dictionary<string, List<EnemyMob>>();
-            Towers = new Dictionary<string, List<Tower>>();
         }
 
         public override void Initialize()
@@ -74,26 +60,8 @@ namespace vgcpTowerDefense.Managers
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-
-            //for each instantiated mob type
-            foreach (var mobList in Mobs)
-            {
-                //for each instantiated mob in each mob type
-                foreach (EnemyMob mob in mobList.Value)
-                {
-                    mob.Draw(SpriteBatch);
-                }
-            }
-
-            //for each instantiated tower type
-            foreach (var towerList in Towers)
-            {
-                //for each instantiated tower in each tower type
-                foreach (Tower tower in towerList.Value)
-                {
-                    tower.Update(gameTime);
-                }
-            }
+            UnitManager.Draw(SpriteBatch);
+          
         }
 
         
@@ -103,26 +71,9 @@ namespace vgcpTowerDefense.Managers
  	         base.Update(gameTime);
 
              LevelManager.Update(gameTime);
+             UnitManager.Update(gameTime);
 
-             //for each instantiated mob type
-             foreach (var mobList in Mobs)
-             {
-                 //for each instantiated mob in each mob type
-                 foreach (EnemyMob mob in mobList.Value)
-                 {
-                     mob.Update(gameTime);
-                 }
-             }
-
-            //for each instantiated tower type
-             foreach (var towerList in Towers)
-             {
-                 //for each instantiated tower in each tower type
-                 foreach (Tower tower in towerList.Value)
-                 {
-                     tower.Update(gameTime);
-                 }
-             }
+            
         }
         
     }

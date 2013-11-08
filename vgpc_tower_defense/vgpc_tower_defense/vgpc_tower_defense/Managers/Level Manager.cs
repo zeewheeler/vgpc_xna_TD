@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using vgcpTowerDefense.GameObjects;
 
 namespace vgcpTowerDefense.Managers
 {
@@ -22,7 +23,11 @@ namespace vgcpTowerDefense.Managers
                                  used to preload resources as well as ensure there is a definition for each supplied
                                  mon identifier*/
         
+        //list of mobs that will be spawned this level
         public List<GameObjects.MobWave> MobWaves;
+
+        // Dictionary containing defined mob way points. These describe the spawning point, the "end-zone" and a path connecting the two
+        public Dictionary<String, MobPathingInfo> MobPaths;
 
         int CurrentMobInWave;   /*Denotes which mob is next to be spawned in the current active wave */
         int CurrentWaveInLevel;  /* Denotes which wave is currently active*/
@@ -43,7 +48,14 @@ namespace vgcpTowerDefense.Managers
             this.MobWaves = mobWaves;
             AssetManager = assetManager;
             Reset();
+        }
 
+
+        public void LoadLevel(List<GameObjects.MobWave> mobWaves)
+        {
+            this.MobWaves.Clear();
+            this.MobWaves = mobWaves;
+            Reset();
         }
 
         /// <summary>

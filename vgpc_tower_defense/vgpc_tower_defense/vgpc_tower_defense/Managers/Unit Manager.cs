@@ -14,30 +14,73 @@ namespace vgcpTowerDefense.Managers
     /// <summary>
     /// Manages instantiated units, such as towers and mobs
     /// </summary>
-    public class Unit_Manager
+    public class UnitManager
     {
-          public static List<EnemyMob> Mobs;
-          public static List<Tower> Towers;
+
+          //A dictionary of lists that will hold instantiated Mobs grouped by type
+          public Dictionary<String, List<EnemyMob>> Mobs;
+
+          //A dictionary of lists that will hold instantiaed towers grouped by type
+          public Dictionary<String, List<Tower>> Towers;
+
+          protected AssetManager AssetManager;
           
-        public Unit_Manager()
+        public UnitManager(AssetManager assetManager)
         {
-            Mobs = new List<EnemyMob>();
-            Towers = new List<Tower>();
+            Mobs = new Dictionary<string, List<EnemyMob>>();
+            Towers = new Dictionary<string, List<Tower>>();
+
+            AssetManager = assetManager;
         }
 
         public void Update(GameTime gameTime)
         {
 
-            foreach (EnemyMob Mob in Mobs)
+            //for each instantiated mob type
+            foreach (var mobList in Mobs)
             {
-                Mob.Update(gameTime);
+                //for each instantiated mob in each mob type
+                foreach (EnemyMob mob in mobList.Value)
+                {
+                    mob.Update(gameTime);
+                }
             }
 
-            foreach (Tower Tower in Towers)
+            //for each instantiated tower type
+            foreach (var towerList in Towers)
             {
-                Tower.Update(gameTime);
+                //for each instantiated tower in each tower type
+                foreach (Tower tower in towerList.Value)
+                {
+                    tower.Update(gameTime);
+                }
             }
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            //for each instantiated mob type
+            foreach (var mobList in Mobs)
+            {
+                //for each instantiated mob in each mob type
+                foreach (EnemyMob mob in mobList.Value)
+                {
+                    mob.Draw(spriteBatch);
+                }
+            }
+
+            //for each instantiated tower type
+            foreach (var towerList in Towers)
+            {
+                //for each instantiated tower in each tower type
+                foreach (Tower tower in towerList.Value)
+                {
+                    tower.Draw(spriteBatch);
+                }
+            }
+        }
+
+        
 
     }
 }

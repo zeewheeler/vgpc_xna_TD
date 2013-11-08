@@ -47,6 +47,8 @@ namespace vgcpTowerDefense
         public static List<MobWayPoint> MobPath;
         //Pathing Related Stuff, TODO Move to pathing related class
 
+        public static Random Random = new Random();
+
 
     }
 
