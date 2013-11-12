@@ -1,65 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using vgcpTowerDefense.GameObjects;
+using FuncWorks.XNA.XTiled;
 
 namespace vgcpTowerDefense.Managers
 {
-
-
     /// <summary>
-    /// Manages a game level, which consists of multiple "waves". The level manager will spawn multiple waves in a 
-    /// time series, and the waves will spawn multiple EnemyMobs in a time series.
+    ///     Manages a game level, which consists of multiple "waves". The level manager will spawn multiple waves in a
+    ///     time series, and the waves will spawn multiple EnemyMobs in a time series.
     /// </summary>
     public class LevelManager
     {
-        public List<String> EnemyMobs; /*A list containing the identifier for each mob type that may be spawned for this level
+        private readonly AssetManager AssetManager;
+        private int CurrentMobInWave; /*Denotes which mob is next to be spawned in the current active wave */
+        private int CurrentWaveInLevel; /* Denotes which wave is currently active*/
+
+        public List<String> EnemyMobs;
+            /*A list containing the identifier for each mob type that may be spawned for this level
                                  used to preload resources as well as ensure there is a definition for each supplied
                                  mon identifier*/
-        
-        //list of mobs that will be spawned this level
-        public List<GameObjects.MobWave> MobWaves;
 
-        // Dictionary containing defined mob way points. These describe the spawning point, the "end-zone" and a path connecting the two
-        public Dictionary<String, MobPathingInfo> MobPaths;
-
-        int CurrentMobInWave;   /*Denotes which mob is next to be spawned in the current active wave */
-        int CurrentWaveInLevel;  /* Denotes which wave is currently active*/
         public bool IsActive; /*Denotes where a level is actively spawning mobs or not*/
+        public Dictionary<String, MobPathingInfo> MobPaths;
+        public List<MobWave> MobWaves;
 
-        TimeSpan TimeSinceLastSpawn; /*Time Since last mob Spawned*/
-        TimeSpan TimeToNextSpawn;   /*Amount of time that must pass until next spawn*/
-        AssetManager AssetManager;
-        
+        private TimeSpan TimeSinceLastSpawn; /*Time Since last mob Spawned*/
+        private TimeSpan TimeToNextSpawn; /*Amount of time that must pass until next spawn*/
+
+
+
+        private Rectangle MapView;
+        private Map Map;
+
+
+        public void LoadMap(String MapIdentifier)
+        {
+            if (AssetManager.LoadedMaps.ContainsKey(MapIdentifier))
+            {
+                Map = AssetManager.LoadedMaps[MapIdentifier];
+
+                //add waypoints defined in the .tmx map to asset manager
+                var ObjLayerList = Map.ObjectLayers;
+                foreach (var ObjLayer in ObjLayerList)
+                {
+                    Console.WriteLine(ObjLayer.Name);
+                }
+
+
+            }
+            else
+            {
+                throw new Exception("Map: " + MapIdentifier + " does not exist!\n");
+            }
+        }
+
+
+
+
         public LevelManager(AssetManager assetManager)
         {
             AssetManager = assetManager;
             Reset();
         }
 
-        public LevelManager(AssetManager assetManager, List<GameObjects.MobWave> mobWaves)
+        public LevelManager(AssetManager assetManager, List<MobWave> mobWaves)
         {
-            this.MobWaves = mobWaves;
+            MobWaves = mobWaves;
             AssetManager = assetManager;
             Reset();
         }
 
 
-        public void LoadLevel(List<GameObjects.MobWave> mobWaves)
+        public void LoadLevel(List<MobWave> mobWaves)
         {
-            this.MobWaves.Clear();
-            this.MobWaves = mobWaves;
+            MobWaves.Clear();
+            MobWaves = mobWaves;
             Reset();
         }
 
         /// <summary>
-        /// Resets values to starting state
+        ///     Resets values to starting state
         /// </summary>
         public void Reset()
         {
@@ -74,7 +95,6 @@ namespace vgcpTowerDefense.Managers
         {
             if (IsActive && (MobWaves != null))
             {
-
                 TimeSinceLastSpawn += gameTime.ElapsedGameTime;
                 if (TimeSinceLastSpawn > TimeToNextSpawn)
                 {
@@ -82,25 +102,26 @@ namespace vgcpTowerDefense.Managers
                     SpawnNextMob();
                 }
             }
-
         }
 
 
         /// <summary>
-        /// Spawns the next mob in a wave or advances the leve to the next level if an end of wave is reached. 
+        ///     Spawns the next mob in a wave or advances the leve to the next level if an end of wave is reached.
         /// </summary>
         private void SpawnNextMob()
         {
             String MobIdentifer;
             String MobPathIdentifier;
-            
+
 
             if (MobWaves.Count > CurrentWaveInLevel - 1) /*Check if wave is in bounds*/
             {
-                if ( (CurrentMobInWave - 1) < MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries.Count ) /*Check if mob is in bounds*/
+                if ((CurrentMobInWave - 1) < MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries.Count)
+                    /*Check if mob is in bounds*/
                 {
                     MobIdentifer = MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].MobIdentifier;
-                    MobPathIdentifier = MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].PathIdentifer;
+                    MobPathIdentifier =
+                        MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].PathIdentifer;
 
                     /*Find an enemy mob that is currently not being used of the appropriate type.
                     * If one is not available, create a new one.*/
@@ -114,40 +135,32 @@ namespace vgcpTowerDefense.Managers
 
                             //Reset the Timer
                             TimeToNextSpawn = TimeSpan.FromMilliseconds(
-                                (double)MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
+                                MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
                             CurrentMobInWave++;
                             return;
-
                         }
                     }
                     //no available mobs of proper type, we'll have to add a new one
-                    GameObjects.EnemyMob NewMob = new GameObjects.EnemyMob(AssetManager.LoadedSprites[MobIdentifer],
+                    var NewMob = new EnemyMob(AssetManager.LoadedSprites[MobIdentifer],
                         MobIdentifer);
                     NewMob.Spawn(globals.MobPaths[MobPathIdentifier]);
                     globals.Mobs.Add(NewMob);
-                    
+
                     //Reset the Timer
                     TimeToNextSpawn = TimeSpan.FromMilliseconds(
-                               (double)MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
+                        MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
                     CurrentMobInWave++;
-                    return;
-
                 }
-                else // Last mob in wave. Advance to Next wave, if there is one
-                {
-                    CurrentWaveInLevel++; //increment wave
-                    CurrentMobInWave = 1; //set current mob to first in new wave
-                    IsActive = false; /* Stop the spawning. After each wave, the spawning stops until the player triggers
+                CurrentWaveInLevel++; //increment wave
+                CurrentMobInWave = 1; //set current mob to first in new wave
+                IsActive = false; /* Stop the spawning. After each wave, the spawning stops until the player triggers
                                        * the next wave. To start again, set isActive to true. */
-                }
             }
             else // no more mobs or waves, level is done!
             {
-                throw new Exception("What happens when you finish all mobs and waves?"); //reminder to implement some sort of end of level
+                throw new Exception("What happens when you finish all mobs and waves?");
+                    //reminder to implement some sort of end of level
             }
         }
-
-
-
-    }// End Level Manager Class
+    } // End Level Manager Class
 }

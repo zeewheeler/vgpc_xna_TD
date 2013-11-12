@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="40" height="22" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="MapName" value="Map2"/>
+ </properties>
  <tileset firstgid="1" name="terrain_atlas" tilewidth="32" tileheight="32">
   <image source="Map Assets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -8,7 +11,7 @@
  </tileset>
  <layer name="Green" width="40" height="22">
   <data encoding="base64" compression="zlib">
-   eJyNlVFyxCAMQ/lI7tyb9CbASZqepPltdibMKuoT9MOTDRuMLMuibqXUK1oppd+/+x1N3uv9rt80+bbCe5Vvv/ZSjiu+92eesa9B3ibRL3y1vHE6Nj+vQg7aM34TPqpL19pmnJQnTsXatme9XkMHbPrdir9qOXVdvx+4FKPuIW5dD5T758L1ccXnFX3PmvBetLBey5vPPrgsTzye17WkNakGB0bSi9dJOvJ9pCvUh+RynptweACPpFvXvuvUNZWwuw5pjn1OhhaJP6ot9YY8YKXrGY+OjzzgMQ+AgbSlZ/p+nwU/R3Ot+CPtzPwh6dY9kOog71R81LekKeLHz056SD5LPq74RvT9b+3Jd6lHzjd50+puGeuvGT7veK3pLBMen133HJ9H7x09SZ/JMw/wG59/8hrqKfXyv3W6347nCZ6Y/Ik0RnjIc1zH7meuB92bfJtqoxlw76B5pzso9ZTyO8Z2x6q3s3Nmd1zy9eQpfv+pB9G9lDyYfDLNP+kvea5iPCWch5kH0RwmHKmXpIs0B4SNeKI91Du6QxLvMx9KnkD6onuNMKT5IQ93TdN/K/9IHKw8xvMmn6E7iubyF6BviL0=
+   eJyFlcF1wzAMQ3mwd+4m3UTSJE0naa51Xq0XGP2wDnqOFYsCQRCsqmpbVT+eY/v7Pc7V5b2d7/pNl28bvDf59muvehzre7/Gmec6xO2yxgtnvXE6Nr+vQQw6M38TPspL9/pmnNQVp2Lt2zVfz2EANv1uxV+zmLqv309cilHPELeuB4r9c+D6ONbnscaeNeG16GG/1ZvPMbmsKx6P61rSnFSDEyPpxfMkHfk50hXqQ2I5z104fACPpFvXvuvUNZWwuw6pj71PphaJP8ot1YY8YKXrOx4dH3nApR8AA2lL7/Tz3gt+j8Za8UfaufOHpFv3QMqDvFPxUd2SpogfvzvpIfks+bjim2vs/3NPvks1cr7Jm1azZe6/evh5rtee9jLh8d51z/F+9NrRk/SZPPMBfuP9T15DNaVaUp5VPG+I4yd4YvIn0hjhIc9xHbufuR70bPJtyo16wL2D+p1mUKopxXeM/Vyr2t7dczfjkq8nT/H5px5Ecyl5MPlk6n/SX/JcxfiU5TzceRD1YcKRakm6SH1A2IgnOkO1oxmSeL/zoeR9pC+aa4Qh9Q95uGua/lv5R+Jg5TEeN/kMzSjqy1++VYdH
   </data>
  </layer>
  <layer name="Path" width="40" height="22">
@@ -26,79 +29,82 @@
    eJztlbERQEAQRTdxJZCgElSCMsx1QiVOJaiEBOMbF1wgv8W+mTcufPMFSyT8kSbwXSAIgiAI32XDnd3hYe9tj6+BA5P7GyuiBKbqbuvgBGcmfRm6cljA0bZFeLd2R+N5zxItFaydvic57PmWvuv/um2h4tG3oGGFmtF+Jy2rKmU=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="40" height="22">
-  <object name="Mob Spawn" x="1235" y="145" width="31" height="29">
+ <objectgroup name="Path1" width="40" height="22">
+  <properties>
+   <property name="Obj Layer 1" value=""/>
+  </properties>
+  <object name="Mob Spawn" type="Path1" x="1235" y="145" width="31" height="29">
    <properties>
     <property name="spawn" value="&quot;spawn&quot;"/>
    </properties>
   </object>
-  <object name="WayPoint1" x="1123" y="186" width="34" height="19">
+  <object name="WayPoint1" type="Path1" x="1123" y="186" width="34" height="19">
    <properties>
     <property name="WayPoint" value="1"/>
    </properties>
   </object>
-  <object name="WayPoint2" x="1052" y="318" width="25" height="21">
+  <object name="WayPoint2" type="Path1" x="1052" y="318" width="25" height="21">
    <properties>
     <property name="WayPoint" value="2"/>
    </properties>
   </object>
-  <object name="WayPoint3" x="988" y="432" width="23" height="23">
+  <object name="WayPoint3" type="Path1" x="988" y="432" width="23" height="23">
    <properties>
     <property name="WayPoint" value="3"/>
    </properties>
   </object>
-  <object name="WayPoint4" x="899" y="564" width="21" height="28">
+  <object name="WayPoint4" type="Path1" x="899" y="564" width="21" height="28">
    <properties>
     <property name="WayPoint" value="4"/>
    </properties>
   </object>
-  <object name="WayPoint5" x="836" y="673" width="16" height="20">
+  <object name="WayPoint5" type="Path1" x="836" y="673" width="16" height="20">
    <properties>
     <property name="WayPoint" value="5"/>
    </properties>
   </object>
-  <object name="WayPoint6" x="695" y="655" width="32" height="29">
+  <object name="WayPoint6" type="Path1" x="695" y="655" width="32" height="29">
    <properties>
     <property name="WayPoint" value="6"/>
    </properties>
   </object>
-  <object name="WayPoint7" x="682" y="420" width="25" height="26">
+  <object name="WayPoint7" type="Path1" x="682" y="420" width="25" height="26">
    <properties>
     <property name="WayPoint" value="7"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint8" x="592" y="393" width="25" height="19">
+  <object name="WayPoint8" type="Path1" x="592" y="393" width="25" height="19">
    <properties>
     <property name="WayPoint" value="8"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint9" x="452" y="261" width="29" height="19">
+  <object name="WayPoint9" type="Path1" x="452" y="261" width="29" height="19">
    <properties>
     <property name="WayPoint" value="9"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint10" x="337" y="195" width="28" height="24">
+  <object name="WayPoint10" type="Path1" x="337" y="195" width="28" height="24">
    <properties>
     <property name="WayPoint" value="10"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint11" x="138" y="179" width="28" height="17">
+  <object name="WayPoint11" type="Path1" x="138" y="179" width="28" height="17">
    <properties>
     <property name="WayPoint" value="11"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint12" x="10" y="48" width="30" height="25">
+  <object name="WayPoint12" type="Path1" x="10" y="48" width="30" height="25">
    <properties>
     <property name="WayPoint" value="12"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="InZone" x="-28" y="-13" width="65" height="80">
+  <object name="InZone" type="Path1" x="-28" y="-13" width="65" height="80">
    <properties>
     <property name="InZone" value="&quot;score!&quot;"/>
    </properties>

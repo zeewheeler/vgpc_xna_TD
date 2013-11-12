@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -66,6 +67,7 @@ namespace vgcpTowerDefense
             //LevelManager = new Managers.LevelManager(this);
             //LevelManager.IsActive = true;
             GameManager = new Game_Manager(this);
+            Components.Add(GameManager);
 
 
             graphics = new GraphicsDeviceManager(this);
@@ -75,12 +77,12 @@ namespace vgcpTowerDefense
             //globals.Towers = new List<GameObjects.Tower>();
             //globals.MobPath = new List<MobWayPoint>();
 
-            RectangleDrawer = new Util.DrawRectangle(this);
-            RectangleDrawer.Visible = false;
+            //RectangleDrawer = new Util.DrawRectangle(this);
+            //RectangleDrawer.Visible = false;
 
 
 
-            Components.Add(RectangleDrawer);
+           // Components.Add(RectangleDrawer);
 
             //define what screen resolution the game should run in
             graphics.PreferredBackBufferWidth = 1280;
@@ -114,17 +116,17 @@ namespace vgcpTowerDefense
         /// </summary>
         protected override void LoadContent()
         {
-            globals.viewport_rectangle = new Rectangle(0, 0,
-              graphics.GraphicsDevice.Viewport.Width,
-              graphics.GraphicsDevice.Viewport.Height);
+            //globals.viewport_rectangle = new Rectangle(0, 0,
+            //  graphics.GraphicsDevice.Viewport.Width,
+            //  graphics.GraphicsDevice.Viewport.Height);
 
-            mapView = graphics.GraphicsDevice.Viewport.Bounds;
+            //mapView = graphics.GraphicsDevice.Viewport.Bounds;
 
             //Load All content that is added to content project. This MUST be called before you try to use any content.
             
             //AssetManager.LoadAllContent();
 
-            map = AssetManager.LoadedMaps["Map2"];
+            //map = AssetManager.LoadedMaps["Map2"];
            // map.Orientation = MapOrientation.Isometric;
 
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
@@ -138,52 +140,53 @@ namespace vgcpTowerDefense
 
 
 
-            random = new Random();
+            //random = new Random();
 
           
 
 
-            IEnumerable<MapObject> MapObjects = map.GetObjectsInRegion(mapView);
+            //IEnumerable<MapObject> MapObjects = map.GetObjectsInRegion(mapView);
 
-            List<MobWayPoint> MobPathWayPoints = new List<MobWayPoint>();
-            Vector2 MobSpawn = new Vector2();
-            Rectangle EndZoneRect = new Rectangle();
+            //List<MobWayPoint> MobPathWayPoints = new List<MobWayPoint>();
+            //Vector2 MobSpawn = new Vector2();
+            //Rectangle EndZoneRect = new Rectangle();
 
-            foreach (MapObject MapObj in MapObjects)
-            {
+            //foreach (MapObject MapObj in MapObjects)
+            //{
 
-               if(MapObj.Properties.ContainsKey("WayPoint"))
-                {
-                   MobWayPoint wayPoint = new MobWayPoint();
+            //   MapObj.Type
+            //    if(MapObj.Properties.ContainsKey("WayPoint"))
+            //    {
+            //       MobWayPoint wayPoint = new MobWayPoint();
 
-                   wayPoint.Position.X = MapObj.Bounds.Center.X;
-                   wayPoint.Position.Y = MapObj.Bounds.Center.Y;
-                   wayPoint.WayPointNumber = Int32.Parse(MapObj.Properties["WayPoint"].Value);
-                   MobPathWayPoints.Add(wayPoint);
-                }
+            //       wayPoint.Position.X = MapObj.Bounds.Center.X;
+            //       wayPoint.Position.Y = MapObj.Bounds.Center.Y;
+            //       wayPoint.WayPointNumber = Int32.Parse(MapObj.Properties["WayPoint"].Value);
+            //       MobPathWayPoints.Add(wayPoint);
+            //    }
 
-               if (MapObj.Properties.ContainsKey("spawn"))
-               {
-                   MobSpawn = new Vector2();
-                   MobSpawn.X = MapObj.Bounds.Center.X;
-                   MobSpawn.Y = MapObj.Bounds.Center.Y;
-               }
+            //   if (MapObj.Properties.ContainsKey("spawn"))
+            //   {
+            //       MobSpawn = new Vector2();
+            //       MobSpawn.X = MapObj.Bounds.Center.X;
+            //       MobSpawn.Y = MapObj.Bounds.Center.Y;
+            //   }
 
-               if (MapObj.Properties.ContainsKey("EndZone"))
-               {
-                   EndZoneRect = new Rectangle(
-                       MapObj.Bounds.X,
-                       MapObj.Bounds.Y,
-                       MapObj.Bounds.Width,
-                       MapObj.Bounds.Height);
-               }
-            }
+            //   if (MapObj.Properties.ContainsKey("EndZone"))
+            //   {
+            //       EndZoneRect = new Rectangle(
+            //           MapObj.Bounds.X,
+            //           MapObj.Bounds.Y,
+            //           MapObj.Bounds.Width,
+            //           MapObj.Bounds.Height);
+            //   }
+            //}
 
-            MobPathingInfo MobPath = new MobPathingInfo();
-            MobPath.PathWayPoints = MobPathWayPoints;
-            MobPath.MobSpawnLocation = MobSpawn;
-            MobPath.MobEndZone = EndZoneRect;
-            globals.MobPaths.Add("Path1", MobPath);
+            //MobPathingInfo MobPath = new MobPathingInfo();
+            //MobPath.PathWayPoints = MobPathWayPoints;
+            //MobPath.MobSpawnLocation = MobSpawn;
+            //MobPath.MobEndZone = EndZoneRect;
+            //globals.MobPaths.Add("Path1", MobPath);
 
 
 
@@ -229,7 +232,7 @@ namespace vgcpTowerDefense
 
             //Debug: Visualize the enemies bounding rectangle
             //RectangleDrawer.Visible = true;
-            RectangleDrawer.SetColor(Color.Red);
+           // RectangleDrawer.SetColor(Color.Red);
 
 
             // TODO: use this.Content to load your game content here
@@ -279,9 +282,9 @@ namespace vgcpTowerDefense
              
                
 
-                globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
-                globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
-                globals.Towers[globals.Towers.Count - 1].IsActive = true;
+                //globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
+                //globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
+                //globals.Towers[globals.Towers.Count - 1].IsActive = true;
             }
 
             if (MouseState.RightButton == ButtonState.Pressed && !(PreviousMouseState.RightButton == ButtonState.Pressed))
@@ -292,19 +295,19 @@ namespace vgcpTowerDefense
 
 
 
-                globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
-                globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
-                globals.Towers[globals.Towers.Count - 1].IsActive = true;
+                //globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
+                //globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
+                //globals.Towers[globals.Towers.Count - 1].IsActive = true;
             }
 
 
 
           
             
-            foreach (EnemyMob Mob in globals.Mobs)
-            {
-                Mob.Update(gameTime);
-            }
+            //foreach (EnemyMob Mob in globals.Mobs)
+            //{
+            //    Mob.Update(gameTime);
+            //}
 
 
             //for (int i = 0; i < globals.Mobs.Count; i++)
@@ -326,20 +329,20 @@ namespace vgcpTowerDefense
                 
             //}
 
-            if (MobDeathCounter % 10 == 0)
-            {
-            }
+            //if (MobDeathCounter % 10 == 0)
+            //{
+            //}
            
 
-            foreach (Tower Tower in globals.Towers)
-            {
-                Tower.Update(gameTime);
+            //foreach (Tower Tower in globals.Towers)
+            //{
+            //    Tower.Update(gameTime);
                
-            }
+            //}
 
 
-            PreviousMouseState = MouseState;
-            PreviousKeyboardState = KeyboardState;
+            //PreviousMouseState = MouseState;
+            //PreviousKeyboardState = KeyboardState;
 
             //LevelManager.Update(gameTime);
             base.Update(gameTime);
@@ -353,25 +356,25 @@ namespace vgcpTowerDefense
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            //// TODO: Add your drawing code here
+            //spriteBatch.Begin();
 
-            //draw background
-            map.Draw(spriteBatch, mapView);
+            ////draw background
+            //map.Draw(spriteBatch, mapView);
  
             
-            //Draw Units
-            foreach (EnemyMob Mob in globals.Mobs)
-            {
-                Mob.Draw(spriteBatch);
-            }
+            ////Draw Units
+            //foreach (EnemyMob Mob in globals.Mobs)
+            //{
+            //    Mob.Draw(spriteBatch);
+            //}
 
-            foreach (Tower Tower in globals.Towers)
-            {
-                Tower.Draw(spriteBatch);
-            }
+            //foreach (Tower Tower in globals.Towers)
+            //{
+            //    Tower.Draw(spriteBatch);
+            //}
 
-            spriteBatch.End();
+            //spriteBatch.End();
 
             base.Draw(gameTime);
         }

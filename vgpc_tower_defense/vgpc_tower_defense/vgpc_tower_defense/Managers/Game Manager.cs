@@ -1,48 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using vgcpTowerDefense.GameObjects;
 
-
-using FuncWorks.XNA.XTiled;
-
-namespace vgcpTowerDefense.Managers 
+namespace vgcpTowerDefense.Managers
 {
     /// <summary>
-    /// The game manager "glues" together all of the other managers, and provides one interface to manager the game
+    ///     The game manager "glues" together all of the other managers, and provides one interface to manage the game
     /// </summary>
     public class Game_Manager : DrawableGameComponent
     {
-        protected SpriteBatch SpriteBatch;
-        
-        protected LevelManager LevelManager;
         protected AssetManager AssetManager;
+        protected LevelManager LevelManager;
+        protected SpriteBatch SpriteBatch;
         protected UnitManager UnitManager;
+
+        public Rectangle ViewportRectangle;
+
+
+        private Game Game;
         
-
-       
-
-        enum GameState { Run, Pause, Menu, Etc };
-
-
-           
 
         public Game_Manager(Game game)
             : base(game)
         {
-            SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
+           
 
-            
-            AssetManager = new Managers.AssetManager(game);
+
+            AssetManager = new AssetManager(game);
             UnitManager = new UnitManager(AssetManager);
             LevelManager = new LevelManager(AssetManager);
 
+            this.Game = game;
         }
 
         public override void Initialize()
@@ -52,29 +40,42 @@ namespace vgcpTowerDefense.Managers
 
         protected override void LoadContent()
         {
-            base.LoadContent();
+
+            SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
+
+            ViewportRectangle = new Rectangle(0, 0, 
+                Game.GraphicsDevice.Viewport.Width,
+                Game.GraphicsDevice.Viewport.Width);
 
             AssetManager.LoadAllContent();
+
+
+            base.LoadContent();
+
+
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             UnitManager.Draw(SpriteBatch);
-          
         }
 
-        
 
         public override void Update(GameTime gameTime)
         {
- 	         base.Update(gameTime);
+            base.Update(gameTime);
 
-             LevelManager.Update(gameTime);
-             UnitManager.Update(gameTime);
-
-            
+            LevelManager.Update(gameTime);
+            UnitManager.Update(gameTime);
         }
-        
+
+        private enum GameState
+        {
+            Run,
+            Pause,
+            Menu,
+            Etc
+        };
     }
 }
