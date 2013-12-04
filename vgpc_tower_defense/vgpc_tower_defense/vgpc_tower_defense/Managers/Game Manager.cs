@@ -9,17 +9,17 @@ namespace vgcpTowerDefense.Managers
     /// </summary>
     public class Game_Manager : DrawableGameComponent
     {
-        protected AssetManager AssetManager;
-        protected LevelManager LevelManager;
-        protected SpriteBatch SpriteBatch;
-        protected UnitManager UnitManager;
+        public AssetManager AssetManager;
+        public LevelManager LevelManager;
+        public SpriteBatch SpriteBatch;
+        public UnitManager UnitManager;
 
         public Rectangle ViewportRectangle;
 
 
-        private Game Game;
+        public Game Game;
         
-
+        
         public Game_Manager(Game game)
             : base(game)
         {
@@ -28,7 +28,10 @@ namespace vgcpTowerDefense.Managers
 
             AssetManager = new AssetManager(game);
             UnitManager = new UnitManager(AssetManager);
-            LevelManager = new LevelManager(AssetManager);
+            LevelManager = new LevelManager(AssetManager, UnitManager);
+
+           
+           
 
             this.Game = game;
         }
@@ -36,6 +39,7 @@ namespace vgcpTowerDefense.Managers
         public override void Initialize()
         {
             base.Initialize();
+            LevelManager.MapView = Game.GraphicsDevice.Viewport.Bounds;
         }
 
         protected override void LoadContent()
@@ -58,7 +62,13 @@ namespace vgcpTowerDefense.Managers
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            UnitManager.Draw(SpriteBatch);
+            
+            SpriteBatch.Begin();
+                LevelManager.Draw(SpriteBatch);    
+                UnitManager.Draw(SpriteBatch);
+                
+            SpriteBatch.End();
+            
         }
 
 

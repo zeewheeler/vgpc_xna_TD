@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,10 +71,10 @@ namespace vgcpTowerDefense.Managers
             }
 
             //for each instantiated tower type
-            foreach (var towerList in Towers)
+            foreach (var TowerType in Towers)
             {
                 //for each instantiated tower in each tower type
-                foreach (Tower tower in towerList.Value)
+                foreach (Tower tower in TowerType.Value)
                 {
                     tower.Draw(spriteBatch);
                 }

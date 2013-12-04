@@ -116,21 +116,11 @@ namespace vgcpTowerDefense
         /// </summary>
         protected override void LoadContent()
         {
-            //globals.viewport_rectangle = new Rectangle(0, 0,
-            //  graphics.GraphicsDevice.Viewport.Width,
-            //  graphics.GraphicsDevice.Viewport.Height);
+           
 
-            //mapView = graphics.GraphicsDevice.Viewport.Bounds;
-
-            //Load All content that is added to content project. This MUST be called before you try to use any content.
-            
-            //AssetManager.LoadAllContent();
-
-            //map = AssetManager.LoadedMaps["Map2"];
-           // map.Orientation = MapOrientation.Isometric;
-
+           
             //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
-            //Config.TowerConfig.WriteExampleJsonTowerConfig();
+            Config.TowerConfig.WriteExampleJsonTowerConfig();
             
             
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -139,10 +129,11 @@ namespace vgcpTowerDefense
 
 
 
-
+            GameManager.LevelManager.LoadMap("Map2");
+            GameManager.LevelManager.LoadMobWavesFromFile("Example_Json_Level_Definition.txt");
             //random = new Random();
 
-          
+
 
 
             //IEnumerable<MapObject> MapObjects = map.GetObjectsInRegion(mapView);
@@ -228,11 +219,11 @@ namespace vgcpTowerDefense
             //}
 
 
-            
+
 
             //Debug: Visualize the enemies bounding rectangle
             //RectangleDrawer.Visible = true;
-           // RectangleDrawer.SetColor(Color.Red);
+            // RectangleDrawer.SetColor(Color.Red);
 
 
             // TODO: use this.Content to load your game content here
@@ -264,7 +255,7 @@ namespace vgcpTowerDefense
 
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
-                //LevelManager.IsActive = true;
+                GameManager.LevelManager.IsActive = true;
             }
      
 
@@ -274,12 +265,19 @@ namespace vgcpTowerDefense
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
 
-            //    Tower newTower = new Tower(AssetManager.LoadedSprites["Laser001"],
-            //AssetManager.LoadedSprites["LaserBlue"]);
-                //Tower newTower = new Tower("laser_tower.txt", AssetManager);
+                //Tower newTower = new Tower(GameManager.AssetManager.LoadedSprites["Laser001"],
+                    //GameManager.AssetManager.LoadedSprites["LaserBlue"]);
+                Tower newTower = new Tower("Example_Json_Tower_Definition.txt", GameManager.AssetManager);
+                newTower.IsActive = true;
+                newTower.Position = MousePosition;
+                
 
                 //globals.Towers.Add(newTower);
-             
+                if (!GameManager.UnitManager.Towers.ContainsKey("ManualAdd"))
+                {
+                    GameManager.UnitManager.Towers.Add("ManualAdd", new List<Tower>());
+                }
+                GameManager.UnitManager.Towers["ManualAdd"].Add(newTower);
                
 
                 //globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;

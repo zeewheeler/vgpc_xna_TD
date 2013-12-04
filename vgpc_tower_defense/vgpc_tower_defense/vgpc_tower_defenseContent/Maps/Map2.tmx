@@ -33,80 +33,80 @@
   <properties>
    <property name="Obj Layer 1" value=""/>
   </properties>
-  <object name="Mob Spawn" type="Path1" x="1235" y="145" width="31" height="29">
+  <object name="Spawn" type="Path_1" x="1235" y="145" width="31" height="29">
    <properties>
-    <property name="spawn" value="&quot;spawn&quot;"/>
+    <property name="" value=""/>
    </properties>
   </object>
-  <object name="WayPoint1" type="Path1" x="1123" y="186" width="34" height="19">
+  <object name="WayPoint1" type="Path_1" x="1123" y="186" width="34" height="19">
    <properties>
     <property name="WayPoint" value="1"/>
    </properties>
   </object>
-  <object name="WayPoint2" type="Path1" x="1052" y="318" width="25" height="21">
+  <object name="WayPoint2" type="Path_1" x="1052" y="318" width="25" height="21">
    <properties>
     <property name="WayPoint" value="2"/>
    </properties>
   </object>
-  <object name="WayPoint3" type="Path1" x="988" y="432" width="23" height="23">
+  <object name="WayPoint3" type="Path_1" x="988" y="432" width="23" height="23">
    <properties>
     <property name="WayPoint" value="3"/>
    </properties>
   </object>
-  <object name="WayPoint4" type="Path1" x="899" y="564" width="21" height="28">
+  <object name="WayPoint4" type="Path_1" x="899" y="564" width="21" height="28">
    <properties>
     <property name="WayPoint" value="4"/>
    </properties>
   </object>
-  <object name="WayPoint5" type="Path1" x="836" y="673" width="16" height="20">
+  <object name="WayPoint5" type="Path_1" x="836" y="673" width="16" height="20">
    <properties>
     <property name="WayPoint" value="5"/>
    </properties>
   </object>
-  <object name="WayPoint6" type="Path1" x="695" y="655" width="32" height="29">
+  <object name="WayPoint6" type="Path_1" x="695" y="655" width="32" height="29">
    <properties>
     <property name="WayPoint" value="6"/>
    </properties>
   </object>
-  <object name="WayPoint7" type="Path1" x="682" y="420" width="25" height="26">
+  <object name="WayPoint7" type="Path_1" x="682" y="420" width="25" height="26">
    <properties>
     <property name="WayPoint" value="7"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint8" type="Path1" x="592" y="393" width="25" height="19">
+  <object name="WayPoint8" type="Path_1" x="592" y="393" width="25" height="19">
    <properties>
     <property name="WayPoint" value="8"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint9" type="Path1" x="452" y="261" width="29" height="19">
+  <object name="WayPoint9" type="Path_1" x="452" y="261" width="29" height="19">
    <properties>
     <property name="WayPoint" value="9"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint10" type="Path1" x="337" y="195" width="28" height="24">
+  <object name="WayPoint10" type="Path_1" x="337" y="195" width="28" height="24">
    <properties>
     <property name="WayPoint" value="10"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint11" type="Path1" x="138" y="179" width="28" height="17">
+  <object name="WayPoint11" type="Path_1" x="138" y="179" width="28" height="17">
    <properties>
     <property name="WayPoint" value="11"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="WayPoint12" type="Path1" x="10" y="48" width="30" height="25">
+  <object name="WayPoint12" type="Path_1" x="10" y="48" width="30" height="25">
    <properties>
     <property name="WayPoint" value="12"/>
    </properties>
    <ellipse/>
   </object>
-  <object name="InZone" type="Path1" x="-28" y="-13" width="65" height="80">
+  <object name="EndZone" type="Path_1" x="-28" y="-13" width="65" height="80">
    <properties>
-    <property name="InZone" value="&quot;score!&quot;"/>
+    <property name="" value=""/>
    </properties>
   </object>
  </objectgroup>
