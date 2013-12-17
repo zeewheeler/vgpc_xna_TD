@@ -88,9 +88,9 @@
   <ItemGroup>
     <Compile Include="Common\common.cs" />
     <Compile Include="Badguys\EnemyMob.cs" />
-    <Compile Include="Base Game Classes\gameObject.cs" />
-    <Compile Include="Base Game Classes\game_object_config.cs" />
-    <Compile Include="Base Game Classes\Projectile.cs" />
+    <Compile Include="Badguys\Base Game Classes\gameObject.cs" />
+    <Compile Include="Badguys\Base Game Classes\game_object_config.cs" />
+    <Compile Include="Badguys\Base Game Classes\Projectile.cs" />
     <Compile Include="Config\config_reader.cs" />
     <Compile Include="Interfaces\interfaces.cs" />
     <Compile Include="Managers\Game Manager.cs" />

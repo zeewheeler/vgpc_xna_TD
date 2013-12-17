@@ -85,8 +85,8 @@ namespace vgcpTowerDefense
            // Components.Add(RectangleDrawer);
 
             //define what screen resolution the game should run in
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
          }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace vgcpTowerDefense
 
 
 
-            GameManager.LevelManager.LoadMap("Map2");
+            GameManager.LevelManager.LoadMap("vgcp-12-4");
             GameManager.LevelManager.LoadMobWavesFromFile("Example_Json_Level_Definition.txt");
             //random = new Random();
 
@@ -265,9 +265,9 @@ namespace vgcpTowerDefense
             if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
             {
 
-                //Tower newTower = new Tower(GameManager.AssetManager.LoadedSprites["Laser001"],
-                    //GameManager.AssetManager.LoadedSprites["LaserBlue"]);
-                Tower newTower = new Tower("Example_Json_Tower_Definition.txt", GameManager.AssetManager);
+                Tower newTower = new Tower(GameManager.AssetManager.LoadedSprites["Ninja"],
+                    GameManager.AssetManager.LoadedSprites["LaserBlue"], GameManager.UnitManager);
+                //Tower newTower = new Tower("Example_Json_Tower_Definition.txt", GameManager.AssetManager);
                 newTower.IsActive = true;
                 newTower.Position = MousePosition;
                 

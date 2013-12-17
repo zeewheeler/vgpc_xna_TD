@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using vgcpTowerDefense.GameObjects;
 
 namespace vgcpTowerDefense.Util
 {
@@ -36,43 +37,65 @@ namespace vgcpTowerDefense.Util
         }
 
         //returns the position of the closest enemy mob to the given position
-        public static List<FindNearestMobResult> FindNearestMob(Vector2 towerCenter, List<GameObjects.EnemyMob> enemyMobs)
+        public static List<FindNearestMobResult> FindNearestMob(Vector2 towerCenter, Dictionary<String, List<EnemyMob>> Mobs)
         {
             List<FindNearestMobResult> ReturnVal = new List<FindNearestMobResult>();
-            //if no enemies in list, return a null via default keyword
-            if (enemyMobs.Count == 0)
-            {
-                return ReturnVal;
-            }
+           
              
             float distance;
             float MinDistance = float.MaxValue;
 
-
-           
-            //iterate through each mob, if it has a lower distance that current min, update it to the new closest mob
-            foreach(GameObjects.EnemyMob BadGuy in enemyMobs)
+            foreach (var mobList in Mobs)
             {
-                if(BadGuy.IsActive)
+                //for each instantiated mob in each mob type
+                foreach (EnemyMob BadGuy in mobList.Value)
                 {
-                    
-                    if (0 == ReturnVal.Count)
+                    if (BadGuy.IsActive)
                     {
-                        FindNearestMobResult Result = new FindNearestMobResult();
-                        ReturnVal.Add(Result);
-                    }
-                    //utilize the XNA vector class do the the math for us
-                    distance = Vector2.Distance(towerCenter, BadGuy.GetCenter());
-                
-                    if (distance < MinDistance)
-                    {
-                        ReturnVal[0].EnemyMob = BadGuy;
-                        ReturnVal[0].Distance = distance;
 
-                        MinDistance = distance;
+                        if (0 == ReturnVal.Count)
+                        {
+                            FindNearestMobResult Result = new FindNearestMobResult();
+                            ReturnVal.Add(Result);
+                        }
+                        //utilize the XNA vector class do the the math for us
+                        distance = Vector2.Distance(towerCenter, BadGuy.GetCenter());
+
+                        if (distance < MinDistance)
+                        {
+                            ReturnVal[0].EnemyMob = BadGuy;
+                            ReturnVal[0].Distance = distance;
+
+                            MinDistance = distance;
+                        }
                     }
                 }
             }
+
+           
+            //iterate through each mob, if it has a lower distance that current min, update it to the new closest mob
+            //foreach(GameObjects.EnemyMob BadGuy in enemyMobs)
+            //{
+            //    if(BadGuy.IsActive)
+            //    {
+                    
+            //        if (0 == ReturnVal.Count)
+            //        {
+            //            FindNearestMobResult Result = new FindNearestMobResult();
+            //            ReturnVal.Add(Result);
+            //        }
+            //        //utilize the XNA vector class do the the math for us
+            //        distance = Vector2.Distance(towerCenter, BadGuy.GetCenter());
+                
+            //        if (distance < MinDistance)
+            //        {
+            //            ReturnVal[0].EnemyMob = BadGuy;
+            //            ReturnVal[0].Distance = distance;
+
+            //            MinDistance = distance;
+            //        }
+            //    }
+            //}
 
             return ReturnVal;
             

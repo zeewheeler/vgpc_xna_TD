@@ -182,33 +182,39 @@ namespace vgcpTowerDefense.Managers
 
                     /*Find an enemy mob that is currently not being used of the appropriate type.
                     * If one is not available, create a new one.*/
-                    
+
                     //UnitManager.Mobs[MobIdentifer]
 
-                    if (UnitManager.Mobs.ContainsKey(MobIdentifer))
+                    if (!UnitManager.Mobs.ContainsKey(MobIdentifer))
                     {
-                        foreach (var mob in UnitManager.Mobs[MobIdentifer])
-                        {
-                            if (!mob.IsActive)
-                            {
-                                mob.Spawn(MobPaths[MobPathIdentifier]);
+                        UnitManager.Mobs.Add(MobIdentifer, new List<EnemyMob>());
+                    }
 
-                                //Reset the Timer
-                                TimeToNextSpawn = TimeSpan.FromMilliseconds(
-                                    MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
-                                CurrentMobInWave++;
-                            }
+                    bool mobSpawned = false;
+                    foreach (var mob in UnitManager.Mobs[MobIdentifer])
+                    {
+                        if (!mob.IsActive)
+                        {
+                            mob.Spawn(MobPaths[MobPathIdentifier]);
+
+                            //Reset the Timer
+                            TimeToNextSpawn = TimeSpan.FromMilliseconds(
+                                MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
+                            CurrentMobInWave++;
+                            mobSpawned = true;
                         }
                     }
-                    else
+
+                    if (!mobSpawned)
                     {
                         var newMob = new EnemyMob(AssetManager.LoadedSprites[MobIdentifer],
-                       MobIdentifer);
+                            MobIdentifer);
                         newMob.Spawn(MobPaths[MobPathIdentifier]);
                         UnitManager.Mobs[MobIdentifer].Add(newMob);
                     }
 
-                    TimeToNextSpawn = TimeSpan.FromMilliseconds(
+
+                TimeToNextSpawn = TimeSpan.FromMilliseconds(
                                MobWaves[CurrentWaveInLevel - 1].MobSpawnEntries[CurrentMobInWave - 1].DelayAfter_ms);
                     CurrentMobInWave++;
                     return;

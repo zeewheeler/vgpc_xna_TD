@@ -252,15 +252,15 @@ namespace vgcpTowerDefense.Config
 
             MobEntry1.DelayAfter_ms = 1000;
             MobEntry1.MobIdentifier = "EvilRobotRight";
-            MobEntry1.PathIdentifer = "Path1";
+            MobEntry1.PathIdentifer = "Path_1";
 
             MobEntry2.DelayAfter_ms = 2000;
             MobEntry2.MobIdentifier = "EvilRobotRight";
-            MobEntry2.PathIdentifer = "Path1";
+            MobEntry2.PathIdentifer = "Path_1";
 
             MobEntry3.DelayAfter_ms = 3000;
             MobEntry3.MobIdentifier = "EvilRobotRight";
-            MobEntry3.PathIdentifer = "Path1";
+            MobEntry3.PathIdentifer = "Path_1";
             
           
             MobWave1.MobSpawnEntries.Add(MobEntry1);

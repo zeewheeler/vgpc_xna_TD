@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using vgcpTowerDefense.Config;
+using vgcpTowerDefense.Managers;
 
 namespace vgcpTowerDefense.GameObjects
 {
@@ -22,6 +23,7 @@ public class Tower : DrawableGameObject
 
 
     public string TowerName; /*String to hold the name of this tower*/
+    private readonly UnitManager UnitManager;
     
     //sounds
     protected SoundEffect SoundShoot;   /*SoundEffect to be played when the tower shoots*/
@@ -69,13 +71,16 @@ public class Tower : DrawableGameObject
         
         
     //constructor
-    public Tower(Texture2D defaultTexture, Texture2D textureProjectile)
+    public Tower(Texture2D defaultTexture, Texture2D textureProjectile, UnitManager unitManager)
         : base(defaultTexture)
     {
         //The projectile texture MUST be set before Intialize is called, else it will load a null texture 
+
+        UnitManager = unitManager;
+
         TextureProjectile = textureProjectile;
 
-        this.Intialize();
+        Intialize();
             
         //sounds
         SoundShoot = null;
@@ -110,10 +115,11 @@ public class Tower : DrawableGameObject
     /// Constructor used to create a tower from a Json Config File. Parameter is the name of the Json tower config file which is assumed to be in /definitions/towers/
     /// </summary>
     /// <param name="jsonConfigFile"></param>
-    public Tower(string jsonConfigFile, Managers.AssetManager assetManager)
+    public Tower(string jsonConfigFile, Managers.AssetManager assetManager, Managers.UnitManager unitManager)
         : base(null)
     {
         this.Intialize();
+        UnitManager = unitManager;
         SetVarsFromConfigVars(TowerConfig.GetTowerConfigFromJsonFile(jsonConfigFile), assetManager);
 
     }
@@ -298,11 +304,11 @@ public class Tower : DrawableGameObject
     /// </summary>
     /// <param name="enemyMobs"></param>
     protected virtual void FireAtClosestMob(List<EnemyMob> enemyMobs)
-    {
-        if (!IsDisabled && (enemyMobs.Count > 0)) //if there tower is diabled or there are no mobs, just exit the function now
+     {
+        if (!IsDisabled) //if there tower is diabled or there are no mobs, just exit the function now
         {
 
-            List<Util.vgpc_math.FindNearestMobResult> Results = Util.vgpc_math.FindNearestMob(this.Position, enemyMobs);
+            List<Util.vgpc_math.FindNearestMobResult> Results = Util.vgpc_math.FindNearestMob(this.Position, UnitManager.Mobs);
             /*FindNearestMob returns an array of  "FindNearestMobResult". If it found 0, exit.
              If it found 1, but it is out of range, exit.*/
             if (1 != Results.Count)
