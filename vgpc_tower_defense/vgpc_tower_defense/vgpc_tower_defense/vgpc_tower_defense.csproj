@@ -16,8 +16,8 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>231328d5-2a61-4298-adb3-8ba7f84422de</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Automatic\Game.ico</ApplicationIcon>
-    <Thumbnail>Automatic\GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Everything Else\Automatic\Game.ico</ApplicationIcon>
+    <Thumbnail>Everything Else\Automatic\GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -86,30 +86,30 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\common.cs" />
-    <Compile Include="Badguys\EnemyMob.cs" />
-    <Compile Include="Badguys\Base Game Classes\gameObject.cs" />
-    <Compile Include="Badguys\Base Game Classes\game_object_config.cs" />
-    <Compile Include="Badguys\Base Game Classes\Projectile.cs" />
-    <Compile Include="Config\config_reader.cs" />
-    <Compile Include="Interfaces\interfaces.cs" />
-    <Compile Include="Managers\Game Manager.cs" />
-    <Compile Include="Managers\Level Manager.cs" />
-    <Compile Include="Managers\Unit Manager.cs" />
-    <Compile Include="Towers\Tower.cs" />
-    <Compile Include="Common\display.cs" />
-    <Compile Include="Common\GameComponent1.cs" />
-    <Compile Include="Globals\globals.cs" />
-    <Compile Include="Managers\Asset Manager.cs" />
+    <Compile Include="Everything Else\Common\common.cs" />
+    <Compile Include="Everything Else\Badguys\EnemyMob.cs" />
+    <Compile Include="Everything Else\Badguys\Base Game Classes\gameObject.cs" />
+    <Compile Include="Everything Else\Badguys\Base Game Classes\game_object_config.cs" />
+    <Compile Include="Everything Else\Badguys\Base Game Classes\Projectile.cs" />
+    <Compile Include="Everything Else\Config\config_reader.cs" />
+    <Compile Include="Everything Else\Interfaces\interfaces.cs" />
+    <Compile Include="Everything Else\Managers\Game Manager.cs" />
+    <Compile Include="Everything Else\Managers\Level Manager.cs" />
+    <Compile Include="Everything Else\Managers\Unit Manager.cs" />
+    <Compile Include="Everything Else\Towers\Tower.cs" />
+    <Compile Include="Everything Else\Common\display.cs" />
+    <Compile Include="Everything Else\Common\GameComponent1.cs" />
+    <Compile Include="Everything Else\Globals\globals.cs" />
+    <Compile Include="Everything Else\Managers\Asset Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Automatic\Program.cs" />
-    <Compile Include="Util\DrawShape.cs" />
+    <Compile Include="Everything Else\Automatic\Program.cs" />
+    <Compile Include="Everything Else\Util\DrawShape.cs" />
     <Compile Include="vgcpTowerDefenseGame.cs" />
-    <Compile Include="Util\vgpc_math.cs" />
+    <Compile Include="Everything Else\Util\vgpc_math.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Automatic\Game.ico" />
-    <Content Include="Automatic\GameThumbnail.png">
+    <Content Include="Everything Else\Automatic\Game.ico" />
+    <Content Include="Everything Else\Automatic\GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
   </ItemGroup>
@@ -150,7 +150,7 @@
     <None Include="Properties\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphical User Interfaces\" />
+    <Folder Include="Everything Else\Graphical User Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

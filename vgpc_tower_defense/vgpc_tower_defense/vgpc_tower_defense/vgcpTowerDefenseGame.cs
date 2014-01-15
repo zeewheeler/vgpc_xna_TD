@@ -33,60 +33,26 @@ namespace vgcpTowerDefense
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //Managers.AssetManager AssetManager;
-        //Managers.LevelManager LevelManager;
+
         Managers.Game_Manager GameManager;
 
-
-        Rectangle mapView;
-        Map map;
-
-       
-
-        Util.DrawRectangle RectangleDrawer;
-
-        MouseState PreviousMouseState;
-        KeyboardState PreviousKeyboardState;
-
-
-        int MobDeathCounter = 0;
-
-        Random random;
-
-
-
-
-       
         public vgcp_tower_defense_game()
         {
-            //AssetManager = new Managers.AssetManager(this);
-            Config.LevelConfig.WriteExampleJsonLevelConfig();
-            //LevelManager = new Managers.LevelManager(AssetManager,
-            //    Config.LevelConfig.GetLevelConfigFromJsonFile("Example_Json_Level_Definition.txt").LevelMobWaves);
 
-            //LevelManager = new Managers.LevelManager(this);
-            //LevelManager.IsActive = true;
+            Config.LevelConfig.WriteExampleJsonLevelConfig();
+         
             GameManager = new Game_Manager(this);
             Components.Add(GameManager);
-
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            //globals.Mobs = new List<GameObjects.EnemyMob>();
-            //globals.Towers = new List<GameObjects.Tower>();
-            //globals.MobPath = new List<MobWayPoint>();
-
-            //RectangleDrawer = new Util.DrawRectangle(this);
-            //RectangleDrawer.Visible = false;
-
-
-
-           // Components.Add(RectangleDrawer);
-
             //define what screen resolution the game should run in
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+
+            globals.viewport_rectangle.Width = 1280;
+            globals.viewport_rectangle.Height = 720;
          }
 
         /// <summary>
@@ -102,10 +68,6 @@ namespace vgcpTowerDefense
             base.Initialize();
             this.IsMouseVisible = true;
 
-           
-            
-
-           //initialize global variables
 
         }
 
@@ -115,118 +77,13 @@ namespace vgcpTowerDefense
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {
-           
+        {     
 
-           
-            //Config.JsonConfigOperations.CreateExampleJsonConfigFile();
             Config.TowerConfig.WriteExampleJsonTowerConfig();
-            
-            
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
-
-
-            GameManager.LevelManager.LoadMap("vgcp-12-4");
+            GameManager.LevelManager.LoadMap("Map2");
             GameManager.LevelManager.LoadMobWavesFromFile("Example_Json_Level_Definition.txt");
-            //random = new Random();
 
-
-
-
-            //IEnumerable<MapObject> MapObjects = map.GetObjectsInRegion(mapView);
-
-            //List<MobWayPoint> MobPathWayPoints = new List<MobWayPoint>();
-            //Vector2 MobSpawn = new Vector2();
-            //Rectangle EndZoneRect = new Rectangle();
-
-            //foreach (MapObject MapObj in MapObjects)
-            //{
-
-            //   MapObj.Type
-            //    if(MapObj.Properties.ContainsKey("WayPoint"))
-            //    {
-            //       MobWayPoint wayPoint = new MobWayPoint();
-
-            //       wayPoint.Position.X = MapObj.Bounds.Center.X;
-            //       wayPoint.Position.Y = MapObj.Bounds.Center.Y;
-            //       wayPoint.WayPointNumber = Int32.Parse(MapObj.Properties["WayPoint"].Value);
-            //       MobPathWayPoints.Add(wayPoint);
-            //    }
-
-            //   if (MapObj.Properties.ContainsKey("spawn"))
-            //   {
-            //       MobSpawn = new Vector2();
-            //       MobSpawn.X = MapObj.Bounds.Center.X;
-            //       MobSpawn.Y = MapObj.Bounds.Center.Y;
-            //   }
-
-            //   if (MapObj.Properties.ContainsKey("EndZone"))
-            //   {
-            //       EndZoneRect = new Rectangle(
-            //           MapObj.Bounds.X,
-            //           MapObj.Bounds.Y,
-            //           MapObj.Bounds.Width,
-            //           MapObj.Bounds.Height);
-            //   }
-            //}
-
-            //MobPathingInfo MobPath = new MobPathingInfo();
-            //MobPath.PathWayPoints = MobPathWayPoints;
-            //MobPath.MobSpawnLocation = MobSpawn;
-            //MobPath.MobEndZone = EndZoneRect;
-            //globals.MobPaths.Add("Path1", MobPath);
-
-
-
-            //globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["EvilRobotRight"],
-            //    "EvilRobotRight"));
-            //globals.Mobs[0].Position.X = MobSpawn.X - 200;
-            //globals.Mobs[0].Position.Y = MobSpawn.Y;
-            //globals.Mobs[0].IsActive = true;
-            //globals.Mobs[0].MobPath = globals.MobPath;
-
-
-
-            /*globals.Towers.Add(new Tower(AssetManager.LoadedSprites["PlasmaRight"],
-                AssetManager.LoadedSprites["cannonball"]));*/
-
-            //globals.Towers.Add(new Tower("Example_Json_Tower_Definition.txt", AssetManager));
-
-            //globals.Towers[0].Position.X = globals.viewport_rectangle.Center.X / 3;
-            //globals.Towers[0].Position.Y = globals.viewport_rectangle.Center.Y;
-            //globals.Towers[0].IsActive = true;
-
-            //globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-            //   AssetManager.LoadedSprites["rocket"]));
-
-            //globals.Towers[1].Position.X = globals.viewport_rectangle.Center.X / 3;
-            //globals.Towers[1].Position.Y = globals.viewport_rectangle.Center.Y + 200;
-            //globals.Towers[1].IsActive = true;
-
-            //globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-            //   AssetManager.LoadedSprites["starcharge"]));
-
-            //globals.Towers[2].Position.X = globals.viewport_rectangle.Center.X / 3;
-            //globals.Towers[2].Position.Y = globals.viewport_rectangle.Center.Y - 200;
-            //globals.Towers[2].IsActive = true;
-
-            //foreach (Projectile projectile in globals.Towers[2].Projectiles)
-            //{
-            //    projectile.AngularVelocity = .1f;
-            //}
-
-
-
-
-            //Debug: Visualize the enemies bounding rectangle
-            //RectangleDrawer.Visible = true;
-            // RectangleDrawer.SetColor(Color.Red);
-
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -245,11 +102,6 @@ namespace vgcpTowerDefense
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-
 
             KeyboardState KeyboardState = Keyboard.GetState();
 
@@ -258,91 +110,6 @@ namespace vgcpTowerDefense
                 GameManager.LevelManager.IsActive = true;
             }
      
-
-            var MouseState = Mouse.GetState();
-            var MousePosition = new Vector2(MouseState.X, MouseState.Y);
-
-            if (MouseState.LeftButton == ButtonState.Pressed && !(PreviousMouseState.LeftButton == ButtonState.Pressed))
-            {
-
-                Tower newTower = new Tower(GameManager.AssetManager.LoadedSprites["Ninja"],
-                    GameManager.AssetManager.LoadedSprites["LaserBlue"], GameManager.UnitManager);
-                //Tower newTower = new Tower("Example_Json_Tower_Definition.txt", GameManager.AssetManager);
-                newTower.IsActive = true;
-                newTower.Position = MousePosition;
-                
-
-                //globals.Towers.Add(newTower);
-                if (!GameManager.UnitManager.Towers.ContainsKey("ManualAdd"))
-                {
-                    GameManager.UnitManager.Towers.Add("ManualAdd", new List<Tower>());
-                }
-                GameManager.UnitManager.Towers["ManualAdd"].Add(newTower);
-               
-
-                //globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
-                //globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
-                //globals.Towers[globals.Towers.Count - 1].IsActive = true;
-            }
-
-            if (MouseState.RightButton == ButtonState.Pressed && !(PreviousMouseState.RightButton == ButtonState.Pressed))
-            {
-
-    //            globals.Towers.Add(new Tower(AssetManager.LoadedSprites["Ninja"],
-    //AssetManager.LoadedSprites["LaserRed"]));
-
-
-
-                //globals.Towers[globals.Towers.Count - 1].Position.X = MousePosition.X;
-                //globals.Towers[globals.Towers.Count - 1].Position.Y = MousePosition.Y;
-                //globals.Towers[globals.Towers.Count - 1].IsActive = true;
-            }
-
-
-
-          
-            
-            //foreach (EnemyMob Mob in globals.Mobs)
-            //{
-            //    Mob.Update(gameTime);
-            //}
-
-
-            //for (int i = 0; i < globals.Mobs.Count; i++)
-            //{
-            //    if (!globals.Mobs[i].IsActive)
-            //    {
-            //        globals.Mobs[i].Spawn(MobSpawn);
-            //        MobDeathCounter++;
-
-            //        if ((MobDeathCounter % 2 == 0) && (globals.Mobs.Count < 100 ) )
-            //        {
-            //            globals.Mobs.Add(new EnemyMob(AssetManager.LoadedSprites["EvilRobotRight"],
-            //                "EvilRobotRight"));
-            //            globals.Mobs[globals.Mobs.Count - 1].Spawn(MobSpawn);
-            //            globals.Mobs[globals.Mobs.Count - 1].MobPath = globals.MobPath;
-            //        }
-            //    }
-
-                
-            //}
-
-            //if (MobDeathCounter % 10 == 0)
-            //{
-            //}
-           
-
-            //foreach (Tower Tower in globals.Towers)
-            //{
-            //    Tower.Update(gameTime);
-               
-            //}
-
-
-            //PreviousMouseState = MouseState;
-            //PreviousKeyboardState = KeyboardState;
-
-            //LevelManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -353,26 +120,6 @@ namespace vgcpTowerDefense
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            //// TODO: Add your drawing code here
-            //spriteBatch.Begin();
-
-            ////draw background
-            //map.Draw(spriteBatch, mapView);
- 
-            
-            ////Draw Units
-            //foreach (EnemyMob Mob in globals.Mobs)
-            //{
-            //    Mob.Draw(spriteBatch);
-            //}
-
-            //foreach (Tower Tower in globals.Towers)
-            //{
-            //    Tower.Draw(spriteBatch);
-            //}
-
-            //spriteBatch.End();
 
             base.Draw(gameTime);
         }
